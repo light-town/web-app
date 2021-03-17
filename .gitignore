@@ -88,3 +88,11 @@ sw.*
 
 # Vim swap files
 *.swp
+
+# Env
+.env*
+!.env.example
+
+# Npmrc
+.npmrc*
+!.npmrc.example
