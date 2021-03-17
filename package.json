@@ -1,6 +1,6 @@
 {
   "name": "@light-town/web-app",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "dev": "nuxt",
@@ -11,6 +11,16 @@
     "lint": "npm run lint:js",
     "test": "jest"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/light-town/web-app.git"
+  },
+  "author": "MichailShcherbakov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/light-town/web-app/issues"
+  },
+  "homepage": "https://github.com/light-town/web-app#readme",
   "dependencies": {
     "@nuxtjs/axios": "^5.12.5",
     "core-js": "^3.8.3",
