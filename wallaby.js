@@ -4,5 +4,5 @@ module.exports = () => {
     testFramework: {
       configFile: './jest.config.js',
     },
-  }
-}
+  };
+};
