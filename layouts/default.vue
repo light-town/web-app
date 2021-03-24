@@ -1,11 +1,5 @@
 <template>
-  <div>
+  <div class="page" data-theme-mode="light">
     <Nuxt />
   </div>
 </template>
-
-<style>
-* {
-  font-family: 'Inter', sans-serif;
-}
-</style>
