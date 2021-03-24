@@ -5,9 +5,13 @@
 }
 
 .page {
-  &-container {
-    background-color: var(--color--color-sign-in-page-bg);
+  &__container {
     height: 100vh;
+
+    background-color: var(--color--color-sign-in-page-bg);
+  }
+  &__form-layout {
+    width: auto;
   }
 }
 
