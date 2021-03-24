@@ -4,4 +4,8 @@
   </div>
 </template>
 
-<style></style>
+<style>
+* {
+  font-family: 'Inter', sans-serif;
+}
+</style>
