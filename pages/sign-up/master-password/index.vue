@@ -48,7 +48,7 @@ import LinksForm from '~/components/forms/auth/links.vue';
 import PadlockIcon from '~/assets/padlock.svg?inline';
 
 export default {
-  name: 'SignUpPage',
+  name: 'MasterPasswordPage',
   components: {
     UiGrid,
     UiInput,
