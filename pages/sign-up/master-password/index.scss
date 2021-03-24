@@ -1,0 +1,54 @@
+.page[data-theme-mode='light'] {
+  --color--color-sign-in-page-bg: var(--color-gray-50);
+}
+
+.page {
+  &__container {
+    height: 100vh;
+
+    background-color: var(--color--color-sign-in-page-bg);
+  }
+  &__form-layout {
+    width: auto;
+  }
+}
+
+.auth-form {
+  &__input {
+    min-width: 400px;
+    margin-bottom: 8px;
+
+    &:first-child {
+      margin-bottom: 16px;
+    }
+  }
+}
+
+.warning {
+  margin-top: 16px;
+
+  &__icon {
+    display: inline-flex;
+    flex-wrap: wrap;
+
+    --size: 36px;
+
+    width: var(--size);
+    height: var(--size);
+
+    margin-right: 20px;
+  }
+
+  &__title {
+    font-size: 14px;
+
+    & > span {
+      font-weight: 600;
+    }
+  }
+}
+
+.btn {
+  width: 100%;
+  height: 40px;
+}
