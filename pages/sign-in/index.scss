@@ -1,0 +1,27 @@
+.page[data-theme-mode='light'] {
+  --color--color-sign-in-page-bg: var(--color-gray-50);
+  --color-sign-in-page-link-text: var(--color-green-400);
+  --color-sign-in-page-link-hover-text: var(--color-green-500);
+}
+
+.page {
+  &-container {
+    background-color: var(--color--color-sign-in-page-bg);
+    height: 100vh;
+  }
+}
+
+.auth-form {
+  &__input {
+    min-width: 400px;
+    margin-bottom: 8px;
+  }
+}
+
+.link {
+  color: var(--color-sign-in-page-link-text);
+
+  &:hover {
+    color: var(--color-sign-in-page-link-hover-text);
+  }
+}

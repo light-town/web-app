@@ -1,0 +1,23 @@
+.page[data-theme-mode='light'] {
+  --color-logo-title: var(--color-gray-650);
+}
+
+.logo {
+  margin: 40px 0;
+
+  &__title {
+    font-size: 30px;
+    font-weight: 700;
+
+    margin-right: 24px;
+
+    color: var(--color-logo-title);
+  }
+
+  &__icon {
+    --size: 60px;
+
+    width: var(--size);
+    height: var(--size);
+  }
+}
