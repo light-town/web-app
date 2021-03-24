@@ -1,8 +1,9 @@
 export default {
   ssr: true,
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: '@light-town/web-app',
+    title: 'web-app',
     htmlAttrs: {
       lang: 'en',
     },
@@ -23,7 +24,7 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ['~/assets/css/main.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: ['~/plugins/axios'],

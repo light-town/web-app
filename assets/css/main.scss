@@ -1,0 +1,18 @@
+@import '../../ui/palette.scss';
+
+* {
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+}
+
+button {
+  &:focus {
+    outline-style: none;
+  }
+}
+
+input {
+  &:focus {
+    outline-style: none;
+  }
+}

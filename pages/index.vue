@@ -1,9 +1,11 @@
 <template>
-  <p>Stated</p>
+  <div></div>
 </template>
 
 <script>
-export default {};
+export default {
+  name: 'IndexPage',
+};
 </script>
 
 <style></style>

@@ -9,8 +9,6 @@ module.exports = {
   },
   extends: [
     '@nuxtjs',
-    'prettier',
-    'prettier/vue',
     'plugin:prettier/recommended',
     'plugin:nuxt/recommended',
   ],
@@ -21,6 +19,7 @@ module.exports = {
     'prettier/prettier': [
       'error',
       {
+        semi: true,
         singleQuote: true,
         endOfLine: 'auto',
         trailingComma: 'all',
