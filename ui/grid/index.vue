@@ -1,10 +1,10 @@
 <template>
   <div
     :class="{
-      grid: true,
-      [`grid_dir-${direction}`]: direction,
-      [`grid_justify-${justify}`]: justify,
-      [`grid_align-${alignItems}`]: alignItems,
+      'ui-grid': true,
+      [`ui-grid_dir-${direction}`]: direction,
+      [`ui-grid_justify-${justify}`]: justify,
+      [`ui-grid_align-${alignItems}`]: alignItems,
     }"
     @click="handleClick"
   >
@@ -12,10 +12,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
-
-export default Vue.extend({
+<script>
+export default {
   name: 'UiGrid',
   props: {
     justify: {
@@ -70,7 +68,7 @@ export default Vue.extend({
       this.$emit('click', e);
     },
   },
-});
+};
 </script>
 
 <style lang="scss" src="./index.scss"></style>

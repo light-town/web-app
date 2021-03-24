@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  name: 'UiButton',
   props: {
     variant: {
       type: String,

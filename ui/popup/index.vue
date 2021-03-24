@@ -1,8 +1,23 @@
+<template>
+  <portal to="modals-location">
+    <ui-grid v-if="open" class="ui-popup">
+      <ui-grid
+        class="ui-popup__background"
+        @click="handleBackgroundClick"
+      ></ui-grid>
+      <popup-content :anchor="anchor" :position="position">
+        <slot></slot>
+      </popup-content>
+    </ui-grid>
+  </portal>
+</template>
+
 <script>
 import PopupContent from './content.vue';
 import UiGrid from '~/ui/grid/index.vue';
 
 export default {
+  name: 'UiPopup',
   components: {
     UiGrid,
     PopupContent,
@@ -38,19 +53,5 @@ export default {
   },
 };
 </script>
-
-<template>
-  <portal to="modals-location">
-    <ui-grid v-if="open" class="popup">
-      <ui-grid
-        class="popup__background"
-        @click="handleBackgroundClick"
-      ></ui-grid>
-      <popup-content :anchor="anchor" :position="position">
-        <slot></slot>
-      </popup-content>
-    </ui-grid>
-  </portal>
-</template>
 
 <style lang="scss" src="./index.scss"></style>

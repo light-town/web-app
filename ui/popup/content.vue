@@ -1,3 +1,9 @@
+<template>
+  <ui-grid ref="content" class="ui-popup__content" :style="{ left: x, top: y }">
+    <slot></slot>
+  </ui-grid>
+</template>
+
 <script>
 import UiGrid from '~/ui/grid/index.vue';
 
@@ -71,11 +77,5 @@ export default {
   },
 };
 </script>
-
-<template>
-  <ui-grid ref="content" class="popup__content" :style="{ left: x, top: y }">
-    <slot></slot>
-  </ui-grid>
-</template>
 
 <style lang="scss" src="./index.scss"></style>

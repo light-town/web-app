@@ -35,18 +35,24 @@
         </ui-grid>
       </ui-grid>
     </ui-grid>
+    <ui-grid direction="column">
+      <p>Input</p>
+      <ui-input type="text" placeholder="Enter Account Key"></ui-input>
+    </ui-grid>
   </ui-grid>
 </template>
 
 <script>
 import UiButton from '~/ui/button/index.vue';
 import UiGrid from '~/ui/grid/index.vue';
+import UiInput from '~/ui/input/index.vue';
 
 export default {
   name: 'IndexPage',
   components: {
     UiButton,
     UiGrid,
+    UiInput,
   },
 };
 </script>
