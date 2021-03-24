@@ -1,30 +1,52 @@
 <template>
-  <div>
-    <div>
-      <p>Contained buttons</p>
-      <ui-button variant="contained">Button</ui-button>
-      <ui-button variant="contained" disabled>Button</ui-button>
-    </div>
-    <div>
-      <p>Outlined buttons</p>
-      <ui-button variant="outlined">Button</ui-button>
-      <ui-button variant="outlined" disabled>Button</ui-button>
-    </div>
-    <div>
-      <p>Text buttons</p>
-      <ui-button variant="text">Button</ui-button>
-      <ui-button variant="text" disabled>Button</ui-button>
-    </div>
-  </div>
+  <ui-grid direction="column">
+    <ui-grid>
+      <ui-grid direction="column">
+        <p>Contained buttons</p>
+        <ui-grid direction="column">
+          <p>Naturally</p>
+          <ui-button variant="contained">Button</ui-button>
+        </ui-grid>
+        <ui-grid direction="column">
+          <p>Disabled</p>
+          <ui-button variant="contained" disabled>Button</ui-button>
+        </ui-grid>
+      </ui-grid>
+      <ui-grid direction="column">
+        <p>Outlined buttons</p>
+        <ui-grid direction="column">
+          <p>Naturally</p>
+          <ui-button variant="outlined">Button</ui-button>
+        </ui-grid>
+        <ui-grid direction="column">
+          <p>Disabled</p>
+          <ui-button variant="outlined" disabled>Button</ui-button>
+        </ui-grid>
+      </ui-grid>
+      <ui-grid direction="column">
+        <p>Text buttons</p>
+        <ui-grid direction="column">
+          <p>Naturally</p>
+          <ui-button variant="text">Button</ui-button>
+        </ui-grid>
+        <ui-grid direction="column">
+          <p>Disabled</p>
+          <ui-button variant="text" disabled>Button</ui-button>
+        </ui-grid>
+      </ui-grid>
+    </ui-grid>
+  </ui-grid>
 </template>
 
 <script>
 import UiButton from '~/ui/button/index.vue';
+import UiGrid from '~/ui/grid/index.vue';
 
 export default {
   name: 'IndexPage',
   components: {
     UiButton,
+    UiGrid,
   },
 };
 </script>

@@ -10,3 +10,9 @@ button {
     outline-style: none;
   }
 }
+
+input {
+  &:focus {
+    outline-style: none;
+  }
+}

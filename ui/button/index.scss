@@ -20,6 +20,15 @@
   --color-outlined-disabled-text: var(--color-gray-300);
   --color-outlined-disabled-bg: transparent;
   --color-outlined-disabled-border: var(--color-gray-300);
+
+  --color-text-text: var(--color-green-400);
+  --color-text-bg: transparent;
+  --color-text-hover-text: var(--color-green-400);
+  --color-text-hover-bg: var(--color-green-50);
+  --color-text-active-text: var(--color-green-400);
+  --color-text-active-bg: var(--color-green-100);
+  --color-text-disabled-text: var(--color-gray-300);
+  --color-text-disabled-bg: transparent;
 }
 
 .btn {
@@ -77,23 +86,23 @@
   }
 
   &--text {
-    color: var(--color-outlined-text);
-    background-color: var(--color-outlined-bg);
+    color: var(--color-text-text);
+    background-color: var(--color-text-bg);
     border: 0;
 
     &:hover:enabled {
-      color: var(--color-outlined-hover-text);
-      background-color: var(--color-outlined-hover-bg);
+      color: var(--color-text-hover-text);
+      background-color: var(--color-text-hover-bg);
     }
 
     &:active:enabled {
-      color: var(--color-outlined-active-text);
-      background-color: var(--color-outlined-active-bg);
+      color: var(--color-text-active-text);
+      background-color: var(--color-text-active-bg);
     }
 
     &:disabled {
-      color: var(--color-outlined-disabled-text);
-      background-color: var(--color-outlined-disabled-bg);
+      color: var(--color-text-disabled-text);
+      background-color: var(--color-text-disabled-bg);
     }
   }
 }
