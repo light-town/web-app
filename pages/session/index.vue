@@ -2,24 +2,24 @@
   <ui-grid class="page__container" justify="center">
     <ui-grid direction="column" align-items="center" class="page__form-layout">
       <logo></logo>
-      <auth-form
-        title="Sign In"
-        desc="Use your LightTown Account"
-        @submit="handleSubmitForm"
-      >
+      <auth-form title="Welcome" @submit="handleSubmitForm">
         <template #content>
+          <account
+            version="A3"
+            uuid="A6488L"
+            username="Michael Shcherbakov"
+          ></account>
           <ui-input
-            type="text"
-            placeholder="Enter Account Key"
+            type="password"
+            placeholder="Enter Master Password"
             class="auth-form__input"
           ></ui-input>
-          <NuxtLink to="/" class="link">Forgot Account Key?</NuxtLink>
+          <NuxtLink to="/" class="link">Forgot Master Password?</NuxtLink>
         </template>
         <template #footer>
-          <ui-button variant="outlined" @click="redirectToSignUpPage">
-            Create Account
-          </ui-button>
-          <ui-button variant="contained" type="submit">Next</ui-button>
+          <ui-grid direction="row-reverse">
+            <ui-button variant="contained" type="submit">Next</ui-button>
+          </ui-grid>
         </template>
       </auth-form>
       <links-form></links-form>
@@ -34,9 +34,10 @@ import UiButton from '~/ui/button/index.vue';
 import Logo from '~/components/forms/auth/logo.vue';
 import AuthForm from '~/components/forms/auth/form.vue';
 import LinksForm from '~/components/forms/auth/links.vue';
+import Account from '~/components/forms/auth/account.vue';
 
 export default {
-  name: 'SignInPage',
+  name: 'VerifyPage',
   components: {
     UiGrid,
     UiInput,
@@ -44,6 +45,7 @@ export default {
     Logo,
     AuthForm,
     LinksForm,
+    Account,
   },
   methods: {
     handleSubmitForm(e) {

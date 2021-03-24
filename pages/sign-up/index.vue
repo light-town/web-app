@@ -3,23 +3,24 @@
     <ui-grid direction="column" align-items="center" class="page__form-layout">
       <logo></logo>
       <auth-form
-        title="Sign In"
-        desc="Use your LightTown Account"
+        title="Sign Up"
+        desc="Welcom to LightTown Platform"
         @submit="handleSubmitForm"
       >
         <template #content>
           <ui-input
             type="text"
-            placeholder="Enter Account Key"
+            placeholder="Enter your username"
             class="auth-form__input"
           ></ui-input>
-          <NuxtLink to="/" class="link">Forgot Account Key?</NuxtLink>
+          <NuxtLink to="/sign-in" class="link">
+            Already has an account?
+          </NuxtLink>
         </template>
         <template #footer>
-          <ui-button variant="outlined" @click="redirectToSignUpPage">
-            Create Account
+          <ui-button variant="contained" type="submit" class="btn">
+            Next
           </ui-button>
-          <ui-button variant="contained" type="submit">Next</ui-button>
         </template>
       </auth-form>
       <links-form></links-form>
@@ -36,7 +37,7 @@ import AuthForm from '~/components/forms/auth/form.vue';
 import LinksForm from '~/components/forms/auth/links.vue';
 
 export default {
-  name: 'SignInPage',
+  name: 'SignUpPage',
   components: {
     UiGrid,
     UiInput,
@@ -48,9 +49,6 @@ export default {
   methods: {
     handleSubmitForm(e) {
       e.preventDefault();
-    },
-    redirectToSignUpPage() {
-      this.$router.push('/sign-up');
     },
   },
 };

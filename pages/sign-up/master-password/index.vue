@@ -3,23 +3,34 @@
     <ui-grid direction="column" align-items="center" class="page__form-layout">
       <logo></logo>
       <auth-form
-        title="Sign In"
-        desc="Use your LightTown Account"
+        title="Sign Up"
+        desc="Choose your Master Password"
         @submit="handleSubmitForm"
       >
         <template #content>
           <ui-input
-            type="text"
-            placeholder="Enter Account Key"
+            type="password"
+            placeholder="Enter a password"
             class="auth-form__input"
           ></ui-input>
-          <NuxtLink to="/" class="link">Forgot Account Key?</NuxtLink>
+          <ui-input
+            type="password"
+            placeholder="Confirm your password"
+            class="auth-form__input"
+          ></ui-input>
+
+          <ui-grid align-items="center" class="warning">
+            <padlock-icon class="warning__icon"></padlock-icon>
+            <p class="warning__title">
+              <span>Remember:</span> the logner and more random your password,
+              the better!
+            </p>
+          </ui-grid>
         </template>
         <template #footer>
-          <ui-button variant="outlined" @click="redirectToSignUpPage">
-            Create Account
+          <ui-button variant="contained" type="submit" class="btn">
+            Next
           </ui-button>
-          <ui-button variant="contained" type="submit">Next</ui-button>
         </template>
       </auth-form>
       <links-form></links-form>
@@ -34,9 +45,10 @@ import UiButton from '~/ui/button/index.vue';
 import Logo from '~/components/forms/auth/logo.vue';
 import AuthForm from '~/components/forms/auth/form.vue';
 import LinksForm from '~/components/forms/auth/links.vue';
+import PadlockIcon from '~/assets/padlock.svg?inline';
 
 export default {
-  name: 'SignInPage',
+  name: 'MasterPasswordPage',
   components: {
     UiGrid,
     UiInput,
@@ -44,13 +56,11 @@ export default {
     Logo,
     AuthForm,
     LinksForm,
+    PadlockIcon,
   },
   methods: {
     handleSubmitForm(e) {
       e.preventDefault();
-    },
-    redirectToSignUpPage() {
-      this.$router.push('/sign-up');
     },
   },
 };
