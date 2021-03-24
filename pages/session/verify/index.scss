@@ -1,5 +1,7 @@
 .page[data-theme-mode='light'] {
   --color--color-sign-in-page-bg: var(--color-gray-50);
+  --color--color-sign-in-page-title: var(--color-gray-700);
+  --color--color-sign-in-page-desc: var(--color-gray-700);
   --color-sign-in-page-link-text: var(--color-green-400);
   --color-sign-in-page-link-hover-text: var(--color-green-500);
 }
@@ -16,15 +18,13 @@
 }
 
 .auth-form {
-  &__input {
-    min-width: 400px;
-    margin-bottom: 8px;
+  &__section:first-child {
+    margin-bottom: 24px;
   }
-}
 
-.btn {
-  width: 100%;
-  height: 40px;
+  &__section:nth-child(2) {
+    margin-bottom: 0px;
+  }
 }
 
 .link {
@@ -32,5 +32,25 @@
 
   &:hover {
     color: var(--color-sign-in-page-link-hover-text);
+  }
+}
+
+.illustration {
+  width: 100%;
+}
+
+.title {
+  font-weight: 600;
+  color: var(--color--color-sign-in-page-title);
+
+  margin-bottom: 16px;
+}
+
+.desc {
+  color: var(--color--color-sign-in-page-desc);
+  margin-bottom: 24px;
+
+  & > span {
+    font-weight: 600;
   }
 }

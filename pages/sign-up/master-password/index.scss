@@ -31,12 +31,12 @@
     display: inline-flex;
     flex-wrap: wrap;
 
-    --size: 36px;
+    --size: 48px;
 
     width: var(--size);
     height: var(--size);
 
-    margin-right: 20px;
+    margin: 0 20px;
   }
 
   &__title {
