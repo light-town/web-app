@@ -21,11 +21,8 @@ module.exports = {
     'prettier/prettier': [
       'error',
       {
-        semi: true,
         singleQuote: true,
         endOfLine: 'auto',
-        quoteProps: 'preserve',
-        arrowParens: 'always',
         trailingComma: 'all',
       },
     ],
