@@ -1,0 +1,12 @@
+.page[data-theme-mode='light'] {
+  --color-ui-input-text: var(--color-gray-450);
+  --color-ui-input-border: var(--color-gray-150);
+}
+
+.ui-input {
+  padding: 13px 26px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid var(--color-ui-input-border);
+  color: var(--color-ui-input-text);
+}

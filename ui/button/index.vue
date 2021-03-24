@@ -1,12 +1,25 @@
 <template>
-  <button :class="['btn', `btn--${variant}`]" @click="e => $emit('click', e)">
+  <button
+    :type="type"
+    :class="['btn', `btn--${variant}`]"
+    @click="e => $emit('click', e)"
+  >
     <slot></slot>
   </button>
 </template>
 
 <script>
 export default {
+  name: 'UiButton',
   props: {
+    type: {
+      type: String,
+      required: false,
+      default: 'button',
+      validator(val) {
+        return ['button', 'submit', 'reset'].includes(val);
+      },
+    },
     variant: {
       type: String,
       required: true,
