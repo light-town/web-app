@@ -1,7 +1,7 @@
 <template>
   <button
     :type="type"
-    :class="['btn', `btn--${variant}`]"
+    :class="['ui-btn', `ui-btn--${variant}`]"
     @click="e => $emit('click', e)"
   >
     <slot></slot>
