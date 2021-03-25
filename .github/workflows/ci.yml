@@ -47,4 +47,9 @@ jobs:
         run: npm run lint
 
       - name: Run tests 
-        run: npm run test
+        run: npm run test:prod
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}

@@ -1,5 +1,10 @@
 <template>
-  <input :type="type" :placeholder="placeholder" class="ui-input" />
+  <input
+    :type="type"
+    :placeholder="placeholder"
+    class="ui-input"
+    :value="value"
+  />
 </template>
 
 <script>
@@ -8,7 +13,7 @@ export default {
   props: {
     type: {
       type: String,
-      require: true,
+      required: true,
       validator(val) {
         return ['text', 'password', 'email'].includes(val);
       },
@@ -16,6 +21,11 @@ export default {
     placeholder: {
       type: String,
       require: false,
+      default: '',
+    },
+    value: {
+      type: String,
+      required: false,
       default: '',
     },
   },
