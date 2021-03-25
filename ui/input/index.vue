@@ -1,8 +1,9 @@
 <template>
   <input
+    v-model="text"
+    class="ui-input"
     :type="type"
     :placeholder="placeholder"
-    class="ui-input"
     :value="value"
   />
 </template>
@@ -27,6 +28,16 @@ export default {
       type: String,
       required: false,
       default: '',
+    },
+  },
+  data() {
+    return {
+      text: '',
+    };
+  },
+  watch: {
+    text() {
+      this.$emit('input', this.text);
     },
   },
 };
