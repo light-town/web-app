@@ -21,8 +21,10 @@ module.exports = {
       {
         semi: true,
         singleQuote: true,
-        endOfLine: 'auto',
-        trailingComma: 'all',
+        tabWidth: 2,
+        useTabs: false,
+        arrowParens: 'avoid',
+        endOfLine: 'crlf',
       },
     ],
   },
