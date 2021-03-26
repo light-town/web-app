@@ -1,10 +1,10 @@
 <template>
   <input
-    v-model="text"
     class="ui-input"
     :type="type"
     :placeholder="placeholder"
     :value="value"
+    @input="handleInput"
   />
 </template>
 
@@ -30,14 +30,9 @@ export default {
       default: '',
     },
   },
-  data() {
-    return {
-      text: '',
-    };
-  },
-  watch: {
-    text() {
-      this.$emit('input', this.text);
+  methods: {
+    handleInput(e) {
+      this.$emit('input', e.target.value);
     },
   },
 };
