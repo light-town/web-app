@@ -1,7 +1,6 @@
 export default {
-  devices: {
-    registerDevice: jest.fn(),
-    getOne: jest.fn(),
+  auth: {
+    signUp: jest.fn(),
   },
   storage: {
     setItem: jest.fn(),

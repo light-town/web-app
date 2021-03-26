@@ -22,7 +22,13 @@
   }
 }
 
+.btn {
+  width: 100%;
+  height: 40px;
+}
+
 .link {
+  font-size: 15px;
   color: var(--color-sign-in-page-link-text);
 
   &:hover {

@@ -6,16 +6,19 @@
 
 <script>
 import { mapActions } from 'vuex';
+import * as authActions from '~/store/auth/types';
 import * as deviceActions from '~/store/devices/types';
 
 export default {
   name: 'DefaultLayout',
-  async mounted() {
-    await this.initDeviceState();
+  mounted() {
+    this.initAuthService();
+    this.initDeviceService();
   },
   methods: {
     ...mapActions({
-      initDeviceState: deviceActions.LOAD_DEVICE_UUID,
+      initAuthService: authActions.INIT,
+      initDeviceService: deviceActions.INIT,
     }),
   },
 };

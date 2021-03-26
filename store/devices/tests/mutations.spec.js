@@ -68,4 +68,13 @@ describe('[Devices State] [Mutaions] ...', () => {
       deviceUuid: TEST_DEVICE_UUID.deviceUuid,
     });
   });
+
+  it('should set is init flag', () => {
+    mutations[mutationTypes.SET_IS_INIT](localState);
+
+    expect(localState).toStrictEqual({
+      ...state,
+      isInit: true,
+    });
+  });
 });

@@ -1,7 +1,5 @@
 .page[data-theme-mode='light'] {
   --color--color-sign-in-page-bg: var(--color-gray-50);
-  --color--color-sign-in-page-title: var(--color-gray-700);
-  --color--color-sign-in-page-desc: var(--color-gray-700);
   --color-sign-in-page-link-text: var(--color-green-400);
   --color-sign-in-page-link-hover-text: var(--color-green-500);
 }
@@ -18,39 +16,17 @@
 }
 
 .auth-form {
-  &__section:first-child {
-    margin-bottom: 24px;
-  }
-
-  &__section:nth-child(2) {
-    margin-bottom: 0px;
+  &__input {
+    min-width: 400px;
+    margin: 8px 0;
   }
 }
 
 .link {
+  font-size: 15px;
   color: var(--color-sign-in-page-link-text);
 
   &:hover {
     color: var(--color-sign-in-page-link-hover-text);
-  }
-}
-
-.illustration {
-  width: 100%;
-}
-
-.title {
-  font-weight: 600;
-  color: var(--color--color-sign-in-page-title);
-
-  margin-bottom: 16px;
-}
-
-.desc {
-  color: var(--color--color-sign-in-page-desc);
-  margin-bottom: 24px;
-
-  & > span {
-    font-weight: 600;
   }
 }

@@ -13,4 +13,7 @@ export default {
   [mutationTypes.SET_DEVICE_UUID](state, payload) {
     state.deviceUuid = payload.uuid;
   },
+  [mutationTypes.SET_IS_INIT](state) {
+    state.isInit = true;
+  },
 };

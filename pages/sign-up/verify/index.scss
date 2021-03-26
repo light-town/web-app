@@ -19,7 +19,7 @@
 }
 
 .auth-form {
-  max-width: calc(534px + 48px * 2);
+  max-width: calc(510px + 48px * 2);
 }
 
 .warning {
@@ -47,11 +47,12 @@
 }
 
 .field {
-  width: auto;
+  width: 100%;
   display: inline-flex;
   padding: 13px 26px;
   border: 1px solid var(--color-sign-in-page-field-border);
   border-radius: 4px;
+  margin-top: 8px;
 }
 
 .account-key {

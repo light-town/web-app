@@ -1,5 +1,7 @@
 export default () => ({
-  deviceUuid: null,
+  isInit: false,
+  username: null,
+  accountKey: null,
   error: null,
   fetchStatus: null,
 });

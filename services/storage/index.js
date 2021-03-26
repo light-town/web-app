@@ -1,15 +1,23 @@
 import AbstractService from '../abstract-service';
 
 export default class StorageService extends AbstractService {
-  async setItem(key, value) {
-    await localStorage.setItem(key, value);
+  setItem(key, value, options) {
+    let val = value;
+
+    if (options?.json) val = JSON.stringify(val);
+
+    return Promise.resolve(localStorage.setItem(key, val));
   }
 
-  async getItem(key) {
-    return await localStorage.getItem(key);
+  getItem(key, options) {
+    const value = localStorage.getItem(key);
+
+    if (value && options?.parseJson) return JSON.parse(value);
+
+    return Promise.resolve(value);
   }
 
-  async removeItem(key) {
-    await localStorage.removeItem(key);
+  removeItem(key) {
+    return Promise.resolve(localStorage.removeItem(key));
   }
 }
