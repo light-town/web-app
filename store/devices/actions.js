@@ -20,8 +20,8 @@ export default {
       commit(mutationTypes.SET_DEVICE_UUID, { uuid: response.data.id });
       commit(mutationTypes.SET_IS_INIT);
     } catch (e) {
-      if (e?.response && e.response?.data) {
-        if (e.response.data.message === 'The device was not found') {
+      if (e?.response && e.response?.data?.error) {
+        if (e.response.data.error.message === 'The device was not found') {
           await this.$api.storage.removeItem('deviceUuid');
           await dispatch(actionTypes.REGIESTER_DEVICE);
 
@@ -29,7 +29,7 @@ export default {
           return;
         }
 
-        commit(mutationTypes.SET_ERROR, { error: e.response.data });
+        commit(mutationTypes.SET_ERROR, { error: e.response.data.error });
         return;
       }
 

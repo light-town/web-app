@@ -2,9 +2,9 @@ import * as faker from 'faker';
 import actions from '../actions';
 import * as actionTypes from '../action-types';
 import * as mutationTypes from '../mutation-types';
-import commit from './__mocks__/commit';
-import dispatch from './__mocks__/dispatch';
-import api from './__mocks__/api';
+import commit from '~/tests/__mocks__/commit';
+import dispatch from '~/tests/__mocks__/dispatch';
+import api from '~/tests/__mocks__/api';
 import identifyDevice from '~/services/devices/identify-device';
 import * as fetchStatuses from '~/store/fetch-statuses';
 
@@ -20,7 +20,7 @@ describe('[Devices State] [Actions] ...', () => {
   });
 
   it('should init device service', async () => {
-    const TEST_DEVICE_UUID = faker.random.uuid();
+    const TEST_DEVICE_UUID = faker.datatype.uuid();
 
     actions.$api.devices.getOne.mockResolvedValueOnce({
       data: { id: TEST_DEVICE_UUID },
@@ -74,12 +74,14 @@ describe('[Devices State] [Actions] ...', () => {
   });
 
   it('should throw error when occurred error in API', async () => {
-    const TEST_DEVICE_UUID = faker.random.uuid();
+    const TEST_DEVICE_UUID = faker.datatype.uuid();
     const TEST_ERROR = {
       response: {
         data: {
-          type: 'Internal Found',
-          message: 'Some message error',
+          error: {
+            type: 'Internal Found',
+            message: 'Some message error',
+          },
           statusCode: 500,
         },
       },
@@ -92,7 +94,7 @@ describe('[Devices State] [Actions] ...', () => {
 
     expect(commit).toBeCalledTimes(1);
     expect(commit).toBeCalledWith(mutationTypes.SET_ERROR, {
-      error: TEST_ERROR.response.data,
+      error: TEST_ERROR.response.data.error,
     });
     expect(dispatch).toBeCalledTimes(0);
 
@@ -101,12 +103,14 @@ describe('[Devices State] [Actions] ...', () => {
   });
 
   it('should register device when an occurred error in API about not found the current device', async () => {
-    const TEST_DEVICE_UUID = faker.random.uuid();
+    const TEST_DEVICE_UUID = faker.datatype.uuid();
     const TEST_ERROR = {
       response: {
         data: {
-          type: 'Not Found',
-          message: 'The device was not found',
+          error: {
+            type: 'Not Found',
+            message: 'The device was not found',
+          },
           statusCode: 404,
         },
       },
@@ -131,7 +135,7 @@ describe('[Devices State] [Actions] ...', () => {
   });
 
   it('should register new device', async () => {
-    const TEST_DEVICE_UUID = faker.random.uuid();
+    const TEST_DEVICE_UUID = faker.datatype.uuid();
     const TEST_FINGERPRINT_DEVICE = {
       os: {
         name: 'Windows',
@@ -238,7 +242,7 @@ describe('[Devices State] [Actions] ...', () => {
   });
 
   it('should do not send request to API when device already registered', async () => {
-    const TEST_DEVICE_UUID = faker.random.uuid();
+    const TEST_DEVICE_UUID = faker.datatype.uuid();
     const TEST_STATE = {
       fetchStatus: null,
     };

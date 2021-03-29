@@ -17,7 +17,7 @@ describe('[Devices State] [Mutaions] ...', () => {
 
   it('should create new device', () => {
     const TEST_PAYLOAD = {
-      deviceUuid: faker.random.uuid(),
+      deviceUuid: faker.datatype.uuid(),
     };
 
     mutations[mutationTypes.CREATE_DEVICE](localState, TEST_PAYLOAD);
@@ -59,7 +59,7 @@ describe('[Devices State] [Mutaions] ...', () => {
   });
 
   it('should set device uuid', () => {
-    const TEST_DEVICE_UUID = faker.random.uuid();
+    const TEST_DEVICE_UUID = faker.datatype.uuid();
 
     mutations[mutationTypes.SET_DEVICE_UUID](localState, TEST_DEVICE_UUID);
 
