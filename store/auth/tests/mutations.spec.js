@@ -15,19 +15,6 @@ describe('[Auth State] [Mutations]', () => {
     jest.clearAllMocks();
   });
 
-  it('should set username', () => {
-    const TEST_PAYLOAD = {
-      username: faker.internet.userName(),
-    };
-
-    mutations[types.SET_USERNAME](localState, TEST_PAYLOAD);
-
-    expect(localState).toStrictEqual({
-      ...state,
-      username: TEST_PAYLOAD.username,
-    });
-  });
-
   it('should set error', () => {
     const TEST_PAYLOAD = {
       error: {
@@ -64,13 +51,18 @@ describe('[Auth State] [Mutations]', () => {
     });
   });
 
-  it('should set account key', () => {
-    const TEST_PAYLOAD = { accountKey: faker.random.uuid() };
-    mutations[types.SET_ACCOUNT_KEY](localState, TEST_PAYLOAD);
+  it('should set session', () => {
+    const TEST_PAYLOAD = {
+      session: {
+        uuid: faker.datatype.uuid(),
+      },
+    };
+
+    mutations[types.SET_SESSION](localState, TEST_PAYLOAD);
 
     expect(localState).toStrictEqual({
       ...state,
-      accountKey: TEST_PAYLOAD.accountKey,
+      session: TEST_PAYLOAD.session,
     });
   });
 });

@@ -19,10 +19,11 @@
 }
 
 .auth-form {
-  max-width: calc(510px + 48px * 2);
+  max-width: none;
 }
 
 .warning {
+  max-width: 400px;
   margin-top: 16px;
 
   &__icon {

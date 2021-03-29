@@ -1,95 +1,91 @@
 <template>
-  <ui-grid class="page__container" justify="center">
-    <ui-grid direction="column" align-items="center" class="page__form-layout">
-      <logo></logo>
-      <auth-form
-        title="Sign In"
-        desc="Use your LightTown Account"
-        @submit="handleFormSubmit"
-      >
-        <template #content>
-          <ui-alert v-if="errorMessage" severity="error">
-            {{ errorMessage }}
-          </ui-alert>
-          <ui-input
-            v-model="accountKey"
-            type="text"
-            placeholder="Enter Account Key"
-            class="auth-form__input"
-          ></ui-input>
-          <NuxtLink to="/" class="link">Forgot Account Key?</NuxtLink>
-        </template>
-        <template #footer>
-          <ui-button variant="outlined" @click="redirectToSignUpPage">
-            Create Account
-          </ui-button>
-          <ui-button variant="contained" type="submit" :disabled="isLock">
-            Next
-          </ui-button>
-        </template>
-      </auth-form>
-      <links-form></links-form>
-    </ui-grid>
-  </ui-grid>
+  <auth-form
+    title="Sign In"
+    desc="Use your LightTown Account"
+    @submit="handleFormSubmit"
+  >
+    <template #content>
+      <ui-alert v-if="error" severity="error">
+        {{ error.message }}
+      </ui-alert>
+      <ui-input
+        v-model="accountKey"
+        type="text"
+        placeholder="Enter Account Key"
+        class="auth-form__input"
+      ></ui-input>
+      <NuxtLink to="/" class="link">Forgot Account Key?</NuxtLink>
+    </template>
+    <template #footer>
+      <ui-button variant="outlined" @click="redirectToSignUpPage">
+        Create Account
+      </ui-button>
+      <ui-button variant="contained" type="submit" :disabled="isLock">
+        Next
+      </ui-button>
+    </template>
+  </auth-form>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import UiGrid from '~/ui/grid/index.vue';
 import UiInput from '~/ui/input/index.vue';
 import UiButton from '~/ui/button/index.vue';
 import UiAlert from '~/ui/alert/index.vue';
-import Logo from '~/components/forms/auth/logo.vue';
 import AuthForm from '~/components/forms/auth/form.vue';
-import LinksForm from '~/components/forms/auth/links.vue';
-import * as deviceActionTypes from '~/store/devices/types';
 import * as fetchStatuses from '~/store/fetch-statuses';
+import * as accountsActionTypes from '~/store/accounts/types';
 
 export default {
   name: 'IdentifierPage',
   components: {
-    UiGrid,
     UiInput,
     UiButton,
-    Logo,
     AuthForm,
-    LinksForm,
     UiAlert,
   },
+  layout: 'auth',
   data() {
     return {
       accountKey: '',
-      validationError: null,
+      localError: null,
     };
   },
   computed: {
     ...mapState({
       isLock: state => state.devices.fetchStatus === fetchStatuses.LOADING,
-      errorMessage(state) {
-        return this.validationError || state.devices.error?.message;
+      error(state) {
+        return this.localError || state.accounts.error;
       },
     }),
   },
   watch: {
     accountKey() {
-      if (this.validationError) {
-        this.validationError = null;
+      if (this.localError) {
+        this.localError = null;
       }
     },
   },
   methods: {
     ...mapActions({
-      registerDevice: deviceActionTypes.REGIESTER_DEVICE,
+      loadAccount: accountsActionTypes.LOAD_ACCOUNT,
+      setCurrentAccountUuid: accountsActionTypes.SET_CURRENT_ACCOUNT_UUID,
     }),
-    handleFormSubmit(e) {
+    async handleFormSubmit(e) {
       e.preventDefault();
 
       if (!this.accountKey.length) {
-        this.validationError = 'Incorrect Account Key';
+        this.localError = new Error('Incorrect Account Key');
         return;
       }
 
-      this.registerDevice();
+      const { accountUuid } = await this.loadAccount({
+        accountKey: this.accountKey,
+      });
+
+      await this.setCurrentAccountUuid({ accountUuid });
+
+      if (!this.error) this.$router.push('/sign-in/pwd');
     },
     redirectToSignUpPage() {
       this.$router.push('/sign-up');

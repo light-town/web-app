@@ -2,7 +2,7 @@
   <ui-grid align-items="center" class="account">
     <user-icon class="account__icon"></user-icon>
     <ui-grid direction="column">
-      <p class="account__username">{{ username }}</p>
+      <p class="account__username">{{ name }}</p>
       <p class="account__key">
         {{ version }}-{{ uuid }} •••••• ••••• ••••• ••••• •••••
       </p>
@@ -29,7 +29,7 @@ export default {
       type: String,
       required: true,
     },
-    username: {
+    name: {
       type: String,
       required: true,
     },

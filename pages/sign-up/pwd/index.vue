@@ -1,44 +1,45 @@
 <template>
-  <ui-grid class="page__container" justify="center">
-    <ui-grid direction="column" align-items="center" class="page__form-layout">
-      <logo></logo>
-      <auth-form
-        title="Sign Up"
-        desc="Choose your Master Password"
-        @submit="handleSubmitForm"
-      >
-        <template #content>
-          <ui-alert v-if="error" severity="error">{{ error.message }}</ui-alert>
-          <ui-input
-            v-model="password"
-            type="password"
-            placeholder="Enter a password"
-            class="auth-form__input"
-          ></ui-input>
-          <ui-input
-            v-model="repeatPassword"
-            type="password"
-            placeholder="Confirm your password"
-            class="auth-form__input"
-          ></ui-input>
+  <ui-grid>
+    <auth-form
+      v-if="showAuthForm"
+      title="Sign Up"
+      desc="Choose your Master Password"
+      @submit="handleSubmitForm"
+    >
+      <template #content>
+        <ui-alert v-if="error" severity="error">{{ error.message }}</ui-alert>
+        <ui-input
+          v-model="password"
+          type="password"
+          placeholder="Enter a password"
+          class="auth-form__input"
+        ></ui-input>
+        <ui-input
+          v-model="repeatPassword"
+          type="password"
+          placeholder="Confirm your password"
+          class="auth-form__input"
+        ></ui-input>
 
-          <ui-grid align-items="center" class="warning">
-            <padlock-icon class="warning__icon"></padlock-icon>
-            <p class="warning__title">
-              <span>Remember:</span> the logner and more random your password,
-              the better!
-            </p>
-          </ui-grid>
-        </template>
-        <template #footer>
-          <ui-button variant="outlined" @click="handleBackBtnClick">
-            Back
-          </ui-button>
-          <ui-button variant="contained" type="submit"> Next </ui-button>
-        </template>
-      </auth-form>
-      <links-form></links-form>
-    </ui-grid>
+        <ui-grid align-items="center" class="warning">
+          <padlock-icon class="warning__icon"></padlock-icon>
+          <p class="warning__title">
+            <span>Remember:</span> the logner and more random your password, the
+            better!
+          </p>
+        </ui-grid>
+      </template>
+      <template #footer>
+        <ui-button variant="outlined" @click="handleBackBtnClick">
+          Back
+        </ui-button>
+        <ui-button variant="contained" type="submit"> Next </ui-button>
+      </template>
+    </auth-form>
+    <auth-form-skeleton
+      v-if="!showAuthForm"
+      title="Sign Up"
+    ></auth-form-skeleton>
   </ui-grid>
 </template>
 
@@ -48,75 +49,73 @@ import UiGrid from '~/ui/grid/index.vue';
 import UiInput from '~/ui/input/index.vue';
 import UiButton from '~/ui/button/index.vue';
 import UiAlert from '~/ui/alert/index.vue';
-import Logo from '~/components/forms/auth/logo.vue';
 import AuthForm from '~/components/forms/auth/form.vue';
-import LinksForm from '~/components/forms/auth/links.vue';
+import AuthFormSkeleton from '~/components/forms/auth/skeleton.vue';
 import PadlockIcon from '~/assets/padlock.svg?inline';
-import * as fetchStatuses from '~/store/fetch-statuses';
-import * as authActions from '~/store/auth/types';
+import * as authActionTypes from '~/store/auth/types';
 
 export default {
-  name: 'MasterPasswordPage',
+  name: 'PwdPage',
   components: {
     UiGrid,
     UiInput,
     UiButton,
     UiAlert,
-    Logo,
     AuthForm,
-    LinksForm,
     PadlockIcon,
+    AuthFormSkeleton,
   },
+  layout: 'auth',
   data() {
-    return { password: '', repeatPassword: '', validationError: null };
+    return { password: '', repeatPassword: '', localError: null };
   },
   computed: {
     ...mapState({
-      isAuthServiceInit: state => state.auth.isInit,
-      username: state => state.auth.username,
-      isLock: state => state.auth.fetchStatus === fetchStatuses.LOADING,
+      isCacheServiceInit: state => state.cache.isInit,
+      cachedUsername: state => state.cache.raws.username,
       error(state) {
-        return this.validationError || state.auth.error;
+        return this.localError || state.cache.error;
       },
     }),
+    showAuthForm() {
+      return this.isCacheServiceInit && this.cachedUsername;
+    },
   },
   watch: {
     password() {
-      if (this.validationError) {
-        this.validationError = null;
+      if (this.localError) {
+        this.localError = null;
       }
     },
     repeatPassword() {
-      if (this.validationError) {
-        this.validationError = null;
+      if (this.localError) {
+        this.localError = null;
       }
     },
-    isAuthServiceInit() {
-      if (this.isAuthServiceInit && !this.username)
+    isCacheServiceInit() {
+      if (this.isCacheServiceInit && !this.cachedUsername)
         this.$router.push('/sign-up');
     },
   },
   methods: {
     ...mapActions({
-      signUp: authActions.SIGN_UP,
+      signUp: authActionTypes.SIGN_UP,
     }),
     async handleSubmitForm(e) {
       e.preventDefault();
 
+      if (this.password.length < 8) {
+        this.localError = new Error('The password must has more 8 characters');
+        return;
+      }
+
       if (!this.password.length || !this.repeatPassword.length) {
-        this.validationError = new Error('All fields is required to fill');
+        this.localError = new Error('All fields is required to fill');
         return;
       }
 
       if (this.password !== this.repeatPassword) {
-        this.validationError = new Error('The passwords is not match');
-        return;
-      }
-
-      if (this.password.length < 8) {
-        this.validationError = new Error(
-          'The password must has more 8 characters'
-        );
+        this.localError = new Error('The passwords is not match');
         return;
       }
 

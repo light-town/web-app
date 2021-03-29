@@ -3,9 +3,11 @@ import * as faker from 'faker';
 import actions from '../actions';
 import * as actionTypes from '../action-types';
 import * as mutationTypes from '../mutation-types';
-import api from './__mocks__/api';
-import commit from './__mocks__/commit';
+import api from '~/tests/__mocks__/api';
+import commit from '~/tests/__mocks__/commit';
+import dispatch from '~/tests/__mocks__/dispatch';
 import * as fetchStatuses from '~/store/fetch-statuses';
+import * as cacheActionTypes from '~/store/cache/types';
 
 jest.mock('@light-town/core');
 
@@ -19,33 +21,13 @@ describe('[Auth State] [Actions]', () => {
   });
 
   it('should init auth service', async () => {
-    const TEST_USERNAME = faker.internet.userName();
-    const TEST_ACCOUNT_KEY = faker.random.uuid();
-
-    actions.$api.storage.getItem.mockResolvedValueOnce({
-      username: TEST_USERNAME,
-      accountKey: TEST_ACCOUNT_KEY,
-    });
-
     await actions[actionTypes.INIT]({ commit });
 
-    expect(commit).toBeCalledTimes(3);
-    expect(commit.mock.calls[0]).toEqual([
-      mutationTypes.SET_USERNAME,
-      {
-        username: TEST_USERNAME,
-      },
-    ]);
-    expect(commit.mock.calls[1]).toEqual([
-      mutationTypes.SET_ACCOUNT_KEY,
-      {
-        accountKey: TEST_ACCOUNT_KEY,
-      },
-    ]);
-    expect(commit.mock.calls[2]).toEqual([mutationTypes.SET_IS_INIT]);
+    expect(commit).toBeCalledTimes(1);
+    expect(commit.mock.calls[0]).toEqual([mutationTypes.SET_IS_INIT]);
   });
 
-  it('should init service without load username', async () => {
+  it('should init auth service without load last account uuid', async () => {
     actions.$api.storage.getItem.mockResolvedValueOnce(undefined);
 
     await actions[actionTypes.INIT]({ commit });
@@ -54,76 +36,33 @@ describe('[Auth State] [Actions]', () => {
     expect(commit.mock.calls[0]).toEqual([mutationTypes.SET_IS_INIT]);
   });
 
-  it('should throw error while init service when occurred error in storage service', async () => {
-    const TEST_ERROR = new Error('Service error');
-    actions.$api.storage.getItem.mockRejectedValueOnce(TEST_ERROR);
-
-    await actions[actionTypes.INIT]({ commit });
-
-    expect(commit).toBeCalledTimes(1);
-    expect(commit.mock.calls[0]).toEqual([
-      mutationTypes.SET_ERROR,
-      { error: TEST_ERROR },
-    ]);
-  });
-
-  it('should set username', async () => {
-    const TEST_PAYLOAD = { username: faker.internet.userName() };
-
-    await actions[actionTypes.SET_USERNAME]({ commit }, TEST_PAYLOAD);
-
-    expect(commit).toBeCalledTimes(1);
-    expect(commit).toBeCalledWith(mutationTypes.SET_USERNAME, TEST_PAYLOAD);
-
-    expect(actions.$api.storage.setItem).toBeCalledTimes(1);
-    expect(actions.$api.storage.setItem).toBeCalledWith(
-      'auth-cache',
-      { username: TEST_PAYLOAD.username },
-      { json: true }
-    );
-  });
-
-  it('should throw error when was  occurred an error in storage', async () => {
-    const TEST_PAYLOAD = { username: faker.internet.userName() };
-    const TEST_ERROR = new Error('Service Error');
-
-    actions.$api.storage.setItem.mockRejectedValueOnce(TEST_ERROR);
-
-    await actions[actionTypes.SET_USERNAME]({ commit }, TEST_PAYLOAD);
-
-    expect(commit).toBeCalledTimes(1);
-    expect(commit).toBeCalledWith(mutationTypes.SET_ERROR, {
-      error: TEST_ERROR,
-    });
-
-    expect(actions.$api.storage.setItem).toBeCalledTimes(1);
-    expect(actions.$api.storage.setItem).toBeCalledWith(
-      'auth-cache',
-      { username: TEST_PAYLOAD.username },
-      { json: true }
-    );
-  });
-
   it('should sign up', async () => {
-    const TEST_PAYLOAD = { password: faker.random.word() };
-    const TEST_STATE = { username: faker.internet.userName() };
-    const TEST_ROOT_STATE = { devices: { deviceUuid: faker.random.uuid() } };
+    const TEST_PASSWORD = faker.random.word();
+    const TEST_STATE = { fetchStatus: null };
+    const TEST_ROOT_STATE = {
+      devices: { deviceUuid: faker.datatype.uuid() },
+      cache: { raws: { username: faker.internet.userName() } },
+    };
     const TEST_ACCOUNT_KEY = faker.random.word();
     const TEST_VERIFIER = {
       salt: faker.random.word(),
       verifier: faker.random.word(),
     };
 
+    commit.mockImplementationOnce(
+      () => (TEST_STATE.fetchStatus = fetchStatuses.LOADING)
+    );
+
     actions.$api.auth.signUp.mockResolvedValueOnce({});
     core.common.generateAccountKey.mockReturnValueOnce(TEST_ACCOUNT_KEY);
     core.srp.client.deriveVerifier.mockReturnValueOnce(TEST_VERIFIER);
 
     await actions[actionTypes.SIGN_UP](
-      { commit, state: TEST_STATE, rootState: TEST_ROOT_STATE },
-      TEST_PAYLOAD
+      { commit, state: TEST_STATE, rootState: TEST_ROOT_STATE, dispatch },
+      { password: TEST_PASSWORD }
     );
 
-    expect(commit).toBeCalledTimes(3);
+    expect(commit).toBeCalledTimes(2);
     expect(commit.mock.calls[0]).toEqual([
       mutationTypes.SET_FETCH_STATUS,
       { status: fetchStatuses.LOADING },
@@ -132,84 +71,43 @@ describe('[Auth State] [Actions]', () => {
       mutationTypes.SET_FETCH_STATUS,
       { status: fetchStatuses.SUCCESS },
     ]);
-    expect(commit.mock.calls[2]).toEqual([
-      mutationTypes.SET_ACCOUNT_KEY,
-      { accountKey: TEST_ACCOUNT_KEY },
-    ]);
 
     expect(actions.$api.auth.signUp).toBeCalledTimes(1);
     expect(actions.$api.auth.signUp).toBeCalledWith({
       accountKey: TEST_ACCOUNT_KEY,
       salt: TEST_VERIFIER.salt,
       verifier: TEST_VERIFIER.verifier,
-      username: TEST_STATE.username,
+      username: TEST_ROOT_STATE.cache.raws.username,
       deviceUuid: TEST_ROOT_STATE.devices.deviceUuid,
     });
-  });
 
-  it('should throw error while sign up when occurred error in storage service', async () => {
-    const TEST_PAYLOAD = { password: faker.random.word() };
-    const TEST_STATE = { username: faker.internet.userName() };
-    const TEST_ROOT_STATE = { devices: { deviceUuid: faker.random.uuid() } };
-    const TEST_ACCOUNT_KEY = faker.random.word();
-    const TEST_VERIFIER = {
-      salt: faker.random.word(),
-      verifier: faker.random.word(),
-    };
-    const TEST_ERROR = new Error('Service error');
-
-    actions.$api.storage.getItem.mockRejectedValueOnce(TEST_ERROR);
-    actions.$api.auth.signUp.mockResolvedValueOnce({});
-    core.common.generateAccountKey.mockReturnValueOnce(TEST_ACCOUNT_KEY);
-    core.srp.client.deriveVerifier.mockReturnValueOnce(TEST_VERIFIER);
-
-    await actions[actionTypes.SIGN_UP](
-      { commit, state: TEST_STATE, rootState: TEST_ROOT_STATE },
-      TEST_PAYLOAD
+    expect(dispatch).toBeCalledTimes(1);
+    expect(dispatch).toBeCalledWith(
+      cacheActionTypes.SET_CACHE,
+      { accountKey: TEST_ACCOUNT_KEY },
+      { root: true }
     );
-
-    expect(commit).toBeCalledTimes(4);
-    expect(commit.mock.calls[0]).toEqual([
-      mutationTypes.SET_FETCH_STATUS,
-      { status: fetchStatuses.LOADING },
-    ]);
-    expect(commit.mock.calls[1]).toEqual([
-      mutationTypes.SET_FETCH_STATUS,
-      { status: fetchStatuses.SUCCESS },
-    ]);
-    expect(commit.mock.calls[2]).toEqual([
-      mutationTypes.SET_ACCOUNT_KEY,
-      { accountKey: TEST_ACCOUNT_KEY },
-    ]);
-    expect(commit.mock.calls[3]).toEqual([
-      mutationTypes.SET_ERROR,
-      { error: TEST_ERROR },
-    ]);
-
-    expect(actions.$api.auth.signUp).toBeCalledTimes(1);
-    expect(actions.$api.auth.signUp).toBeCalledWith({
-      accountKey: TEST_ACCOUNT_KEY,
-      salt: TEST_VERIFIER.salt,
-      verifier: TEST_VERIFIER.verifier,
-      username: TEST_STATE.username,
-      deviceUuid: TEST_ROOT_STATE.devices.deviceUuid,
-    });
   });
 
   it('should throw error while sign up when occurred error in API', async () => {
-    const TEST_PAYLOAD = { password: faker.random.word() };
-    const TEST_STATE = { username: faker.internet.userName() };
-    const TEST_ROOT_STATE = { devices: { deviceUuid: faker.random.uuid() } };
+    const TEST_PASSWORD = faker.random.word();
+    const TEST_STATE = { fetchStatus: null };
+    const TEST_ROOT_STATE = {
+      devices: { deviceUuid: faker.datatype.uuid() },
+      cache: { raws: { username: faker.internet.userName() } },
+    };
     const TEST_ACCOUNT_KEY = faker.random.word();
     const TEST_VERIFIER = {
       salt: faker.random.word(),
       verifier: faker.random.word(),
     };
-    const TEST_ERROR = {
+    const TEST_ERROR_RESPONSE = {
       response: {
         data: {
-          type: 'Internal Error',
-          message: 'All is very bad!',
+          error: {
+            type: 'Internal Error',
+            message: 'All is very bad!',
+          },
           statusCide: 500,
         },
       },
@@ -219,13 +117,13 @@ describe('[Auth State] [Actions]', () => {
       () => (TEST_STATE.fetchStatus = fetchStatuses.LOADING)
     );
 
-    actions.$api.auth.signUp.mockRejectedValueOnce(TEST_ERROR);
+    actions.$api.auth.signUp.mockRejectedValueOnce(TEST_ERROR_RESPONSE);
     core.common.generateAccountKey.mockReturnValueOnce(TEST_ACCOUNT_KEY);
     core.srp.client.deriveVerifier.mockReturnValueOnce(TEST_VERIFIER);
 
     await actions[actionTypes.SIGN_UP](
       { commit, state: TEST_STATE, rootState: TEST_ROOT_STATE },
-      TEST_PAYLOAD
+      { password: TEST_PASSWORD }
     );
 
     expect(commit).toBeCalledTimes(3);
@@ -239,7 +137,7 @@ describe('[Auth State] [Actions]', () => {
     ]);
     expect(commit.mock.calls[2]).toEqual([
       mutationTypes.SET_ERROR,
-      { error: TEST_ERROR.response.data },
+      { error: TEST_ERROR_RESPONSE.response.data.error },
     ]);
 
     expect(actions.$api.auth.signUp).toBeCalledTimes(1);
@@ -247,36 +145,146 @@ describe('[Auth State] [Actions]', () => {
       accountKey: TEST_ACCOUNT_KEY,
       salt: TEST_VERIFIER.salt,
       verifier: TEST_VERIFIER.verifier,
-      username: TEST_STATE.username,
+      username: TEST_ROOT_STATE.cache.raws.username,
       deviceUuid: TEST_ROOT_STATE.devices.deviceUuid,
     });
   });
 
-  it('should clear auth cache', async () => {
-    await actions[actionTypes.CLEAR_CACHE]({ commit });
+  it('should create session', async () => {
+    const TEST_PASSWORD = faker.random.word();
+    const TEST_STATE = { fetchStatus: null };
+    const TEST_CREATE_SESSION_RESPONSE = {
+      data: {
+        sessionUuid: faker.datatype.uuid(),
+        salt: faker.random.word(),
+        serverPublicEphemeral: faker.random.word(),
+      },
+      statusCode: 200,
+    };
+    const TEST_ROOT_STATE = { devices: { deviceUuid: faker.datatype.uuid() } };
+    const TEST_GETTERS = {
+      currentAccount: {
+        key: faker.datatype.uuid(),
+      },
+    };
+    const TEST_EPEMERAL = {
+      key: faker.datatype.uuid(),
+      secret: faker.datatype.uuid(),
+    };
+    const TEST_SESSION = {
+      key: faker.datatype.uuid(),
+      proof: faker.datatype.uuid(),
+    };
 
-    expect(commit).toBeCalledTimes(0);
+    commit.mockImplementationOnce(
+      () => (TEST_STATE.fetchStatus = fetchStatuses.LOADING)
+    );
 
-    expect(actions.$api.storage.removeItem).toBeCalledTimes(1);
-    expect(actions.$api.storage.removeItem).toBeCalledWith('auth-cache');
-  });
+    actions.getters = TEST_GETTERS;
+    actions.$api.auth.createSession.mockResolvedValueOnce(
+      TEST_CREATE_SESSION_RESPONSE
+    );
 
-  it('should throw error while clear auth cache when occurred error in storage service', async () => {
-    const TEST_ERROR = new Error('Service Error');
+    core.srp.client.generateEphemeral.mockReturnValueOnce(TEST_EPEMERAL);
+    core.srp.client.deriveSession.mockReturnValueOnce(TEST_SESSION);
 
-    actions.$api.storage.removeItem.mockRejectedValueOnce(TEST_ERROR);
-
-    await actions[actionTypes.CLEAR_CACHE]({ commit });
-
-    expect(commit).toBeCalledTimes(1);
-    expect(commit.mock.calls[0]).toEqual([
-      mutationTypes.SET_ERROR,
+    await actions[actionTypes.CREATE_SESSION](
       {
-        error: TEST_ERROR,
+        commit,
+        state: TEST_STATE,
+        rootState: TEST_ROOT_STATE,
+      },
+      { password: TEST_PASSWORD }
+    );
+
+    expect(commit).toBeCalledTimes(3);
+    expect(commit.mock.calls[0]).toMatchObject([
+      mutationTypes.SET_FETCH_STATUS,
+      { status: fetchStatuses.LOADING },
+    ]);
+    expect(commit.mock.calls[1]).toMatchObject([
+      mutationTypes.SET_FETCH_STATUS,
+      { status: fetchStatuses.SUCCESS },
+    ]);
+    expect(commit.mock.calls[2]).toMatchObject([
+      mutationTypes.SET_SESSION,
+      {
+        session: {
+          uuid: TEST_CREATE_SESSION_RESPONSE.data.sessionUuid,
+          srpSession: TEST_SESSION,
+          ephemeralKeyPair: TEST_EPEMERAL,
+          serverPublicEphemeralKey:
+            TEST_CREATE_SESSION_RESPONSE.data.serverPublicEphemeral,
+        },
       },
     ]);
 
-    expect(actions.$api.storage.removeItem).toBeCalledTimes(1);
-    expect(actions.$api.storage.removeItem).toBeCalledWith('auth-cache');
+    expect(core.srp.client.generateEphemeral).toBeCalledTimes(1);
+
+    expect(core.srp.client.deriveSession).toBeCalledTimes(1);
+    expect(core.srp.client.deriveSession).toBeCalledWith(
+      TEST_CREATE_SESSION_RESPONSE.data.salt,
+      TEST_GETTERS.currentAccount.key,
+      TEST_PASSWORD,
+      TEST_EPEMERAL.secret,
+      TEST_CREATE_SESSION_RESPONSE.data.serverPublicEphemeral
+    );
+  });
+
+  it('should throw error while creating session when occurred error in API', async () => {
+    const TEST_ERROR = {
+      response: {
+        data: {
+          error: {
+            type: 'Forbidden',
+            message: 'Invalid password',
+          },
+          statusCode: 403,
+        },
+      },
+    };
+    const TEST_PASSWORD = faker.random.word();
+    const TEST_STATE = { fetchStatus: null };
+    const TEST_ROOT_STATE = { devices: { deviceUuid: faker.datatype.uuid() } };
+    const TEST_GETTERS = {
+      currentAccount: {
+        key: faker.datatype.uuid(),
+      },
+    };
+
+    commit.mockImplementationOnce(
+      () => (TEST_STATE.fetchStatus = fetchStatuses.LOADING)
+    );
+
+    actions.getters = TEST_GETTERS;
+    actions.$api.auth.createSession.mockRejectedValueOnce(TEST_ERROR);
+
+    await actions[actionTypes.CREATE_SESSION](
+      {
+        commit,
+        state: TEST_STATE,
+        rootState: TEST_ROOT_STATE,
+      },
+      { password: TEST_PASSWORD }
+    );
+
+    expect(commit).toBeCalledTimes(3);
+    expect(commit.mock.calls[0]).toMatchObject([
+      mutationTypes.SET_FETCH_STATUS,
+      { status: fetchStatuses.LOADING },
+    ]);
+    expect(commit.mock.calls[1]).toMatchObject([
+      mutationTypes.SET_FETCH_STATUS,
+      { status: fetchStatuses.ERROR },
+    ]);
+    expect(commit.mock.calls[2]).toMatchObject([
+      mutationTypes.SET_ERROR,
+      {
+        error: TEST_ERROR.response.data.error,
+      },
+    ]);
+
+    expect(core.srp.client.generateEphemeral).toBeCalledTimes(0);
+    expect(core.srp.client.deriveSession).toBeCalledTimes(0);
   });
 });

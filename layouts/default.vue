@@ -6,19 +6,25 @@
 
 <script>
 import { mapActions } from 'vuex';
-import * as authActions from '~/store/auth/types';
-import * as deviceActions from '~/store/devices/types';
+import * as authActionTypes from '~/store/auth/types';
+import * as devicesActionTypes from '~/store/devices/types';
+import * as accountsActionTypes from '~/store/accounts/types';
+import * as cacheActionTypes from '~/store/cache/types';
 
 export default {
   name: 'DefaultLayout',
   mounted() {
+    this.initCacheService();
     this.initAuthService();
-    this.initDeviceService();
+    this.initDevicesService();
+    this.initAccountsService();
   },
   methods: {
     ...mapActions({
-      initAuthService: authActions.INIT,
-      initDeviceService: deviceActions.INIT,
+      initCacheService: cacheActionTypes.INIT,
+      initAuthService: authActionTypes.INIT,
+      initDevicesService: devicesActionTypes.INIT,
+      initAccountsService: accountsActionTypes.INIT,
     }),
   },
 };

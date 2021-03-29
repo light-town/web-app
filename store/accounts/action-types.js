@@ -1,0 +1,4 @@
+export const INIT = 'INIT';
+
+export const LOAD_ACCOUNT = 'LOAD_ACCOUNT';
+export const SET_CURRENT_ACCOUNT_UUID = 'SET_CURRENT_ACCOUNT_UUID';

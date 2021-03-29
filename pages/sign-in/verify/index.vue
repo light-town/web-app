@@ -7,7 +7,7 @@
           <account
             version="A3"
             uuid="A6488L"
-            username="Michael Shcherbakov"
+            name="Michael Shcherbakov"
           ></account>
           <auth-illustration class="illustration"></auth-illustration>
           <p class="title">Check your phone</p>

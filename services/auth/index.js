@@ -13,22 +13,21 @@ export default class AuthService extends AbstractService {
       .then(response => response.data);
   }
 
-  signIn({ accountKey, deviceUuid }) {
+  createSession({ accountKey, deviceUuid }) {
     return this.axios
-      .post('/auth/sign-in', {
+      .post('/auth/sessions', {
         accountKey,
         deviceUuid,
       })
       .then(response => response.data);
   }
 
-  startSession({
+  startSession(
     sessionUuid,
-    clientPublicEphemeralKey,
-    clientSessionProofKey,
-  }) {
+    { clientPublicEphemeralKey, clientSessionProofKey }
+  ) {
     return this.axios
-      .post('/auth/start-session', {
+      .post(`/auth/sessions/${sessionUuid}/start`, {
         sessionUuid,
         clientPublicEphemeralKey,
         clientSessionProofKey,

@@ -1,18 +1,3 @@
-.page[data-theme-mode='light'] {
-  --color--color-sign-in-page-bg: var(--color-gray-50);
-}
-
-.page {
-  &__container {
-    height: 100vh;
-
-    background-color: var(--color--color-sign-in-page-bg);
-  }
-  &__form-layout {
-    width: auto;
-  }
-}
-
 .auth-form {
   &__input {
     min-width: 400px;

@@ -1,0 +1,15 @@
+@import './form.scss';
+
+.skeleton {
+  &__section {
+    margin-bottom: 28px;
+  }
+
+  &__title {
+    margin-bottom: 8px;
+  }
+
+  &__block {
+    margin-bottom: 16px;
+  }
+}
