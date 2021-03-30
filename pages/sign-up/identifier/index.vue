@@ -61,6 +61,10 @@ export default {
         this.username = this.cachedUsername;
     },
   },
+  mounted() {
+    if (this.isCacheServiceInit && this.cachedUsername?.length)
+      this.username = this.cachedUsername;
+  },
   methods: {
     ...mapActions({
       setCache: cacheActionTypes.SET_CACHE,

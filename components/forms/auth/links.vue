@@ -1,11 +1,6 @@
 <template>
   <ui-grid align-items="center" justify="space-between" class="links">
-    <ui-button variant="text" class="links__btn">
-      <ui-grid align-items="center">
-        <p>English (US)</p>
-        <arrow-icon class="links__icon"></arrow-icon>
-      </ui-grid>
-    </ui-button>
+    <select-languages></select-languages>
     <ui-grid class="links__support">
       <ui-button variant="text" class="links__btn">{{ $t('Help') }}</ui-button>
       <ui-button variant="text" class="links__btn">{{
@@ -17,16 +12,16 @@
 </template>
 
 <script>
+import SelectLanguages from './select-languages.vue';
 import UiGrid from '~/ui/grid/index.vue';
 import UiButton from '~/ui/button/index.vue';
-import ArrowIcon from '~/assets/right-arrow.svg?inline';
 
 export default {
   name: 'Links',
   components: {
     UiGrid,
     UiButton,
-    ArrowIcon,
+    SelectLanguages,
   },
 };
 </script>

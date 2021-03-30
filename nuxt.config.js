@@ -25,13 +25,33 @@ export default {
     ],
   },
   css: ['~/assets/css/main.scss'],
-  plugins: ['~/plugins/axios', '~/plugins/api', '~/plugins/i18n'],
+  plugins: ['~/plugins/axios', '~/plugins/api'],
   components: true,
   buildModules: [
     '@nuxtjs/eslint-module',
     '@nuxtjs/style-resources',
     '@nuxtjs/svg',
   ],
-  modules: ['@nuxtjs/axios', 'cookie-universal-nuxt', 'portal-vue/nuxt'],
+  modules: [
+    '@nuxtjs/axios',
+    'cookie-universal-nuxt',
+    'portal-vue/nuxt',
+    'nuxt-i18n',
+  ],
   build: {},
+  i18n: {
+    locales: [
+      { code: 'en', name: 'English (US)', iso: 'en-US', file: 'en-US.json' },
+      { code: 'ru', name: 'Русский', iso: 'ru-RU', file: 'ru-RU.json' },
+    ],
+    lazy: true,
+    langDir: '~/locales/',
+    defaultLocale: 'en',
+    strategy: 'no_prefix',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_locale',
+      onlyOnRoot: true,
+    },
+  },
 };

@@ -1,6 +1,7 @@
 <template>
   <div class="page" data-theme-mode="light">
     <Nuxt />
+    <portal-target name="modals-location" multiple> </portal-target>
   </div>
 </template>
 
