@@ -6,6 +6,7 @@ export default {
     'Forgot Account Key?': 'Забыли ключ от аккаунта?',
     'Create Account': 'Создать аккаунт',
     Next: 'Далее',
+    Back: 'Назад',
     'Incorrect Account Key': 'Неверный Ключ Аккаунта',
     Help: 'Справка',
     Privacy: 'Конфиденциальность',
@@ -19,5 +20,11 @@ export default {
     'Already has an account?': 'Уже есть аккаунт?',
     'The username must has length more 6 characters':
       'Имя пользователя должно содержать более 6 символов',
+    'Choose your Master Password': 'Введите ваш Мастер пароль',
+    'Enter a password': 'Введите пароль',
+    'Confirm your password': 'Подтвердите ваш пароль',
+    Remember: 'Помните',
+    'the logner and more random your password, the better!':
+      'чем длиннее и чем больше символов в вашем пароле, тем - лучше!',
   },
 };

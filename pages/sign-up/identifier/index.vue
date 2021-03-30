@@ -35,7 +35,7 @@ import AuthForm from '~/components/forms/auth/form.vue';
 import * as cacheActionTypes from '~/store/cache/types';
 
 export default {
-  name: 'SignUpPage',
+  name: 'IdentifierPage',
   components: {
     UiInput,
     UiButton,

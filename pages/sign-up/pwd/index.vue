@@ -2,8 +2,8 @@
   <ui-grid>
     <auth-form
       v-if="showAuthForm"
-      title="Sign Up"
-      desc="Choose your Master Password"
+      :title="$t('Sign Up')"
+      :desc="$t('Choose your Master Password')"
       @submit="handleSubmitForm"
     >
       <template #content>
@@ -11,29 +11,31 @@
         <ui-input
           v-model="password"
           type="password"
-          placeholder="Enter a password"
+          :placeholder="$t('Enter a password')"
           class="auth-form__input"
         ></ui-input>
         <ui-input
           v-model="repeatPassword"
           type="password"
-          placeholder="Confirm your password"
+          :placeholder="$t('Confirm your password')"
           class="auth-form__input"
         ></ui-input>
 
         <ui-grid align-items="center" class="warning">
           <padlock-icon class="warning__icon"></padlock-icon>
           <p class="warning__title">
-            <span>Remember:</span> the logner and more random your password, the
-            better!
+            <span>{{ $t('Remember') }}:</span>
+            {{ $t('the logner and more random your password, the better!') }}
           </p>
         </ui-grid>
       </template>
       <template #footer>
         <ui-button variant="outlined" @click="handleBackBtnClick">
-          Back
+          {{ $t('Back') }}
         </ui-button>
-        <ui-button variant="contained" type="submit"> Next </ui-button>
+        <ui-button variant="contained" type="submit"
+          >{{ $t('Next') }}
+        </ui-button>
       </template>
     </auth-form>
     <auth-form-skeleton
