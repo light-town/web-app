@@ -1,7 +1,11 @@
 <template>
   <ui-grid>
     <client-only>
-      <auth-form v-if="showAuthForm" title="Welcome" @submit="handleSubmitForm">
+      <auth-form
+        v-if="showAuthForm"
+        :title="$t('Welcome')"
+        @submit="handleSubmitForm"
+      >
         <template #content>
           <ui-alert v-if="error" severity="error">
             {{ error.message }}
@@ -14,23 +18,27 @@
           <ui-input
             v-model="password"
             type="password"
-            placeholder="Enter Master Password"
+            :placeholder="$t('Enter Master Password')"
             class="auth-form__input"
           ></ui-input>
-          <NuxtLink to="/" class="link">Forgot Master Password?</NuxtLink>
+          <NuxtLink to="/" class="link">{{
+            $t('Forgot Master Password?')
+          }}</NuxtLink>
         </template>
         <template #footer>
           <ui-grid direction="row-reverse">
-            <ui-button variant="contained" type="submit">Next</ui-button>
+            <ui-button variant="contained" type="submit">{{
+              $t('Next')
+            }}</ui-button>
           </ui-grid>
         </template>
       </auth-form>
       <auth-form-skeleton
         v-if="!showAuthForm"
-        title="Sign In"
+        :title="$t('Sign In')"
       ></auth-form-skeleton>
       <template slot="placeholder">
-        <auth-form-skeleton title="Sign In"></auth-form-skeleton>
+        <auth-form-skeleton :title="$t('Sign In')"></auth-form-skeleton>
       </template>
     </client-only>
   </ui-grid>

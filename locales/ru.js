@@ -10,5 +10,8 @@ export default {
     Help: 'Справка',
     Privacy: 'Конфиденциальность',
     Terms: 'Условия',
+    Welcome: 'Добро пожаловать',
+    'Forgot Master Password?': 'Забыли Мастер пароль?',
+    'Enter Master Password': 'Введите Мастер пароль',
   },
 };
