@@ -5,6 +5,7 @@ import * as faker from 'faker';
 import PwdPage from '../index.vue';
 import AuthFormSkeleton from '~/components/forms/auth/skeleton.vue';
 import * as authActionTypes from '~/store/auth/types';
+import i18n from '~/tests/__mocks__/i18n';
 
 const router = new VueRouter();
 const localVue = createLocalVue();
@@ -37,6 +38,9 @@ describe('[Sign Up] [Pwd Page] ...', () => {
       store,
       stubs: {
         NuxtLink: RouterLinkStub,
+      },
+      mocks: {
+        $t: i18n,
       },
     });
 
@@ -143,6 +147,9 @@ describe('[Sign Up] [Pwd Page] ...', () => {
       stubs: {
         NuxtLink: RouterLinkStub,
       },
+      mocks: {
+        $t: i18n,
+      },
     });
 
     wrapper.vm.$store.state.cache.raws.username = faker.random.word();
@@ -151,12 +158,10 @@ describe('[Sign Up] [Pwd Page] ...', () => {
     await wrapper.vm.$nextTick();
 
     const form = await wrapper.find('form');
-    const passwordField = await form.find(
-      'input[type="password"][placeholder="Enter a password"]'
-    );
-    const confirmPasswordField = await form.find(
-      'input[type="password"][placeholder="Confirm your password"]'
-    );
+    const passwordField = await form.findAll('input[type="password"]').at(0);
+    const confirmPasswordField = await form
+      .findAll('input[type="password"]')
+      .at(1);
     const nextButton = await form.find('button[type="submit"]');
 
     passwordField.setValue(TEST_PASSWORD);
@@ -204,6 +209,9 @@ describe('[Sign Up] [Pwd Page] ...', () => {
       stubs: {
         NuxtLink: RouterLinkStub,
       },
+      mocks: {
+        $t: i18n,
+      },
     });
 
     wrapper.vm.$store.state.cache.raws.username = faker.random.word();
@@ -212,12 +220,10 @@ describe('[Sign Up] [Pwd Page] ...', () => {
     await wrapper.vm.$nextTick();
 
     const form = await wrapper.find('form');
-    const passwordField = await form.find(
-      'input[type="password"][placeholder="Enter a password"]'
-    );
-    const confirmPasswordField = await form.find(
-      'input[type="password"][placeholder="Confirm your password"]'
-    );
+    const passwordField = await form.findAll('input[type="password"]').at(0);
+    const confirmPasswordField = await form
+      .findAll('input[type="password"]')
+      .at(1);
     const nextButton = await form.find('button[type="submit"]');
 
     passwordField.setValue(TEST_FIRST_PASSWORD);
@@ -263,6 +269,9 @@ describe('[Sign Up] [Pwd Page] ...', () => {
       stubs: {
         NuxtLink: RouterLinkStub,
       },
+      mocks: {
+        $t: i18n,
+      },
     });
 
     wrapper.vm.$store.state.cache.raws.username = faker.random.word();
@@ -271,12 +280,10 @@ describe('[Sign Up] [Pwd Page] ...', () => {
     await wrapper.vm.$nextTick();
 
     const form = await wrapper.find('form');
-    const passwordField = await form.find(
-      'input[type="password"][placeholder="Enter a password"]'
-    );
-    const confirmPasswordField = await form.find(
-      'input[type="password"][placeholder="Confirm your password"]'
-    );
+    const passwordField = await form.findAll('input[type="password"]').at(0);
+    const confirmPasswordField = await form
+      .findAll('input[type="password"]')
+      .at(1);
     const nextButton = await form.find('button[type="submit"]');
 
     passwordField.setValue(TEST_PASSWORD);
@@ -322,6 +329,9 @@ describe('[Sign Up] [Pwd Page] ...', () => {
       stubs: {
         NuxtLink: RouterLinkStub,
       },
+      mocks: {
+        $t: i18n,
+      },
     });
 
     wrapper.vm.$store.state.cache.raws.username = faker.random.word();
@@ -330,9 +340,7 @@ describe('[Sign Up] [Pwd Page] ...', () => {
     await wrapper.vm.$nextTick();
 
     const form = await wrapper.find('form');
-    const passwordField = await form.find(
-      'input[type="password"][placeholder="Enter a password"]'
-    );
+    const passwordField = await form.findAll('input[type="password"]').at(0);
     const nextButton = await form.find('button[type="submit"]');
 
     passwordField.setValue(TEST_PASSWORD);
@@ -374,6 +382,9 @@ describe('[Sign Up] [Pwd Page] ...', () => {
       router,
       stubs: {
         NuxtLink: RouterLinkStub,
+      },
+      mocks: {
+        $t: i18n,
       },
     });
 

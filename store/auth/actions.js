@@ -72,9 +72,13 @@ export default {
       commit(mutationTypes.SET_SESSION, {
         session: {
           uuid: response.data.sessionUuid,
-          srpSession: clientSRPSession,
+          srp: clientSRPSession,
           ephemeralKeyPair: clientEphemeralKeyPair,
           serverPublicEphemeralKey: response.data.serverPublicEphemeral,
+          verifing: {
+            stage: response.data.sessionVerify.stage,
+            MFAType: response.data.sessionVerify.MFAType,
+          },
         },
       });
     } catch (e) {
@@ -82,6 +86,36 @@ export default {
         commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.ERROR });
 
       commit(mutationTypes.SET_ERROR, { error: e?.response?.data?.error || e });
+    }
+  },
+  async [actionTypes.START_SESSION]({ commit, state }) {
+    try {
+      commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.LOADING });
+
+      const response = await this.$api.auth.startSession(state.session.uuid, {
+        clientPublicEphemeralKey: state.session.ephemeralKeyPair.public,
+        clientSessionProofKey: state.session.srp.proof,
+      });
+
+      commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.SUCCESS });
+
+      core.srp.client.verifySession(
+        state.session.ephemeralKeyPair.public,
+        state.session.srp,
+        response.data.serverSessionProof
+      );
+
+      commit(mutationTypes.SET_SESSION, {
+        session: {
+          uuid: state.session.uuid,
+          token: response.data.token,
+        },
+      });
+    } catch (e) {
+      if (state.fetchStatus === fetchStatuses.LOADING)
+        commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.ERROR });
+
+      commit(mutationTypes.SET_ERROR, { error: e?.error || e });
     }
   },
 };

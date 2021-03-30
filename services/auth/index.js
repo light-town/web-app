@@ -32,7 +32,10 @@ export default class AuthService extends AbstractService {
         clientPublicEphemeralKey,
         clientSessionProofKey,
       })
-      .then(response => response.data);
+      .then(response => response.data)
+      .catch(response => {
+        throw response.data;
+      });
   }
 
   getCsrfToken() {

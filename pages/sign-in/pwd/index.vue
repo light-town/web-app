@@ -54,6 +54,7 @@ import AuthForm from '~/components/forms/auth/form.vue';
 import Account from '~/components/forms/auth/account.vue';
 import AuthFormSkeleton from '~/components/forms/auth/skeleton.vue';
 import * as authActionTypes from '~/store/auth/types';
+import { SessionVerifyStagesEnum } from '~/store/auth/enums';
 
 export default {
   name: 'VerifyPage',
@@ -76,6 +77,7 @@ export default {
   computed: {
     ...mapState({
       isAccountServiceInit: state => state.accounts.isInit,
+      session: state => state.auth.session,
       error(state) {
         return this.localError || state.auth.error;
       },
@@ -100,13 +102,23 @@ export default {
   methods: {
     ...mapActions({
       createSession: authActionTypes.CREATE_SESSION,
+      startSession: authActionTypes.START_SESSION,
     }),
     async handleSubmitForm(e) {
       e.preventDefault();
 
       await this.createSession({ password: this.password });
 
-      /* if (!this.error) this.$router.push('/'); */
+      if (this.error) return;
+
+      if (this.session.verifing.stage === SessionVerifyStagesEnum.REQUIRED)
+        this.$router.push('/sign-in/verify');
+
+      await this.startSession();
+
+      if (this.error) return;
+
+      this.$router.push('/');
     },
     redirectToSignUpPage() {
       this.$router.push('/sign-up');

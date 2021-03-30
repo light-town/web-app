@@ -6,6 +6,7 @@ import IndentifierPage from '../index.vue';
 import AuthForm from '~/components/forms/auth/form';
 import UiAlert from '~/ui/alert/index.vue';
 import * as cacheActionTypes from '~/store/cache/types';
+import i18n from '~/tests/__mocks__/i18n';
 
 const router = new VueRouter();
 const localVue = createLocalVue();
@@ -28,6 +29,9 @@ describe('[Sign Up] [Indentifier Page] ...', () => {
       router,
       stubs: {
         NuxtLink: RouterLinkStub,
+      },
+      mocks: {
+        $t: i18n,
       },
     });
 
@@ -64,6 +68,9 @@ describe('[Sign Up] [Indentifier Page] ...', () => {
       stubs: {
         NuxtLink: RouterLinkStub,
       },
+      mocks: {
+        $t: i18n,
+      },
     });
 
     wrapper.vm.$store.state.cache.raws.username = TEST_USERNAME;
@@ -94,6 +101,9 @@ describe('[Sign Up] [Indentifier Page] ...', () => {
       router,
       stubs: {
         NuxtLink: RouterLinkStub,
+      },
+      mocks: {
+        $t: i18n,
       },
     });
 
@@ -128,6 +138,9 @@ describe('[Sign Up] [Indentifier Page] ...', () => {
       router,
       stubs: {
         NuxtLink: RouterLinkStub,
+      },
+      mocks: {
+        $t: i18n,
       },
     });
 
@@ -176,7 +189,12 @@ describe('[Sign Up] [Indentifier Page] ...', () => {
       stubs: {
         NuxtLink: RouterLinkStub,
       },
+      mocks: {
+        $t: i18n,
+      },
     });
+
+    i18n.mockReturnValueOnce('The error text');
 
     await wrapper
       .findComponent(AuthForm)
@@ -186,9 +204,7 @@ describe('[Sign Up] [Indentifier Page] ...', () => {
     await wrapper.vm.$nextTick();
 
     expect(store.dispatch).toBeCalledTimes(0);
-    expect(wrapper.vm.error).toStrictEqual(
-      new Error('The username must has length more 6 characters')
-    );
+    expect(wrapper.vm.error).toStrictEqual(new Error('The error text'));
     expect(wrapper.findComponent(UiAlert).vm.severity).toStrictEqual('error');
     expect(
       wrapper

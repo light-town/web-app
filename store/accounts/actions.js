@@ -61,7 +61,6 @@ export default {
           key: payload.accountKey,
           name: response.data.accountName,
           avatarUrl: response.data.accountAvatarUrl,
-          MFAType: response.data.MFAType,
         },
       });
       commit(mutationTypes.SET_USER, {

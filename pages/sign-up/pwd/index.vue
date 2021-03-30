@@ -20,7 +20,6 @@
           :placeholder="$t('Confirm your password')"
           class="auth-form__input"
         ></ui-input>
-
         <ui-grid align-items="center" class="warning">
           <padlock-icon class="warning__icon"></padlock-icon>
           <p class="warning__title">

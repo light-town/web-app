@@ -158,6 +158,10 @@ describe('[Auth State] [Actions]', () => {
         sessionUuid: faker.datatype.uuid(),
         salt: faker.random.word(),
         serverPublicEphemeral: faker.random.word(),
+        sessionVerify: {
+          stage: faker.random.word(),
+          MFAType: faker.random.word(),
+        },
       },
       statusCode: 200,
     };
@@ -211,10 +215,14 @@ describe('[Auth State] [Actions]', () => {
       {
         session: {
           uuid: TEST_CREATE_SESSION_RESPONSE.data.sessionUuid,
-          srpSession: TEST_SESSION,
+          srp: TEST_SESSION,
           ephemeralKeyPair: TEST_EPEMERAL,
           serverPublicEphemeralKey:
             TEST_CREATE_SESSION_RESPONSE.data.serverPublicEphemeral,
+          verifing: {
+            stage: TEST_CREATE_SESSION_RESPONSE.data.sessionVerify.stage,
+            MFAType: TEST_CREATE_SESSION_RESPONSE.data.sessionVerify.MFAType,
+          },
         },
       },
     ]);
@@ -286,5 +294,131 @@ describe('[Auth State] [Actions]', () => {
 
     expect(core.srp.client.generateEphemeral).toBeCalledTimes(0);
     expect(core.srp.client.deriveSession).toBeCalledTimes(0);
+  });
+
+  it('should create session', async () => {
+    const TEST_SESSION = {
+      uuid: faker.datatype.uuid(),
+      ephemeralKeyPair: {
+        public: faker.datatype.uuid(),
+      },
+      srp: {
+        proof: faker.datatype.uuid(),
+        key: faker.datatype.uuid(),
+      },
+    };
+    const TEST_START_SESSION_RESPONSE = {
+      data: {
+        serverSessionProof: faker.datatype.uuid(),
+        token: faker.datatype.uuid(),
+      },
+      statusCode: 200,
+    };
+
+    actions.$api.auth.startSession.mockResolvedValueOnce(
+      TEST_START_SESSION_RESPONSE
+    );
+
+    await actions[actionTypes.START_SESSION]({
+      commit,
+      state: { session: TEST_SESSION },
+    });
+
+    expect(commit).toBeCalledTimes(3);
+
+    expect(commit.mock.calls[0][0]).toStrictEqual(
+      mutationTypes.SET_FETCH_STATUS
+    );
+    expect(commit.mock.calls[0][1]).toStrictEqual({
+      status: fetchStatuses.LOADING,
+    });
+
+    expect(commit.mock.calls[1][0]).toStrictEqual(
+      mutationTypes.SET_FETCH_STATUS
+    );
+    expect(commit.mock.calls[1][1]).toStrictEqual({
+      status: fetchStatuses.SUCCESS,
+    });
+
+    expect(commit.mock.calls[2][0]).toStrictEqual(mutationTypes.SET_SESSION);
+    expect(commit.mock.calls[2][1]).toStrictEqual({
+      session: {
+        uuid: TEST_SESSION.uuid,
+        token: TEST_START_SESSION_RESPONSE.data.token,
+      },
+    });
+
+    expect(actions.$api.auth.startSession).toBeCalledTimes(1);
+    expect(actions.$api.auth.startSession.mock.calls[0][0]).toStrictEqual(
+      TEST_SESSION.uuid
+    );
+    expect(actions.$api.auth.startSession.mock.calls[0][1]).toStrictEqual({
+      clientPublicEphemeralKey: TEST_SESSION.ephemeralKeyPair.public,
+      clientSessionProofKey: TEST_SESSION.srp.proof,
+    });
+  });
+
+  it('should throw error while creating session when occurred error in API', async () => {
+    const TEST_SESSION = {
+      uuid: faker.datatype.uuid(),
+      ephemeralKeyPair: {
+        public: faker.datatype.uuid(),
+      },
+      srp: {
+        proof: faker.datatype.uuid(),
+        key: faker.datatype.uuid(),
+      },
+    };
+    const TEST_STATE = { session: TEST_SESSION };
+    const TEST_START_SESSION_RESPONSE = {
+      error: {
+        type: 'Forbitten',
+        message: 'The session was not verified',
+      },
+      statusCode: 200,
+    };
+
+    commit.mockImplementationOnce(
+      () => (TEST_STATE.fetchStatus = fetchStatuses.LOADING)
+    );
+
+    actions.$api.auth.startSession.mockRejectedValueOnce(
+      TEST_START_SESSION_RESPONSE
+    );
+
+    await actions[actionTypes.START_SESSION]({
+      commit,
+      state: TEST_STATE,
+    });
+
+    expect(commit).toBeCalledTimes(3);
+
+    expect(commit.mock.calls[0][0]).toStrictEqual(
+      mutationTypes.SET_FETCH_STATUS
+    );
+    expect(commit.mock.calls[0][1]).toStrictEqual({
+      status: fetchStatuses.LOADING,
+    });
+
+    expect(commit.mock.calls[1][0]).toStrictEqual(
+      mutationTypes.SET_FETCH_STATUS
+    );
+    expect(commit.mock.calls[1][1]).toStrictEqual({
+      status: fetchStatuses.ERROR,
+    });
+
+    expect(commit.mock.calls[2][0]).toStrictEqual(mutationTypes.SET_ERROR);
+    expect(commit.mock.calls[2][1]).toStrictEqual({
+      error: TEST_START_SESSION_RESPONSE.error,
+    });
+
+    expect(actions.$api.auth.startSession).toBeCalledTimes(1);
+    expect(actions.$api.auth.startSession.mock.calls[0][0]).toStrictEqual(
+      TEST_SESSION.uuid
+    );
+    expect(actions.$api.auth.startSession.mock.calls[0][1]).toStrictEqual({
+      clientPublicEphemeralKey: TEST_SESSION.ephemeralKeyPair.public,
+      clientSessionProofKey: TEST_SESSION.srp.proof,
+    });
   });
 });
