@@ -7,9 +7,11 @@
       </ui-grid>
     </ui-button>
     <ui-grid class="links__support">
-      <ui-button variant="text" class="links__btn">Help</ui-button>
-      <ui-button variant="text" class="links__btn">Privacy</ui-button>
-      <ui-button variant="text" class="links__btn">Terms</ui-button>
+      <ui-button variant="text" class="links__btn">{{ $t('Help') }}</ui-button>
+      <ui-button variant="text" class="links__btn">{{
+        $t('Privacy')
+      }}</ui-button>
+      <ui-button variant="text" class="links__btn">{{ $t('Terms') }}</ui-button>
     </ui-grid>
   </ui-grid>
 </template>

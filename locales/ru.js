@@ -7,5 +7,8 @@ export default {
     'Create Account': 'Создать аккаунт',
     Next: 'Далее',
     'Incorrect Account Key': 'Неверный Ключ Аккаунта',
+    Help: 'Справка',
+    Privacy: 'Конфиденциальность',
+    Terms: 'Условия',
   },
 };
