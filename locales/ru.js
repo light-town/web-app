@@ -26,5 +26,13 @@ export default {
     Remember: 'Помните',
     'the logner and more random your password, the better!':
       'чем длиннее и чем больше символов в вашем пароле, тем - лучше!',
+    'Meet your Account Key': 'Встречайте ваш Ключ Аккаунта',
+    'Not keep is secret, keep it anywhere':
+      'Не храните его в секрете, храните его где угодно',
+    'Copied to clipboard': 'Скопировано в буфер обмена',
+    Explain: 'Пояснение',
+    'you can safely store your account key anywhere, it does not contain any secrets':
+      'вы можете безопасно хранить ключ своей учетной записи в любом месте, он не содержит никаких секретов',
+    "I've got it": 'Я сохранил его',
   },
 };

@@ -2,14 +2,14 @@
   <ui-grid>
     <auth-form
       v-if="isCacheServiceInit && accountKey"
-      title="Meet your Account Key"
-      desc="Not keep is secret, keep it anywhere"
+      :title="$t('Meet your Account Key')"
+      :desc="$t('Not keep is secret, keep it anywhere')"
       @submit="handleSubmitForm"
     >
       <template #content>
-        <ui-alert v-if="showTips" severity="success"
-          >Copied to clipboard</ui-alert
-        >
+        <ui-alert v-if="showTips" severity="success">
+          {{ $t('Copied to clipboard') }}
+        </ui-alert>
         <ui-grid align-items="center" class="field">
           <p class="account-key">
             {{ accountKey }}
@@ -24,20 +24,26 @@
         </ui-grid>
         <ui-grid align-items="center" class="warning">
           <p class="warning__title">
-            <span>Explain:</span> you can safely store your account key
-            anywhere, it does not contain any secrets.
+            <span>{{ $t('Explain') }}:</span>
+            {{
+              $t(
+                'you can safely store your account key anywhere, it does not contain any secrets'
+              )
+            }}
           </p>
         </ui-grid>
       </template>
       <template #footer>
         <ui-grid direction="row-reverse" alight-items="center">
-          <ui-button variant="contained" type="submit">I've got it</ui-button>
+          <ui-button variant="contained" type="submit">{{
+            $t(`I've got it`)
+          }}</ui-button>
         </ui-grid>
       </template>
     </auth-form>
     <auth-form-skeleton
       v-if="!isCacheServiceInit || !accountKey"
-      title="Sign Up"
+      :title="$t('Sign Up')"
     ></auth-form-skeleton>
   </ui-grid>
 </template>
