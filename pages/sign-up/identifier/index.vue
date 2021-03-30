@@ -1,7 +1,7 @@
 <template>
   <auth-form
-    title="Sign Up"
-    desc="Welcom to LightTown Platform"
+    :title="$t('Sign Up')"
+    :desc="$t('Welcom to LightTown Platform')"
     @submit="handleFormSubmit"
   >
     <template #content>
@@ -11,14 +11,16 @@
       <ui-input
         v-model="username"
         type="text"
-        placeholder="Enter your username"
+        :placeholder="$t('Enter your username')"
         class="auth-form__input"
       ></ui-input>
-      <NuxtLink to="/sign-in" class="link"> Already has an account? </NuxtLink>
+      <NuxtLink to="/sign-in" class="link">{{
+        $t('Already has an account?')
+      }}</NuxtLink>
     </template>
     <template #footer>
       <ui-button variant="contained" type="submit" class="btn">
-        Next
+        {{ $t('Next') }}
       </ui-button>
     </template>
   </auth-form>
@@ -68,7 +70,7 @@ export default {
 
       if (this.username.length < 6) {
         this.localError = new Error(
-          'The username must has length more 6 characters'
+          this.$t('The username must has length more 6 characters')
         );
         return;
       }

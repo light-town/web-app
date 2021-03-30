@@ -13,5 +13,11 @@ export default {
     Welcome: 'Добро пожаловать',
     'Forgot Master Password?': 'Забыли Мастер пароль?',
     'Enter Master Password': 'Введите Мастер пароль',
+    'Sign Up': 'Создание аккаунта',
+    'Welcom to LightTown Platform': 'Добро пожаловать на платформу LightTown',
+    'Enter your username': 'Введите ваше имя',
+    'Already has an account?': 'Уже есть аккаунт?',
+    'The username must has length more 6 characters':
+      'Имя пользователя должно содержать более 6 символов',
   },
 };
