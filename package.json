@@ -29,6 +29,7 @@
     "cookie-universal-nuxt": "^2.1.4",
     "core-js": "^3.9.1",
     "faker": "^5.4.0",
+    "i18next": "^20.1.0",
     "lodash": "^4.17.21",
     "nuxt": "^2.15.3",
     "portal-vue": "^2.1.7",

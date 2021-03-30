@@ -1,7 +1,7 @@
 <template>
   <auth-form
-    title="Sign In"
-    desc="Use your LightTown Account"
+    :title="$t('Sign In')"
+    :desc="$t('Use your LightTown Account')"
     @submit="handleFormSubmit"
   >
     <template #content>
@@ -11,17 +11,17 @@
       <ui-input
         v-model="accountKey"
         type="text"
-        placeholder="Enter Account Key"
+        :placeholder="$t('Enter Account Key')"
         class="auth-form__input"
       ></ui-input>
-      <NuxtLink to="/" class="link">Forgot Account Key?</NuxtLink>
+      <NuxtLink to="/" class="link">{{ $t('Forgot Account Key?') }}</NuxtLink>
     </template>
     <template #footer>
       <ui-button variant="outlined" @click="redirectToSignUpPage">
-        Create Account
+        {{ $t('Create Account') }}
       </ui-button>
       <ui-button variant="contained" type="submit" :disabled="isLock">
-        Next
+        {{ $t('Next') }}
       </ui-button>
     </template>
   </auth-form>
@@ -75,7 +75,7 @@ export default {
       e.preventDefault();
 
       if (!this.accountKey.length) {
-        this.localError = new Error('Incorrect Account Key');
+        this.localError = new Error(this.$t('Incorrect Account Key'));
         return;
       }
 
