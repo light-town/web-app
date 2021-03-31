@@ -59,14 +59,19 @@ export default {
 
       commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.SUCCESS });
 
-      const clientEphemeralKeyPair = core.srp.client.generateEphemeral();
-
-      const clientSRPSession = core.srp.client.deriveSession(
-        response.data.salt,
+      const clientEphemeralKeyPair = core.srp.client.generateEphemeralKeyPair();
+      const privateKey = core.srp.client.derivePrivateKey(
         this.getters.currentAccount.key,
         payload.password,
+        response.data.salt
+      );
+
+      const clientSRPSession = core.srp.client.deriveSession(
         clientEphemeralKeyPair.secret,
-        response.data.serverPublicEphemeral
+        response.data.serverPublicEphemeral,
+        response.data.salt,
+        this.getters.currentAccount.key,
+        privateKey
       );
 
       commit(mutationTypes.SET_SESSION, {

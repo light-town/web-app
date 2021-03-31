@@ -179,6 +179,7 @@ describe('[Auth State] [Actions]', () => {
       key: faker.datatype.uuid(),
       proof: faker.datatype.uuid(),
     };
+    const TEST_PRIVATE_KEY = faker.datatype.uuid();
 
     commit.mockImplementationOnce(
       () => (TEST_STATE.fetchStatus = fetchStatuses.LOADING)
@@ -189,7 +190,8 @@ describe('[Auth State] [Actions]', () => {
       TEST_CREATE_SESSION_RESPONSE
     );
 
-    core.srp.client.generateEphemeral.mockReturnValueOnce(TEST_EPEMERAL);
+    core.srp.client.derivePrivateKey.mockReturnValueOnce(TEST_PRIVATE_KEY);
+    core.srp.client.generateEphemeralKeyPair.mockReturnValueOnce(TEST_EPEMERAL);
     core.srp.client.deriveSession.mockReturnValueOnce(TEST_SESSION);
 
     await actions[actionTypes.CREATE_SESSION](
@@ -227,15 +229,15 @@ describe('[Auth State] [Actions]', () => {
       },
     ]);
 
-    expect(core.srp.client.generateEphemeral).toBeCalledTimes(1);
+    expect(core.srp.client.generateEphemeralKeyPair).toBeCalledTimes(1);
 
     expect(core.srp.client.deriveSession).toBeCalledTimes(1);
     expect(core.srp.client.deriveSession).toBeCalledWith(
+      TEST_EPEMERAL.secret,
+      TEST_CREATE_SESSION_RESPONSE.data.serverPublicEphemeral,
       TEST_CREATE_SESSION_RESPONSE.data.salt,
       TEST_GETTERS.currentAccount.key,
-      TEST_PASSWORD,
-      TEST_EPEMERAL.secret,
-      TEST_CREATE_SESSION_RESPONSE.data.serverPublicEphemeral
+      TEST_PRIVATE_KEY
     );
   });
 
@@ -292,7 +294,7 @@ describe('[Auth State] [Actions]', () => {
       },
     ]);
 
-    expect(core.srp.client.generateEphemeral).toBeCalledTimes(0);
+    expect(core.srp.client.generateEphemeralKeyPair).toBeCalledTimes(0);
     expect(core.srp.client.deriveSession).toBeCalledTimes(0);
   });
 
