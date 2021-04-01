@@ -26,8 +26,8 @@
   }
 
   &__btn {
-    font-size: 12px;
-    color: var(--color-links-text);
+    font-size: 12px !important;
+    color: var(--color-links-text) !important;
 
     &:hover:enabled {
       color: var(--color-links-hover-text) !important;

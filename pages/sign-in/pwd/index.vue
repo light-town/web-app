@@ -27,9 +27,9 @@
         </template>
         <template #footer>
           <ui-grid direction="row-reverse">
-            <ui-button variant="contained" type="submit">{{
-              $t('Next')
-            }}</ui-button>
+            <ui-button variant="contained" type="submit">
+              {{ $t('Next') }}
+            </ui-button>
           </ui-grid>
         </template>
       </auth-form>
@@ -111,8 +111,10 @@ export default {
 
       if (this.error) return;
 
-      if (this.session.verifing.stage === SessionVerifyStagesEnum.REQUIRED)
+      if (this.session.verifing.stage === SessionVerifyStagesEnum.REQUIRED) {
         this.$router.push('/sign-in/verify');
+        return;
+      }
 
       await this.startSession();
 

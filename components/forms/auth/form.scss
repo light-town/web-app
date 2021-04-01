@@ -6,7 +6,9 @@
 }
 
 .auth-form {
-  max-width: 496px;
+  flex-shrink: 0;
+  flex-grow: 1;
+  width: 500px;
   padding: 40px 48px;
   margin-bottom: 24px;
   border-radius: 4px;

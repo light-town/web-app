@@ -28,5 +28,10 @@
   "Copied to clipboard": "Скопировано в буфер обмена",
   "Explain": "Пояснение",
   "you can safely store your account key anywhere, it does not contain any secrets": "вы можете безопасно хранить ключ своей учетной записи в любом месте, он не содержит никаких секретов",
-  "I've got it": "Я сохранил его"
+  "I've got it": "Я сохранил его",
+  "2-Step Verification": "Двухэтапная аутентификация",
+  "This extra step shows it’s really you trying to sign in": "Нам нужно убедиться, что это действительно вы",
+  "Check your phone": "Проверьте свой телефон",
+  "LightTown sent a notification to your {model} and {os}. Finish fingerprint authorization to continue.": "LightTown отправил уведомление на устройство {model} и {os}. Завершите аутентификацию через проверку отпечатка пальца.",
+  "Try another way?": "Другой способ"
 }

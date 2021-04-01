@@ -28,5 +28,10 @@
   "Copied to clipboard": "Copied to clipboard",
   "Explain": "Explain",
   "you can safely store your account key anywhere, it does not contain any secrets": "you can safely store your account key anywhere, it does not contain any secrets",
-  "I've got it": "I've got it"
+  "I've got it": "I've got it",
+  "2-Step Verification": "2-Step Verification",
+  "This extra step shows it’s really you trying to sign in": "This extra step shows it’s really you trying to sign in",
+  "Check your phone": "Check your phone",
+  "LightTown sent a notification to your {model} and {os}. Finish fingerprint authorization to continue.": "LightTown sent a notification to your {model} and {os}. Finish fingerprint authorization to continue.",
+  "Try another way?": "Try another way?"
 }

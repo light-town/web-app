@@ -48,7 +48,10 @@ export default {
       commit(mutationTypes.SET_ERROR, { error: e?.response?.data?.error || e });
     }
   },
-  async [actionTypes.CREATE_SESSION]({ commit, state, rootState }, payload) {
+  async [actionTypes.CREATE_SESSION](
+    { commit, dispatch, state, rootState },
+    payload
+  ) {
     try {
       commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.LOADING });
 
@@ -81,11 +84,23 @@ export default {
           ephemeralKeyPair: clientEphemeralKeyPair,
           serverPublicEphemeralKey: response.data.serverPublicEphemeral,
           verifing: {
-            stage: response.data.sessionVerify.stage,
-            MFAType: response.data.sessionVerify.MFAType,
+            ...response.data.sessionVerify,
           },
         },
       });
+
+      if (response.data.sessionVerify?.verificationDevice) {
+        dispatch(
+          cacheActionTypes.SET_CACHE,
+          {
+            verificationDevice: {
+              os: response.data.sessionVerify.verificationDevice.os,
+              model: response.data.sessionVerify.verificationDevice.model,
+            },
+          },
+          { root: true }
+        );
+      }
     } catch (e) {
       if (state.fetchStatus === fetchStatuses.LOADING)
         commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.ERROR });

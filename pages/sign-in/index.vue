@@ -1,8 +1,36 @@
+<template>
+  <auth-form-skeleton :title="$t('Sign In')"></auth-form-skeleton>
+</template>
+
 <script>
+import { mapState, mapGetters } from 'vuex';
+import AuthFormSkeleton from '~/components/forms/auth/skeleton.vue';
+
 export default {
   name: 'SignInPage',
-  fetch({ redirect }) {
-    redirect('/sign-in/identifier');
+  components: {
+    AuthFormSkeleton,
+  },
+  layout: 'auth',
+  computed: {
+    ...mapState({
+      isAccountServiceInit: state => state.accounts.isInit,
+    }),
+    ...mapGetters(['currentAccount']),
+  },
+  watch: {
+    isAccountServiceInit() {
+      if (this.isAccountServiceInit && this.currentAccount) {
+        this.$router.push('/sign-in/pwd');
+        return;
+      }
+
+      this.$router.push('/sign-in/identifier');
+    },
+  },
+  mounted() {
+    if (this.isAccountServiceInit && this.currentAccount)
+      this.$router.push('/sign-in/pwd');
   },
 };
 </script>
