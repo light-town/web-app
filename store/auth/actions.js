@@ -138,4 +138,7 @@ export default {
       commit(mutationTypes.SET_ERROR, { error: e?.error || e });
     }
   },
+  [actionTypes.SET_TOKEN]({ commit }, payload) {
+    commit(mutationTypes.SET_TOKEN, { token: payload.token });
+  },
 };

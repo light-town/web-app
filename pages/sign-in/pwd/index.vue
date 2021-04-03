@@ -129,7 +129,7 @@ export default {
 
       if (this.error) return;
 
-      this.$router.push('/');
+      this.$router.push('/vaults');
     },
     redirectToSignUpPage() {
       this.$router.push('/sign-up');

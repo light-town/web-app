@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
+import { mapState, mapGetters, mapActions } from 'vuex';
 import UiGrid from '~/ui/grid/index.vue';
 import UiButton from '~/ui/button/index.vue';
 import AuthForm from '~/components/forms/auth/form.vue';
@@ -52,6 +52,7 @@ import Account from '~/components/forms/auth/account.vue';
 import AuthIllustration from '~/assets/illustrations/2fa.svg?inline';
 import AuthFormSkeleton from '~/components/forms/auth/skeleton.vue';
 import { ChangedSessionVerificationStageEvent } from '~/services/subscriptions';
+import * as cacheActionTypes from '~/store/cache/types';
 
 export default {
   name: 'VerifyPage',
@@ -122,15 +123,20 @@ export default {
       );
   },
   methods: {
+    ...mapActions({
+      clearCache: cacheActionTypes.CLEAR_CACHE,
+    }),
     handleSubmitForm(e) {
       e.preventDefault();
     },
     redirectToSignUpPage() {
       this.$router.push('/sign-up');
     },
-    onChangedSessionVerificationStageEvent(response) {
+    async onChangedSessionVerificationStageEvent(response) {
       if (response.data?.stage === 'COMPLETED') {
-        this.$router.push('/');
+        await this.clearCache();
+
+        this.$router.push('/vaults');
       }
     },
   },
