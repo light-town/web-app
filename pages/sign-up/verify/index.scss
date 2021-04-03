@@ -1,5 +1,4 @@
 .page[data-theme-mode='light'] {
-  --color-sign-in-page-bg: var(--color-gray-50);
   --color-sign-in-page-account-key-text: var(--color-gray-450);
   --color-sign-in-page-field-border: var(--color-gray-150);
   --color-sign-in-page-copy-btn-fill: var(--color-gray-450);
@@ -7,19 +6,8 @@
   --color-sign-in-page-copy-btn-active-bg: var(--color-gray-150);
 }
 
-.page {
-  &__container {
-    height: 100vh;
-
-    background-color: var(--color-sign-in-page-bg);
-  }
-  &__form-layout {
-    width: auto;
-  }
-}
-
 .auth-form {
-  max-width: none;
+  max-width: 500%;
 }
 
 .warning {

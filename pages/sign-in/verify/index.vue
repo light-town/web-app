@@ -129,7 +129,9 @@ export default {
       this.$router.push('/sign-up');
     },
     onChangedSessionVerificationStageEvent(response) {
-      console.log(response);
+      if (response.data?.stage === 'COMPLETED') {
+        this.$router.push('/');
+      }
     },
   },
 };

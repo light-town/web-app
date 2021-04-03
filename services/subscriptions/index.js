@@ -66,7 +66,7 @@ export default class SubscriptionsService extends AbstractService {
     this.websocket.onmessage = ({ data }) => {
       const response = JSON.parse(data);
 
-      for (const [subscription, event] of this.subscriptions) {
+      for (const [event, subscription] of this.subscriptions) {
         if (event.is(response)) {
           subscription.cbs.forEach(cb => cb(response));
         }
@@ -85,13 +85,13 @@ export default class SubscriptionsService extends AbstractService {
     if (this.websocket) {
       this.websocket.close();
       this.websocket = null;
-    }
 
-    if (this.subscriptions.size) this.subscriptions.clear();
+      if (this.subscriptions.size) this.subscriptions.clear();
+    }
   }
 
   subscribe(event, callback) {
-    const existsCallbacks = this.subscriptions.get(event) || [];
+    const existsCallbacks = this.subscriptions.get(event)?.cbs || [];
 
     this.subscriptions.set(event, { cbs: [...existsCallbacks, callback] });
 
@@ -107,7 +107,7 @@ export default class SubscriptionsService extends AbstractService {
   hasSubscribed(event, callback) {
     if (!this.subscriptions.has(event)) return false;
 
-    const existsCallbacks = this.subscriptions.get(event);
+    const existsCallbacks = this.subscriptions.get(event).cbs;
 
     return existsCallbacks.includes(callback);
   }
@@ -116,7 +116,7 @@ export default class SubscriptionsService extends AbstractService {
     if (!this.subscriptions.has(event))
       throw new Error('The subscription is not exists');
 
-    const existsCallbacks = this.subscriptions.get(event);
+    const existsCallbacks = this.subscriptions.get(event).cbs;
     const filteredCallbacks = existsCallbacks.filter(cb => cb !== callback);
 
     if (!filteredCallbacks.length) {

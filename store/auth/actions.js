@@ -84,18 +84,18 @@ export default {
           ephemeralKeyPair: clientEphemeralKeyPair,
           serverPublicEphemeralKey: response.data.serverPublicEphemeral,
           verifing: {
-            ...response.data.sessionVerify,
+            ...response.data.sessionVerification,
           },
         },
       });
 
-      if (response.data.sessionVerify?.verificationDevice) {
+      if (response.data.sessionVerification?.verificationDevice) {
         dispatch(
           cacheActionTypes.SET_CACHE,
           {
             verificationDevice: {
-              os: response.data.sessionVerify.verificationDevice.os,
-              model: response.data.sessionVerify.verificationDevice.model,
+              os: response.data.sessionVerification.verificationDevice.os,
+              model: response.data.sessionVerification.verificationDevice.model,
             },
           },
           { root: true }
