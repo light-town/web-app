@@ -26,9 +26,16 @@
           }}</NuxtLink>
         </template>
         <template #footer>
-          <ui-grid direction="row-reverse">
+          <ui-grid direction="row-reverse" justify="space-between">
             <ui-button variant="contained" type="submit">
               {{ $t('Next') }}
+            </ui-button>
+            <ui-button
+              v-if="showChooseAccountBtn"
+              variant="outlined"
+              @click="handleChooseAccountBtnClick"
+            >
+              {{ $t('Choose another account') }}
             </ui-button>
           </ui-grid>
         </template>
@@ -81,6 +88,8 @@ export default {
       error(state) {
         return this.localError || state.auth.error;
       },
+      showChooseAccountBtn: state =>
+        Object.keys(state.accounts.accounts).length,
     }),
     ...mapGetters(['currentAccount']),
     versionAccountKey() {
@@ -124,6 +133,9 @@ export default {
     },
     redirectToSignUpPage() {
       this.$router.push('/sign-up');
+    },
+    handleChooseAccountBtnClick() {
+      this.$router.push('/sign-in/accounts');
     },
   },
 };

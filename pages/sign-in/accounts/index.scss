@@ -1,0 +1,37 @@
+.page[data-theme-mode='light'] {
+  --color-account-hover-bg: var(--color-gray-50);
+  --color-account-active-bg: var(--color-gray-100);
+}
+
+.account {
+  margin-top: 8px;
+  user-select: none;
+
+  &__list {
+    overflow-y: auto;
+    max-height: calc(100vh - 500px);
+  }
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.auth-form {
+  &__input {
+    min-width: 400px;
+    margin: 16px 0;
+  }
+}
+
+.account {
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--color-account-hover-bg);
+  }
+
+  &:active {
+    background-color: var(--color-account-active-bg);
+  }
+}

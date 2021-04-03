@@ -5,7 +5,7 @@ import * as faker from 'faker';
 import PwdPage from '../index.vue';
 import AuthFormSkeleton from '~/components/forms/auth/skeleton.vue';
 import * as authActionTypes from '~/store/auth/types';
-import i18n from '~/tests/__mocks__/i18n';
+import i18n from '~/__tests__/__mocks__/i18n';
 
 const router = new VueRouter();
 const localVue = createLocalVue();

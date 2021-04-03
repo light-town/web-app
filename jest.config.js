@@ -18,4 +18,5 @@ module.exports = {
     '<rootDir>/pages/**/*.vue',
     '<rootDir>/store/**/*.js',
   ],
+  modulePathIgnorePatterns: ['__mocks__'],
 };

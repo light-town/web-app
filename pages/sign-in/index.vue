@@ -20,6 +20,14 @@ export default {
   },
   watch: {
     isAccountServiceInit() {
+      this.redirect();
+    },
+  },
+  mounted() {
+    this.redirect();
+  },
+  methods: {
+    redirect() {
       if (this.isAccountServiceInit && this.currentAccount) {
         this.$router.push('/sign-in/pwd');
         return;
@@ -27,10 +35,6 @@ export default {
 
       this.$router.push('/sign-in/identifier');
     },
-  },
-  mounted() {
-    if (this.isAccountServiceInit && this.currentAccount)
-      this.$router.push('/sign-in/pwd');
   },
 };
 </script>

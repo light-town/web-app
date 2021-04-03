@@ -14,32 +14,29 @@ export default {
         return;
       }
 
-      const account = await this.$api.storage.getItem(
-        `account-${lastAccountUuid}`,
-        { parseJson: true }
-      );
-
-      if (typeof account !== 'object' || !account) {
-        commit(mutationTypes.SET_IS_INIT);
-        return;
-      }
-
       commit(mutationTypes.SET_CURRENT_ACCOUNT_UUID, { uuid: lastAccountUuid });
-      commit(mutationTypes.SET_ACCOUNT, {
-        account: {
-          uuid: account?.accountUuid,
-          key: account?.accountKey,
-          name: account?.accountName,
-          avatarUrl: account?.accountAvatarUrl,
-        },
-      });
-      commit(mutationTypes.SET_USER, {
-        user: {
-          uuid: account?.userUuid,
-          name: account?.userName,
-          avatarUrl: account?.userAvatarUrl,
-        },
-      });
+
+      await this.$api.storage
+        .getAllItems()
+        .filter(({ key, value }) => key === `account-${value?.accountUuid}`)
+        .forEach(({ value }) => {
+          commit(mutationTypes.SET_ACCOUNT, {
+            account: {
+              uuid: value?.accountUuid,
+              key: value?.accountKey,
+              name: value?.accountName,
+              avatarUrl: value?.accountAvatarUrl,
+            },
+          });
+          commit(mutationTypes.SET_USER, {
+            user: {
+              uuid: value?.userUuid,
+              name: value?.userName,
+              avatarUrl: value?.userAvatarUrl,
+            },
+          });
+        });
+
       commit(mutationTypes.SET_IS_INIT);
     } catch (e) {
       commit(mutationTypes.SET_USER, { error: e });

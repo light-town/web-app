@@ -6,7 +6,7 @@ import IndentifierPage from '../index.vue';
 import AuthForm from '~/components/forms/auth/form';
 import UiAlert from '~/ui/alert/index.vue';
 import * as cacheActionTypes from '~/store/cache/types';
-import i18n from '~/tests/__mocks__/i18n';
+import i18n from '~/__tests__/__mocks__/i18n';
 
 const router = new VueRouter();
 const localVue = createLocalVue();

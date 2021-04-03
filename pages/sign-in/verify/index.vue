@@ -51,6 +51,7 @@ import AuthForm from '~/components/forms/auth/form.vue';
 import Account from '~/components/forms/auth/account.vue';
 import AuthIllustration from '~/assets/illustrations/2fa.svg?inline';
 import AuthFormSkeleton from '~/components/forms/auth/skeleton.vue';
+import { ChangedSessionVerificationStageEvent } from '~/services/subscriptions';
 
 export default {
   name: 'VerifyPage',
@@ -63,9 +64,16 @@ export default {
     AuthFormSkeleton,
   },
   layout: 'auth',
+  data() {
+    return {
+      event: null,
+    };
+  },
   computed: {
     ...mapState({
       isAccountServiceInit: state => state.accounts.isInit,
+      sessionUuid: state => state.auth.session?.uuid,
+      deviceUuid: state => state.devices.deviceUuid,
       isCacheServiceInit: state => state.cache.isInit,
       error(state) {
         return this.localError || state.auth.error;
@@ -91,10 +99,27 @@ export default {
     ...mapGetters(['currentAccount']),
   },
   mounted() {
-    // subs
+    this.event = new ChangedSessionVerificationStageEvent({
+      sessionUuid: this.sessionUuid,
+      deviceUuid: this.deviceUuid,
+    });
+
+    this.$api.subscriptions.subscribe(
+      this.event,
+      this.onChangedSessionVerificationStageEvent
+    );
   },
   beforeDestroy() {
-    // unsubs
+    if (
+      this.$api.subscriptions.hasSubscribed(
+        this.event,
+        this.onChangedSessionVerificationStageEvent
+      )
+    )
+      this.$api.subscriptions.unsubscribe(
+        this.event,
+        this.onChangedSessionVerificationStageEvent
+      );
   },
   methods: {
     handleSubmitForm(e) {
@@ -102,6 +127,9 @@ export default {
     },
     redirectToSignUpPage() {
       this.$router.push('/sign-up');
+    },
+    onChangedSessionVerificationStageEvent(response) {
+      console.log(response);
     },
   },
 };

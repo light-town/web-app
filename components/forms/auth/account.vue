@@ -1,5 +1,5 @@
 <template>
-  <ui-grid align-items="center" class="account">
+  <ui-grid align-items="center" class="account" @click="e => $emit('click', e)">
     <user-icon class="account__icon"></user-icon>
     <ui-grid direction="column">
       <p class="account__username">{{ name }}</p>

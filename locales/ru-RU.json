@@ -33,5 +33,8 @@
   "This extra step shows it’s really you trying to sign in": "Нам нужно убедиться, что это действительно вы",
   "Check your phone": "Проверьте свой телефон",
   "LightTown sent a notification to your {model} and {os}. Finish fingerprint authorization to continue.": "LightTown отправил уведомление на устройство {model} и {os}. Завершите аутентификацию через проверку отпечатка пальца.",
-  "Try another way?": "Другой способ"
+  "Try another way?": "Другой способ",
+  "Choose another account": "Выбрать другой аккаунт",
+  "Choose an account": "Выберите аккаунт",
+  "Sign in to another account": "Войти через другой аккаунт"
 }

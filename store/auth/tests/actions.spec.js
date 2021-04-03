@@ -3,9 +3,9 @@ import * as faker from 'faker';
 import actions from '../actions';
 import * as actionTypes from '../action-types';
 import * as mutationTypes from '../mutation-types';
-import api from '~/tests/__mocks__/api';
-import commit from '~/tests/__mocks__/commit';
-import dispatch from '~/tests/__mocks__/dispatch';
+import api from '~/__tests__/__mocks__/api';
+import commit from '~/__tests__/__mocks__/commit';
+import dispatch from '~/__tests__/__mocks__/dispatch';
 import * as fetchStatuses from '~/store/fetch-statuses';
 import * as cacheActionTypes from '~/store/cache/types';
 

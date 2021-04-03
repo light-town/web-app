@@ -33,5 +33,8 @@
   "This extra step shows it’s really you trying to sign in": "This extra step shows it’s really you trying to sign in",
   "Check your phone": "Check your phone",
   "LightTown sent a notification to your {model} and {os}. Finish fingerprint authorization to continue.": "LightTown sent a notification to your {model} and {os}. Finish fingerprint authorization to continue.",
-  "Try another way?": "Try another way?"
+  "Try another way?": "Try another way?",
+  "Choose another account": "Choose another account",
+  "Choose an account": "Choose an account",
+  "Sign in to another account": "Sign in to another account"
 }
