@@ -14,6 +14,9 @@ export default {
   },
   async [actionTypes.SIGN_UP]({ commit, state, rootState, dispatch }, payload) {
     try {
+      const normalizedMasterPassword = core.common.normalizeMasterPassword(
+        payload.password
+      );
       const accountKey = core.common.generateAccountKey({
         versionCode: 'A3',
         secret: core.common.generateCryptoRandomString(32),
@@ -21,18 +24,43 @@ export default {
 
       const verifier = core.srp.client.deriveVerifier(
         accountKey,
-        payload.password
+        normalizedMasterPassword
       );
 
       commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.LOADING });
 
-      await this.$api.auth.signUp({
+      const salt = core.common.generateRandomSalt(32);
+      const masterUnlockKey = core.common.deriveMasterUnlockKey(
         accountKey,
-        salt: verifier.salt,
-        verifier: verifier.verifier,
-        username: rootState.cache.raws.username,
-        deviceUuid: rootState.devices.deviceUuid,
+        normalizedMasterPassword,
+        salt
+      );
+      const symmetricKey = core.common.generateCryptoRandomString(32);
+      const vaultKey = core.common.generateCryptoRandomString(32);
+
+      const { publicKey, privateKey } = await core.vaults.generateKeyPair();
+      const encVaultKey = core.vaults.encryptVaultKey(vaultKey, publicKey);
+      const encPrivateKey = core.vaults.encryptPrivateKey(
+        privateKey,
+        symmetricKey
+      );
+
+      const encSymmetricKey = core.vaults.encryptSymmetricKey({
+        symmetricKey,
+        secretKey: masterUnlockKey.key,
+        salt: masterUnlockKey.salt,
       });
+
+      await this.$api.auth.signUp(
+        rootState.devices.deviceUuid,
+        {
+          verifier: verifier.verifier,
+          salt: verifier.salt,
+        },
+        { accountKey, username: rootState.cache.raws.username },
+        { publicKey, encPrivateKey, encSymmetricKey },
+        { encVaultKey }
+      );
 
       commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.SUCCESS });
 

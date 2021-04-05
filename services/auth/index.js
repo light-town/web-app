@@ -1,14 +1,33 @@
 import AbstractService from '../abstract-service';
 
 export default class AuthService extends AbstractService {
-  signUp({ accountKey, salt, verifier, username, deviceUuid }) {
+  signUp(
+    deviceUuid,
+    { verifier, salt },
+    { accountKey, username, avatarUrl },
+    { publicKey, encPrivateKey, encSymmetricKey },
+    { encVaultKey }
+  ) {
     return this.axios
       .post('/auth/sign-up', {
-        accountKey,
-        salt,
-        verifier,
-        username,
         deviceUuid,
+        srp: {
+          verifier,
+          salt,
+        },
+        account: {
+          key: accountKey,
+          username,
+          avatarUrl,
+        },
+        primaryKeySet: {
+          publicKey,
+          encPrivateKey,
+          encSymmetricKey,
+        },
+        primaryVault: {
+          encVaultKey,
+        },
       })
       .then(response => response.data);
   }
