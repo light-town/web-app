@@ -2,7 +2,9 @@
   <ui-grid class="main-layout">
     <sidebar></sidebar>
     <ui-grid direction="column">
-      <appbar></appbar>
+      <appbar>
+        <new-vault-form></new-vault-form>
+      </appbar>
       <ui-grid class="vault-list" wrap="wrap">
         <template v-if="showVaultList">
           <vault
@@ -34,6 +36,7 @@ import Sidebar from '~/components/sibebar/index.vue';
 import Appbar from '~/components/appbar/index.vue';
 import Vault from '~/components/vault/index.vue';
 import VaultSkeleton from '~/components/vault/skeleton/index.vue';
+import NewVaultForm from '~/components/forms/new-vault/index.vue';
 
 export default {
   name: 'VaultsPage',
@@ -43,6 +46,7 @@ export default {
     Appbar,
     Vault,
     VaultSkeleton,
+    NewVaultForm,
   },
   middleware: ['auth'],
   computed: {
@@ -52,12 +56,8 @@ export default {
     }),
   },
   methods: {
-    openVault() {
-      console.log('open');
-    },
-    manageVault() {
-      console.log('manage');
-    },
+    openVault() {},
+    manageVault() {},
   },
 };
 </script>

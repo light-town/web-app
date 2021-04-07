@@ -1,0 +1,41 @@
+.page[data-theme-mode='light'] {
+  --color-ui-modal-bg-color: var(--color-black);
+}
+
+.ui-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 30;
+  transition: all 0.3s ease-out;
+
+  &__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-ui-modal-bg-color);
+    opacity: 0.6;
+  }
+
+  &__content {
+    display: inline-flex;
+
+    width: auto;
+    overflow: auto;
+
+    z-index: 1;
+
+    /* &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: var(--color-dialog-content-scroll);
+    } */
+  }
+}

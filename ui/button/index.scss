@@ -1,6 +1,7 @@
 .page[data-theme-mode='light'] {
   --color-contained-text: var(--color-white);
   --color-contained-bg: var(--color-green-400);
+  --color-contained-border: var(--color-green-400);
   --color-contained-hover-text: var(--color-white);
   --color-contained-hover-bg: var(--color-green-500);
   --color-contained-active-text: var(--color-white);
@@ -23,12 +24,16 @@
 
   --color-text-text: var(--color-green-400);
   --color-text-bg: transparent;
+  --color-text-border: transparent;
   --color-text-hover-text: var(--color-green-400);
   --color-text-hover-bg: var(--color-green-50);
   --color-text-active-text: var(--color-green-400);
   --color-text-active-bg: var(--color-green-100);
   --color-text-disabled-text: var(--color-gray-300);
   --color-text-disabled-bg: transparent;
+
+  --color-ui-button-focus-border: var(--color-green-200);
+  --color-ui-button-focus-bs: var(--color-green-100);
 }
 
 .ui-btn {
@@ -41,12 +46,13 @@
   border-radius: 4px;
   cursor: pointer;
 
-  transition: background 0.3s ease-out, color 0.3s ease-out, fill 0.3s ease-out;
+  transition: background 0.3s ease-out, color 0.3s ease-out, fill 0.3s ease-out,
+    box-shadow 0.3s;
 
   &--contained {
     color: var(--color-contained-text);
     background-color: var(--color-contained-bg);
-    border: 0;
+    border: 1px solid var(--color-contained-border);
 
     &:hover:enabled {
       color: var(--color-contained-hover-text);
@@ -91,7 +97,7 @@
   &--text {
     color: var(--color-text-text);
     background-color: var(--color-text-bg);
-    border: 0;
+    border: 1px solid var(--color-text-border);
 
     &:hover:enabled {
       color: var(--color-text-hover-text);
@@ -107,5 +113,9 @@
       color: var(--color-text-disabled-text);
       background-color: var(--color-text-disabled-bg);
     }
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.25rem var(--color-ui-button-focus-bs);
   }
 }

@@ -4,7 +4,7 @@
     :type="type"
     :placeholder="placeholder"
     :value="value"
-    @input="handleInput"
+    @input.prevent="handleInput"
   />
 </template>
 
@@ -14,10 +14,11 @@ export default {
   props: {
     type: {
       type: String,
-      required: true,
+      required: false,
       validator(val) {
         return ['text', 'password', 'email'].includes(val);
       },
+      default: 'text',
     },
     placeholder: {
       type: String,

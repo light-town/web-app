@@ -1,0 +1,46 @@
+.page[data-theme-mode='light'] {
+  --color-new-vault-form-bg: var(--color-white);
+  --color-new-vault-form-title: var(--color-gray-700);
+}
+
+.new-vault-form {
+  display: inline-flex;
+
+  width: auto;
+
+  padding: 40px;
+  border-radius: 4px;
+
+  background-color: var(--color-new-vault-form-bg);
+
+  & > * {
+    margin-bottom: 40px;
+  }
+
+  &__title {
+    display: inline-flex;
+
+    font-size: 24px;
+    font-weight: 500;
+
+    color: var(--color-new-vault-form-title);
+  }
+
+  &__input {
+    min-width: 324px;
+
+    margin-bottom: 16px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__controls {
+    margin-bottom: 0;
+  }
+
+  &__avatar > div {
+    font-size: 22px;
+  }
+}
