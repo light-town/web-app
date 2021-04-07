@@ -79,13 +79,15 @@ export default {
         return;
       }
 
-      const { accountUuid } = await this.loadAccount({
+      const response = await this.loadAccount({
         accountKey: this.accountKey,
       });
 
-      await this.setCurrentAccountUuid({ accountUuid });
+      if (this.error) return;
 
-      if (!this.error) this.$router.push('/sign-in/pwd');
+      await this.setCurrentAccountUuid({ accountUuid: response?.accountUuid });
+
+      this.$router.push('/sign-in/pwd');
     },
     redirectToSignUpPage() {
       this.$router.push('/sign-up');

@@ -1,0 +1,33 @@
+.page[data-theme-mode='light'] {
+  --color-appbar-account-text: var(--color-gray-550);
+  --color-appbar-account-btn-fill: var(--color-gray-550);
+}
+
+.appbar {
+  &__account {
+    display: inline-flex;
+
+    width: auto;
+
+    &-icon,
+    &-text {
+      margin-right: 32px;
+    }
+
+    &-text {
+      font-weight: 500;
+      color: var(--color-appbar-account-text);
+    }
+
+    &-btn {
+      --size: 14px;
+
+      width: var(--size);
+      height: var(--size);
+
+      transform: rotate(90deg);
+
+      fill: var(--color-appbar-account-btn-fill);
+    }
+  }
+}

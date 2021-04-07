@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import * as mutationTypes from './mutation-types';
 
 export default {
@@ -10,10 +11,10 @@ export default {
   [mutationTypes.SET_ERROR](state, payload) {
     state.error = payload.error;
   },
-  [mutationTypes.CREATE_DEVICE](state, payload) {
-    state.deviceUuid = payload.deviceUuid;
+  [mutationTypes.SET_KEY_SET](state, payload) {
+    Vue.set(state.all, payload?.keySet?.uuid, payload?.keySet);
   },
-  [mutationTypes.SET_DEVICE_UUID](state, payload) {
-    state.deviceUuid = payload.uuid;
+  [mutationTypes.SET_MASTER_UNLOCK_KEY](state, payload) {
+    state.masterUnlockKey = payload.key;
   },
 };

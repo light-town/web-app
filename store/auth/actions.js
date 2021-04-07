@@ -27,13 +27,9 @@ export default {
         normalizedMasterPassword
       );
 
-      commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.LOADING });
-
-      const salt = core.common.generateRandomSalt(32);
       const masterUnlockKey = core.common.deriveMasterUnlockKey(
         accountKey,
-        normalizedMasterPassword,
-        salt
+        normalizedMasterPassword
       );
       const symmetricKey = core.common.generateCryptoRandomString(32);
       const vaultKey = core.common.generateCryptoRandomString(32);
@@ -51,6 +47,13 @@ export default {
         salt: masterUnlockKey.salt,
       });
 
+      const encMetadata = await core.vaults.encryptVaultMetadata(vaultKey, {
+        title: 'Personal',
+        desc: 'Your default vault for storing elements.',
+      });
+
+      commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.LOADING });
+
       await this.$api.auth.signUp(
         rootState.devices.deviceUuid,
         {
@@ -58,8 +61,12 @@ export default {
           salt: verifier.salt,
         },
         { accountKey, username: rootState.cache.raws.username },
-        { publicKey, encPrivateKey, encSymmetricKey },
-        { encVaultKey }
+        {
+          publicKey: core.vaults.publicKeyToString(publicKey),
+          encPrivateKey,
+          encSymmetricKey,
+        },
+        { encKey: encVaultKey, encMetadata }
       );
 
       commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.SUCCESS });

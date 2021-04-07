@@ -2,5 +2,6 @@ export default () => ({
   isInit: false,
   fetchStatus: null,
   error: null,
-  deviceUuid: null,
+  all: Object.create({}),
+  masterUnlockKey: null,
 });

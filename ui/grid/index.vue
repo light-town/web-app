@@ -5,6 +5,7 @@
       [`ui-grid_dir-${direction}`]: direction,
       [`ui-grid_justify-${justify}`]: justify,
       [`ui-grid_align-${alignItems}`]: alignItems,
+      [`ui-grid_wrap-${wrap}`]: wrap,
     }"
     @click="handleClick"
   >

@@ -1,0 +1,34 @@
+.page[data-theme-mode='light'] {
+  --color-ui-avatar-badge-border: var(--color-gray-150);
+  --color-ui-avatar-badge-bg: var(--color-gray-100);
+  --color-ui-avatar-badge-text: var(--color-gray-450);
+}
+
+.ui-avatar {
+  & > * {
+    width: 100%;
+    height: 100%;
+
+    border-radius: 4px;
+  }
+
+  &__badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--color-ui-avatar-badge-border);
+
+    background-color: var(--color-ui-avatar-badge-bg);
+
+    font-size: 18px;
+    font-weight: 500;
+
+    color: var(--color-ui-avatar-badge-text);
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+  }
+}

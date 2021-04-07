@@ -61,6 +61,7 @@ import AuthForm from '~/components/forms/auth/form.vue';
 import Account from '~/components/forms/auth/account.vue';
 import AuthFormSkeleton from '~/components/forms/auth/skeleton.vue';
 import * as authActionTypes from '~/store/auth/types';
+import * as keySetsActionTypes from '~/store/key-sets/types';
 import { SessionVerifyStagesEnum } from '~/store/auth/enums';
 
 export default {
@@ -112,6 +113,7 @@ export default {
     ...mapActions({
       createSession: authActionTypes.CREATE_SESSION,
       startSession: authActionTypes.START_SESSION,
+      setMasterUnlockKey: keySetsActionTypes.SET_MASTER_UNLOCK_KEY,
     }),
     async handleSubmitForm(e) {
       e.preventDefault();
@@ -126,6 +128,10 @@ export default {
       }
 
       await this.startSession();
+
+      if (this.error) return;
+
+      await this.setMasterUnlockKey({ password: this.password });
 
       if (this.error) return;
 

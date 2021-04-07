@@ -1,0 +1,25 @@
+.page[data-theme-mode='light'] {
+  --color-sidebar-logo-title: var(--color-gray-650);
+}
+
+.sidebar {
+  &__logo {
+    padding: 10px;
+
+    &-icon {
+      --size: 50px;
+
+      width: var(--size);
+      height: var(--size);
+
+      margin-right: 16px;
+    }
+
+    &-title {
+      font-size: 24px;
+      font-weight: 600;
+
+      color: var(--color-sidebar-logo-title);
+    }
+  }
+}
