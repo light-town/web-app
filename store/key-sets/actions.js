@@ -16,7 +16,7 @@ export default {
 
       for (const keySet of response.data) {
         const symmetricKey = await core.vaults.decryptSymmetricKey({
-          secretKey: state.masterUnlockKey,
+          secretKey: state.masterUnlockKey.key,
           encryptedSymmetricKey: keySet.encSymmetricKey.key,
           iv: keySet.encSymmetricKey.iv,
           tag: keySet.encSymmetricKey.tag,
@@ -74,7 +74,7 @@ export default {
       );
 
       commit(mutationTypes.SET_MASTER_UNLOCK_KEY, {
-        key: masterUnlockKey.key,
+        key: masterUnlockKey,
       });
 
       commit(mutationTypes.SET_IS_INIT);

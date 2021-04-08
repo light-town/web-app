@@ -5,7 +5,7 @@
 }
 
 .vault-list {
-  height: calc(100vh - 70px);
+  max-height: calc(100vh - 70px);
 
   padding: 40px;
 
@@ -14,5 +14,9 @@
   &__vault {
     margin-right: 40px;
     margin-bottom: 40px;
+
+    &:last-child {
+      margin-right: 0;
+    }
   }
 }

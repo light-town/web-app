@@ -28,12 +28,10 @@ export default {
   },
   methods: {
     redirect() {
-      if (this.isAccountServiceInit && this.currentAccount) {
-        this.$router.push('/sign-in/pwd');
-        return;
-      }
+      if (!this.isAccountServiceInit) return;
 
-      this.$router.push('/sign-in/identifier');
+      if (this.currentAccount) this.$router.push('/sign-in/pwd');
+      else this.$router.push('/sign-in/identifier');
     },
   },
 };

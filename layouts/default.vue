@@ -16,13 +16,13 @@ import * as vaultsActionTypes from '~/store/vaults/types';
 
 export default {
   name: 'DefaultLayout',
-  mounted() {
-    this.initCacheService();
-    this.initAuthService();
-    this.initDevicesService();
-    this.initAccountsService();
-    this.initKeySetsService();
-    this.initVaultsService();
+  async mounted() {
+    await this.initCacheService();
+    await this.initAuthService();
+    await this.initDevicesService();
+    await this.initAccountsService();
+    await this.initKeySetsService();
+    await this.initVaultsService();
   },
   methods: {
     ...mapActions({

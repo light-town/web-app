@@ -27,6 +27,7 @@
   }
 
   &__input {
+    width: 100%;
     min-width: 324px;
 
     margin-bottom: 16px;
@@ -42,5 +43,9 @@
 
   &__avatar > div {
     font-size: 22px;
+  }
+
+  &__alert {
+    margin-bottom: 16px;
   }
 }

@@ -6,4 +6,13 @@ export default class VaultsService extends AbstractService {
       .get(`/accounts/${accountUuid}/vaults`)
       .then(response => response.data);
   }
+
+  createVault(accountUuid, keySet, vault) {
+    return this.axios
+      .post(`/accounts/${accountUuid}/vaults`, {
+        keySet,
+        vault,
+      })
+      .then(response => response.data);
+  }
 }

@@ -14,6 +14,13 @@
           <p class="new-vault-form__title">New Vault</p>
           <ui-avatar name="V" class="new-vault-form__avatar"></ui-avatar>
           <ui-grid direction="column">
+            <ui-alert
+              v-if="error"
+              severity="error"
+              class="new-vault-form__alert"
+            >
+              {{ error.message }}
+            </ui-alert>
             <ui-input
               v-model="title"
               placeholder="Vault Title"
@@ -46,12 +53,15 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
 import UiGrid from '~/ui/grid/index.vue';
 import UiButton from '~/ui/button/index.vue';
 import UiModal from '~/ui/modal/index.vue';
 import UiAvatar from '~/ui/avatar/index.vue';
 import UiInput from '~/ui/input/index.vue';
+import UiAlert from '~/ui/alert/index.vue';
 import AddIcon from '~/assets/add.svg?inline';
+import * as vaultsActionTypes from '~/store/vaults/types';
 
 export default {
   name: 'Appbar',
@@ -61,23 +71,50 @@ export default {
     UiModal,
     UiAvatar,
     UiInput,
+    UiAlert,
     AddIcon,
   },
   data() {
     return {
+      localError: null,
       open: false,
       title: '',
       desc: '',
     };
   },
+  computed: {
+    ...mapState({
+      currentAccountUuid: state => state.accounts.currentAccountUuid,
+      error(state) {
+        return this.localError || state.accounts.error;
+      },
+    }),
+  },
+  watch: {
+    title() {
+      this.localError = this.localError ? null : this.localError;
+    },
+  },
   methods: {
+    ...mapActions({
+      createVault: vaultsActionTypes.CREATE_VAULT,
+    }),
     handleCloseForm() {
       this.open = false;
     },
     openForm() {
       this.open = true;
     },
-    handleFormSubmit() {},
+    async handleFormSubmit() {
+      if (this.title.length < 8) {
+        this.localError = new Error('The vault title must has more 8 symbols');
+        return;
+      }
+
+      await this.createVault({ title: this.title, desc: this.desc });
+
+      this.open = false;
+    },
   },
 };
 </script>
