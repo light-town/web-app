@@ -35,22 +35,28 @@ export default {
       const vaultKey = core.common.generateCryptoRandomString(32);
 
       const { publicKey, privateKey } = await core.vaults.generateKeyPair();
-      const encVaultKey = core.vaults.encryptVaultKey(vaultKey, publicKey);
-      const encPrivateKey = core.vaults.encryptPrivateKey(
+      const encVaultKey = await core.vaults.vaultKey.encryptByPublicKey(
+        vaultKey,
+        publicKey
+      );
+      const encPrivateKey = await core.vaults.privateKey.encryptBySymmetricKey(
         privateKey,
         symmetricKey
       );
 
-      const encSymmetricKey = core.vaults.encryptSymmetricKey({
+      const encSymmetricKey = await core.vaults.symmetricKey.encryptBySecretKey(
         symmetricKey,
-        secretKey: masterUnlockKey.key,
-        salt: masterUnlockKey.salt,
-      });
+        masterUnlockKey.key,
+        masterUnlockKey.salt
+      );
 
-      const encMetadata = await core.vaults.encryptVaultMetadata(vaultKey, {
-        title: 'Personal',
-        desc: 'Your default vault for storing elements.',
-      });
+      const encMetadata = await core.vaults.vaultMetadata.encryptByVaultKey(
+        {
+          title: 'Personal',
+          desc: 'Your default vault for storing elements.',
+        },
+        vaultKey
+      );
 
       commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.LOADING });
 

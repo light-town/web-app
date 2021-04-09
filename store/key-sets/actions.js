@@ -14,30 +14,31 @@ export default {
 
       commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.SUCCESS });
 
-      for (const keySet of response.data) {
-        const symmetricKey = await core.vaults.decryptSymmetricKey({
-          secretKey: state.masterUnlockKey.key,
-          encryptedSymmetricKey: keySet.encSymmetricKey.key,
-          iv: keySet.encSymmetricKey.iv,
-          tag: keySet.encSymmetricKey.tag,
-          tagLength: keySet.encSymmetricKey.tagLength,
-        });
-        const privateKey = core.vaults.decryptPrivateKey(
-          keySet.encPrivateKey.key,
-          symmetricKey
-        );
-        const publicKey = core.vaults.publicKeyFromString(keySet.publicKey);
+      /// [TODO] add support fot not primary key sets
 
-        commit(mutationTypes.SET_KEY_SET, {
-          keySet: {
-            uuid: keySet.uuid,
-            vaultUuid: keySet.vaultUuid,
-            publicKey,
-            privateKey,
-            symmetricKey,
-            isPrimary: keySet.isPrimary,
-          },
-        });
+      for (const keySet of response.data) {
+        if (keySet.isPrimary) {
+          const symmetricKey = await core.vaults.symmetricKey.decryptBySecretKey(
+            keySet.encSymmetricKey,
+            state.masterUnlockKey.key
+          );
+          const privateKey = await core.vaults.privateKey.decryptBySymmetricKey(
+            keySet.encPrivateKey,
+            symmetricKey
+          );
+          const publicKey = core.vaults.publicKeyFromString(keySet.publicKey);
+
+          commit(mutationTypes.SET_KEY_SET, {
+            keySet: {
+              uuid: keySet.uuid,
+              vaultUuid: keySet.vaultUuid,
+              publicKey,
+              privateKey,
+              symmetricKey,
+              isPrimary: keySet.isPrimary,
+            },
+          });
+        }
       }
 
       commit(mutationTypes.SET_IS_INIT);

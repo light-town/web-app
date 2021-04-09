@@ -15,25 +15,26 @@ export default {
       commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.SUCCESS });
 
       for (const vault of response.data) {
-        const keySet = Object.values(rootState['key-sets'].all).find(
-          keySet => keySet.vaultUuid === vault.uuid
-        );
-        const key = core.vaults.decryptVaultKey(
-          vault.encKey.key,
-          keySet.privateKey
-        );
-        const metadata = await core.vaults.decryptVaultMetadata(
-          key,
-          vault.encMetadata
-        );
+        const keySet = rootState['key-sets'].all[vault.keySetUuid];
 
-        commit(mutationTypes.SET_VAULT, {
-          vault: {
-            uuid: vault.uuid,
-            key,
-            metadata,
-          },
-        });
+        if (keySet.isPrimary) {
+          const vaultKey = await core.vaults.vaultKey.decryptByPrivateKey(
+            vault.encKey,
+            keySet.privateKey
+          );
+          const metadata = await core.vaults.vaultMetadata.decryptByVaultKey(
+            vault.encMetadata,
+            vaultKey
+          );
+
+          commit(mutationTypes.SET_VAULT, {
+            vault: {
+              uuid: vault.uuid,
+              key: vaultKey,
+              metadata,
+            },
+          });
+        }
       }
 
       commit(mutationTypes.SET_IS_INIT);
@@ -46,48 +47,40 @@ export default {
   },
   async [actionTypes.CREATE_VAULT]({ commit, state, rootState }, payload) {
     try {
-      const symmetricKey = core.common.generateCryptoRandomString(32);
       const vaultKey = core.common.generateCryptoRandomString(32);
 
-      const { publicKey, privateKey } = await core.vaults.generateKeyPair();
-      const encVaultKey = core.vaults.encryptVaultKey(vaultKey, publicKey);
-      const encPrivateKey = core.vaults.encryptPrivateKey(
-        privateKey,
-        symmetricKey
+      const primaryKeySet = Object.values(rootState['key-sets'].all).find(
+        keySet => keySet.isPrimary
       );
 
-      const encSymmetricKey = core.vaults.encryptSymmetricKey({
-        symmetricKey,
-        secretKey: rootState['key-sets'].masterUnlockKey.key,
-        salt: rootState['key-sets'].masterUnlockKey.salt,
-      });
+      const encKey = await core.vaults.symmetricKey.encryptByPublicKey(
+        vaultKey,
+        primaryKeySet.publicKey
+      );
 
       const vaultMetadata = {
         title: payload.title,
         desc: payload.desc,
       };
-      const encVaultMetadata = await core.vaults.encryptVaultMetadata(
-        vaultKey,
-        vaultMetadata
+      const encVaultMetadata = await core.vaults.vaultMetadata.encryptByVaultKey(
+        vaultMetadata,
+        vaultKey
       );
 
       commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.LOADING });
 
-      const response = await this.$api.vaults.createVault(
-        rootState.accounts.currentAccountUuid,
-        {
-          publicKey: core.vaults.publicKeyToString(publicKey),
-          encPrivateKey,
-          encSymmetricKey,
-        },
-        { encKey: encVaultKey, encMetadata: encVaultMetadata }
-      );
+      const response = await this.$api.vaults.createVault({
+        encKey,
+        encMetadata: encVaultMetadata,
+      });
 
       commit(mutationTypes.SET_VAULT, {
         vault: {
           uuid: response.data.uuid,
           key: vaultKey,
           metadata: vaultMetadata,
+          accountUuid: response.data.accountUuid,
+          keySetUuid: response.data.keySetUuid,
         },
       });
 

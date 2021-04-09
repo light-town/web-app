@@ -47,6 +47,7 @@ export default {
       commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.LOADING });
 
       const response = await this.$api.accounts.getAccount(payload.accountKey);
+      const account = response.data[0];
 
       commit(mutationTypes.SET_FETCH_STATUS, {
         status: fetchStatuses.SUCCESS,
@@ -54,35 +55,35 @@ export default {
 
       commit(mutationTypes.SET_ACCOUNT, {
         account: {
-          uuid: response.data.accountUuid,
+          uuid: account.accountUuid,
           key: payload.accountKey,
-          name: response.data.accountName,
-          avatarUrl: response.data.accountAvatarUrl,
+          name: account.accountName,
+          avatarUrl: account.accountAvatarUrl,
         },
       });
       commit(mutationTypes.SET_USER, {
         user: {
-          uuid: response.data.userUuid,
-          name: response.data.userName,
-          avatarUrl: response.data.userAvatarUrl,
+          uuid: account.userUuid,
+          name: account.userName,
+          avatarUrl: account.userAvatarUrl,
         },
       });
 
       await this.$api.storage.setItem(
-        `account-${response.data.accountUuid}`,
+        `account-${account.accountUuid}`,
         {
-          accountUuid: response.data.accountUuid,
+          accountUuid: account.accountUuid,
           accountKey: payload.accountKey,
-          accountName: response.data.accountName,
-          accountAvatarUrl: response.data.accountAvatarUrl,
-          userUuid: response.data.userUuid,
-          userName: response.data.userName,
-          userAvatarUrl: response.data.userAvatarUrl,
+          accountName: account.accountName,
+          accountAvatarUrl: account.accountAvatarUrl,
+          userUuid: account.userUuid,
+          userName: account.userName,
+          userAvatarUrl: account.userAvatarUrl,
         },
         { json: true }
       );
 
-      return { accountUuid: response.data.accountUuid };
+      return { accountUuid: account.accountUuid };
     } catch (e) {
       if (state.fetchStatus === fetchStatuses.LOADING)
         commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.ERROR });
