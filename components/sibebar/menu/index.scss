@@ -2,9 +2,15 @@
   --color-sidebar-menu-item-icon-fill: var(--color-gray-650);
   --color-sidebar-menu-item-text: var(--color-gray-650);
 
-  --color-sidebar-menu-item-hover-bg: var(--color-gray-100);
+  --color-sidebar-menu-item-hover-bg: var(--color-green-50);
+  --color-sidebar-menu-item-hover-icon: var(--color-green-400);
+  --color-sidebar-menu-item-hover-text: var(--color-green-400);
+
   --color-sidebar-menu-item-active-bg: var(--color-gray-150);
-  --color-sidebar-menu-item-selected-bg: var(--color-gray-100);
+
+  --color-sidebar-menu-item-selected-bg: var(--color-green-50);
+  --color-sidebar-menu-item-selected-icon: var(--color-green-400);
+  --color-sidebar-menu-item-selected-text: var(--color-green-400);
 }
 
 .sidebar {
@@ -12,10 +18,10 @@
     margin-top: 32px;
 
     &-item {
-      min-width: 270px;
+      width: 90px;
+      height: 72px;
 
-      margin: 4px 0;
-      padding: 10px 24px;
+      margin-bottom: 10px;
 
       &-icon {
         --size: 24px;
@@ -23,19 +29,27 @@
         width: var(--size);
         height: var(--size);
 
-        margin-right: 24px;
+        margin-bottom: 6px;
 
         fill: var(--color-sidebar-menu-item-icon-fill);
       }
 
       &-text {
-        font-size: 16px;
+        font-size: 11px;
 
         color: var(--color-sidebar-menu-item-text);
       }
 
       &:not(.sidebar__menu-item_active):hover:enabled {
         background-color: var(--color-sidebar-menu-item-hover-bg) !important;
+
+        .sidebar__menu-item-icon {
+          fill: var(--color-sidebar-menu-item-hover-icon);
+        }
+
+        .sidebar__menu-item-text {
+          color: var(--color-sidebar-menu-item-hover-text);
+        }
       }
 
       &:not(.sidebar__menu-item_active):active:enabled {
@@ -44,6 +58,14 @@
 
       &_active {
         background-color: var(--color-sidebar-menu-item-selected-bg) !important;
+
+        .sidebar__menu-item-icon {
+          fill: var(--color-sidebar-menu-item-selected-icon);
+        }
+
+        .sidebar__menu-item-text {
+          color: var(--color-sidebar-menu-item-selected-text);
+        }
       }
     }
   }
