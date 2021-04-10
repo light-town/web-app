@@ -1,7 +1,10 @@
 <template>
   <ui-grid class="main-layout">
     <sidebar></sidebar>
-    <listbar></listbar>
+    <listbar>
+      <template #title> Vaults </template>
+      <template #menu> <new-vault-form></new-vault-form> </template>
+    </listbar>
     <ui-grid direction="column">
       <appbar> </appbar>
       <ui-grid class="vault-list" wrap="wrap">
@@ -36,6 +39,7 @@ import Appbar from '~/components/appbar/index.vue';
 import Listbar from '~/components/listbar/index.vue';
 import Vault from '~/components/vault/index.vue';
 import VaultSkeleton from '~/components/vault/skeleton/index.vue';
+import NewVaultForm from '~/components/forms/new-vault/index.vue';
 
 export default {
   name: 'VaultsPage',
@@ -46,6 +50,7 @@ export default {
     Vault,
     VaultSkeleton,
     Listbar,
+    NewVaultForm,
   },
   /*   middleware: ['auth'], */
   computed: {

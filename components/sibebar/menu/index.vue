@@ -1,6 +1,10 @@
 <template>
   <ui-grid direction="column" class="sidebar__menu">
-    <ui-button variant="text" class="sidebar__menu-item">
+    <ui-button
+      variant="text"
+      class="sidebar__menu-item"
+      @click="redirect('/overview')"
+    >
       <ui-grid direction="column" align-items="center" justify="center">
         <home-icon class="sidebar__menu-item-icon"></home-icon>
         <p class="sidebar__menu-item-text">Overview</p>
@@ -10,15 +14,23 @@
       variant="text"
       :class="[
         'sidebar__menu-item',
-        { 'sidebar__menu-item_active': vaultPage },
+        { 'sidebar__menu-item_active': vaultsPage },
       ]"
+      @click="$router.push('/vaults')"
     >
       <ui-grid direction="column" align-items="center" justify="center">
         <supplies-icon class="sidebar__menu-item-icon"></supplies-icon>
         <p class="sidebar__menu-item-text">Vaults</p>
       </ui-grid>
     </ui-button>
-    <ui-button variant="text" class="sidebar__menu-item">
+    <ui-button
+      variant="text"
+      :class="[
+        'sidebar__menu-item',
+        { 'sidebar__menu-item_active': teamsPage },
+      ]"
+      @click="$router.push('/teams')"
+    >
       <ui-grid direction="column" align-items="center" justify="center">
         <teams-icon class="sidebar__menu-item-icon"></teams-icon>
         <p class="sidebar__menu-item-text">Teams</p>
@@ -60,8 +72,11 @@ export default {
     SettingsIcon,
   },
   computed: {
-    vaultPage() {
+    vaultsPage() {
       return this.$route.name === 'vaults';
+    },
+    teamsPage() {
+      return this.$route.name === 'teams';
     },
   },
 };

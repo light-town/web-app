@@ -1,0 +1,30 @@
+.page[data-theme-mode='light'] {
+  --color-ui-badge-black-text: var(--color-black);
+  --color-ui-badge-black-bg: var(--color-gray-100);
+
+  --color-ui-badge-blue-text: var(--color-blue-400);
+  --color-ui-badge-blue-bg: var(--color-blue-10);
+}
+
+.ui-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0.25rem 0.5rem;
+
+  font-size: 0.75rem;
+  font-weight: 400;
+
+  border-radius: 4px;
+
+  &_black {
+    color: var(--color-ui-badge-black-text);
+    background-color: var(--color-ui-badge-black-bg);
+  }
+
+  &_blue {
+    color: var(--color-ui-badge-blue-text);
+    background-color: var(--color-ui-badge-blue-bg);
+  }
+}

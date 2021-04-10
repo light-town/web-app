@@ -1,22 +1,20 @@
 <template>
   <ui-grid direction="column" class="listbar">
-    <p class="listbar__title">Vaults</p>
+    <p class="listbar__title"><slot name="title"></slot></p>
     <span class="listbar__separator"></span>
     <ui-grid direction="column" class="listbar__menu">
-      <new-vault-form></new-vault-form>
+      <slot name="menu"></slot>
     </ui-grid>
   </ui-grid>
 </template>
 
 <script>
 import UiGrid from '~/ui/grid/index.vue';
-import NewVaultForm from '~/components/forms/new-vault/index.vue';
 
 export default {
   name: 'Listbar',
   components: {
     UiGrid,
-    NewVaultForm,
   },
 };
 </script>
