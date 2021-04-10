@@ -1,10 +1,9 @@
 <template>
   <ui-grid class="main-layout">
     <sidebar></sidebar>
+    <listbar></listbar>
     <ui-grid direction="column">
-      <appbar>
-        <new-vault-form></new-vault-form>
-      </appbar>
+      <appbar> </appbar>
       <ui-grid class="vault-list" wrap="wrap">
         <template v-if="showVaultList">
           <vault
@@ -34,9 +33,9 @@ import { mapState } from 'vuex';
 import UiGrid from '~/ui/grid/index.vue';
 import Sidebar from '~/components/sibebar/index.vue';
 import Appbar from '~/components/appbar/index.vue';
+import Listbar from '~/components/listbar/index.vue';
 import Vault from '~/components/vault/index.vue';
 import VaultSkeleton from '~/components/vault/skeleton/index.vue';
-import NewVaultForm from '~/components/forms/new-vault/index.vue';
 
 export default {
   name: 'VaultsPage',
@@ -46,9 +45,9 @@ export default {
     Appbar,
     Vault,
     VaultSkeleton,
-    NewVaultForm,
+    Listbar,
   },
-  middleware: ['auth'],
+  /*   middleware: ['auth'], */
   computed: {
     ...mapState({
       showVaultList: state => state.vaults.isInit,

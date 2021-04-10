@@ -1,10 +1,6 @@
 <template>
   <ui-grid>
-    <ui-button
-      variant="outlined"
-      class="appbar__new-vault-btn"
-      @click="openForm"
-    >
+    <ui-button variant="outlined" class="new-vault-btn" @click="openForm">
       <add-icon class="new-vault-btn__icon"></add-icon>
       <p class="new-vault-btn__text">New Vault</p>
     </ui-button>

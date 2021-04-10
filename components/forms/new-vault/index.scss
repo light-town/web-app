@@ -3,6 +3,20 @@
   --color-new-vault-form-title: var(--color-gray-700);
 }
 
+.new-vault-btn {
+  width: 100%;
+
+  border-style: dashed;
+
+  &:hover:enabled {
+    border-style: dashed;
+  }
+
+  &__text {
+    display: inline-flex;
+  }
+}
+
 .new-vault-form {
   display: inline-flex;
 
