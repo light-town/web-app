@@ -5,7 +5,11 @@
         class="ui-popup__background"
         @click="handleBackgroundClick"
       ></ui-grid>
-      <popup-content :anchor="anchor" :position="position">
+      <popup-content
+        :anchor="anchor"
+        :position="position"
+        :class="contentClass"
+      >
         <slot></slot>
       </popup-content>
     </ui-grid>
@@ -44,6 +48,11 @@ export default {
           'right-bottom',
         ].includes(val);
       },
+    },
+    contentClass: {
+      type: String,
+      required: false,
+      default: '',
     },
   },
   methods: {

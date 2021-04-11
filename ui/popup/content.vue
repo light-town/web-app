@@ -42,6 +42,9 @@ export default {
       return this.anchor.root.getBoundingClientRect();
     },
   },
+  beforeUpdate() {
+    this.updatePos();
+  },
   mounted() {
     this.updatePos();
   },

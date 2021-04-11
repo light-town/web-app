@@ -1,11 +1,14 @@
 <template>
-  <ui-grid align-items="center" justify="space-between" class="appbar">
-    <ui-grid align-items="center">
-      <slot></slot>
+  <ui-grid direction="column">
+    <ui-grid align-items="center" justify="space-between" class="appbar">
+      <ui-grid align-items="center">
+        <slot></slot>
+      </ui-grid>
+      <ui-grid align-items="center" justify="flex-end">
+        <account></account>
+      </ui-grid>
     </ui-grid>
-    <ui-grid align-items="center" justify="flex-end">
-      <account></account>
-    </ui-grid>
+    <div class="appbar__separator"></div>
   </ui-grid>
 </template>
 

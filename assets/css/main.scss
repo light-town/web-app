@@ -5,6 +5,8 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+
+  line-height: 1rem;
 }
 
 button {
@@ -21,4 +23,8 @@ input {
 
 a {
   text-decoration: none;
+}
+
+table {
+  border-collapse: collapse;
 }

@@ -1,0 +1,12 @@
+.team-table {
+  &__cell-icon {
+    margin-right: 16px;
+
+    & > div {
+      font-size: 14px;
+    }
+  }
+
+  &__cell-title {
+  }
+}
