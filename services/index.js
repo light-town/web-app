@@ -5,6 +5,7 @@ import AccountsService from './accounts';
 import SubscriptionsService from './subscriptions';
 import KeySetsService from './key-sets';
 import VaultsService from './vaults';
+import VaultFoldersService from './vault-folders';
 
 export default axios => ({
   storage: new StorageService(),
@@ -14,4 +15,5 @@ export default axios => ({
   subscriptions: new SubscriptionsService(),
   keySets: new KeySetsService({ axios }),
   vaults: new VaultsService({ axios }),
+  vaultFolders: new VaultFoldersService({ axios }),
 });

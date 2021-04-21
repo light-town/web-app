@@ -105,10 +105,10 @@ export default {
     async handleSubmitForm(e) {
       e.preventDefault();
 
-      if (this.password.length < 8) {
+      /* if (this.password.length < 8) {
         this.localError = new Error('The password must has more 8 characters');
         return;
-      }
+      } */
 
       if (!this.password.length || !this.repeatPassword.length) {
         this.localError = new Error('All fields is required to fill');

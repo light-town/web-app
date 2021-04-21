@@ -14,48 +14,45 @@ export default {
   },
   async [actionTypes.SIGN_UP]({ commit, state, rootState, dispatch }, payload) {
     try {
-      const normalizedMasterPassword = core.common.normalizeMasterPassword(
+      const accountKey = core.encryption.common.generateAccountKey(
+        'A3',
+        core.encryption.common.generateCryptoRandomString(32)
+      );
+
+      const normalizedMasterPassword = core.encryption.common.normalizeMasterPassword(
         payload.password
       );
-      const accountKey = core.common.generateAccountKey({
-        versionCode: 'A3',
-        secret: core.common.generateCryptoRandomString(32),
-      });
+
+      const masterUnlockKey = core.helpers.masterUnlockKey.deriveMasterUnlockKeyHelper(
+        accountKey,
+        normalizedMasterPassword
+      );
 
       const verifier = core.srp.client.deriveVerifier(
         accountKey,
         normalizedMasterPassword
       );
 
-      const masterUnlockKey = core.common.deriveMasterUnlockKey(
-        accountKey,
-        normalizedMasterPassword
+      const encPrimaryKeySet = await core.helpers.keySets.createPrimaryKeySetHelper(
+        masterUnlockKey
       );
-      const symmetricKey = core.common.generateCryptoRandomString(32);
-      const vaultKey = core.common.generateCryptoRandomString(32);
-
-      const { publicKey, privateKey } = await core.vaults.generateKeyPair();
-      const encVaultKey = await core.vaults.vaultKey.encryptByPublicKey(
-        vaultKey,
-        publicKey
+      const primaryKeySet = await core.helpers.keySets.decryptPrimaryKeySetHelper(
+        encPrimaryKeySet,
+        masterUnlockKey
       );
-      const encPrivateKey = await core.vaults.privateKey.encryptBySymmetricKey(
-        privateKey,
-        symmetricKey
-      );
-
-      const encSymmetricKey = await core.vaults.symmetricKey.encryptBySecretKey(
-        symmetricKey,
-        masterUnlockKey.key,
-        masterUnlockKey.salt
-      );
-
-      const encMetadata = await core.vaults.vaultMetadata.encryptByVaultKey(
+      const encPrimaryVault = await core.helpers.vaults.createVaultHelper(
         {
-          title: 'Personal',
+          name: 'Personal',
           desc: 'Your default vault for storing elements.',
         },
-        vaultKey
+        primaryKeySet.publicKey
+      );
+      const primaryVault = await core.helpers.vaults.decryptVaultByPrivateKeyHelper(
+        encPrimaryVault,
+        primaryKeySet.privateKey
+      );
+      const encPrimaryVaultItemCategories = await core.helpers.vaultItemCategories.createDefaultVaultItemCategories(
+        primaryVault.key
       );
 
       commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.LOADING });
@@ -68,11 +65,9 @@ export default {
         },
         { accountKey, username: rootState.cache.raws.username },
         {
-          publicKey: core.vaults.publicKeyToString(publicKey),
-          encPrivateKey,
-          encSymmetricKey,
+          ...encPrimaryKeySet,
         },
-        { encKey: encVaultKey, encMetadata }
+        { ...encPrimaryVault, encCategories: encPrimaryVaultItemCategories }
       );
 
       commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.SUCCESS });
@@ -82,11 +77,13 @@ export default {
         { accountKey },
         { root: true }
       );
-    } catch (e) {
+    } catch (errorOrResponse) {
       if (state.fetchStatus === fetchStatuses.LOADING)
         commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.ERROR });
 
-      commit(mutationTypes.SET_ERROR, { error: e?.response?.data?.error || e });
+      commit(mutationTypes.SET_ERROR, {
+        error: errorOrResponse?.error || errorOrResponse,
+      });
     }
   },
   async [actionTypes.CREATE_SESSION](
@@ -142,11 +139,13 @@ export default {
           { root: true }
         );
       }
-    } catch (e) {
+    } catch (errorOrResponse) {
       if (state.fetchStatus === fetchStatuses.LOADING)
         commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.ERROR });
 
-      commit(mutationTypes.SET_ERROR, { error: e?.response?.data?.error || e });
+      commit(mutationTypes.SET_ERROR, {
+        error: errorOrResponse?.error || errorOrResponse,
+      });
     }
   },
   async [actionTypes.START_SESSION]({ commit, state }) {
@@ -172,14 +171,21 @@ export default {
           token: response.data.token,
         },
       });
-    } catch (e) {
+    } catch (errorOrResponse) {
       if (state.fetchStatus === fetchStatuses.LOADING)
         commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.ERROR });
 
-      commit(mutationTypes.SET_ERROR, { error: e?.error || e });
+      commit(mutationTypes.SET_ERROR, {
+        error: errorOrResponse?.error || errorOrResponse,
+      });
     }
   },
   [actionTypes.SET_TOKEN]({ commit }, payload) {
     commit(mutationTypes.SET_TOKEN, { token: payload.token });
+  },
+  [actionTypes.CLEAR_ERRORS]({ commit }) {
+    commit(mutationTypes.SET_ERROR, {
+      error: null,
+    });
   },
 };

@@ -1,7 +1,7 @@
 <template>
   <ui-grid class="vault" direction="column">
     <ui-grid class="vault__overview" direction="column">
-      <ui-avatar :name="title" :size="44"></ui-avatar>
+      <ui-avatar :name="title" :size="44" class="vault__icon"></ui-avatar>
       <p class="vault__title">{{ title }}</p>
       <p class="vault__items">
         <span>{{ items }}</span> items

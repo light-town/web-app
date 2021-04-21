@@ -22,14 +22,9 @@
 
   width: auto;
 
-  padding: 40px;
   border-radius: 4px;
 
   background-color: var(--color-new-vault-form-bg);
-
-  & > * {
-    margin-bottom: 40px;
-  }
 
   &__title {
     display: inline-flex;
@@ -55,8 +50,12 @@
     margin-bottom: 0;
   }
 
-  &__avatar > div {
-    font-size: 22px;
+  &__avatar {
+    margin-bottom: 24px;
+
+    & > div {
+      font-size: 22px;
+    }
   }
 
   &__alert {

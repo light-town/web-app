@@ -4,6 +4,8 @@
 }
 
 .ui-loading {
+  display: inline-flex;
+
   &__spinner {
     border-color: var(--color-ui-loading-border);
     border-top-color: var(--color-ui-loading-border-top);

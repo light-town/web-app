@@ -16,26 +16,19 @@ export default {
 
       /// [TODO] add support fot not primary key sets
 
-      for (const keySet of response.data) {
-        if (keySet.isPrimary) {
-          const symmetricKey = await core.vaults.symmetricKey.decryptBySecretKey(
-            keySet.encSymmetricKey,
-            state.masterUnlockKey.key
+      for (const encKeySet of response.data) {
+        if (encKeySet.isPrimary) {
+          const primaryKeySet = await core.helpers.keySets.decryptPrimaryKeySetHelper(
+            encKeySet,
+            state.masterUnlockKey
           );
-          const privateKey = await core.vaults.privateKey.decryptBySymmetricKey(
-            keySet.encPrivateKey,
-            symmetricKey
-          );
-          const publicKey = core.vaults.publicKeyFromString(keySet.publicKey);
 
           commit(mutationTypes.SET_KEY_SET, {
             keySet: {
-              uuid: keySet.uuid,
-              vaultUuid: keySet.vaultUuid,
-              publicKey,
-              privateKey,
-              symmetricKey,
-              isPrimary: keySet.isPrimary,
+              uuid: encKeySet.uuid,
+              vaultUuid: encKeySet.vaultUuid,
+              ...primaryKeySet,
+              isPrimary: encKeySet.isPrimary,
             },
           });
         }
@@ -62,16 +55,12 @@ export default {
 
       commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.SUCCESS });
 
-      const normalizedMasterPassword = core.common.normalizeMasterPassword(
-        payload.password
-      );
+      const primaryKeySet = response.data[0];
 
-      const keySet = response.data[0];
-
-      const masterUnlockKey = core.common.deriveMasterUnlockKey(
+      const masterUnlockKey = core.helpers.masterUnlockKey.deriveMasterUnlockKeyHelper(
         this.getters.currentAccount.key,
-        normalizedMasterPassword,
-        keySet.encSymmetricKey.salt
+        payload.password,
+        primaryKeySet.encSymmetricKey.salt
       );
 
       commit(mutationTypes.SET_MASTER_UNLOCK_KEY, {

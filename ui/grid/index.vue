@@ -1,5 +1,6 @@
 <template>
-  <div
+  <component
+    :is="component"
     :class="{
       'ui-grid': true,
       [`ui-grid_dir-${direction}`]: direction,
@@ -7,10 +8,10 @@
       [`ui-grid_align-${alignItems}`]: alignItems,
       [`ui-grid_wrap-${wrap}`]: wrap,
     }"
-    @click="handleClick"
+    @click="$emit('click', $event)"
   >
     <slot></slot>
-  </div>
+  </component>
 </template>
 
 <script>
@@ -63,10 +64,10 @@ export default {
         return ['row', 'column', 'row-reverse', 'column-reverse'].includes(val);
       },
     },
-  },
-  methods: {
-    handleClick(e) {
-      this.$emit('click', e);
+    component: {
+      type: String,
+      required: false,
+      default: 'div',
     },
   },
 };

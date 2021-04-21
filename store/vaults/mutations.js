@@ -14,4 +14,7 @@ export default {
   [mutationTypes.SET_VAULT](state, payload) {
     Vue.set(state.all, payload?.vault?.uuid, payload?.vault);
   },
+  [mutationTypes.SET_CURRENT_VAULT_UUID](state, payload) {
+    state.currentVaultUuid = payload.uuid;
+  },
 };

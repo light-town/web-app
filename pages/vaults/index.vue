@@ -8,15 +8,15 @@
     <ui-grid direction="column">
       <appbar> </appbar>
       <ui-grid class="vault-list" wrap="wrap">
-        <template v-if="showVaultList">
+        <template v-if="!loading || vaults.length > 0">
           <vault
             v-for="vault in vaults"
             :key="vault.uuid"
-            :title="vault.metadata.title"
-            :desc="vault.metadata.desc"
+            :title="vault.overview.name"
+            :desc="vault.overview.desc"
             class="vault-list__vault"
-            @manage="manageVault(vaults.uuid)"
-            @open-vault="openVault(vaults.uuid)"
+            @manage="manageVault(vault.uuid)"
+            @open-vault="openVault(vault.uuid)"
           ></vault>
         </template>
         <template v-else>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex';
 import UiGrid from '~/ui/grid/index.vue';
 import Sidebar from '~/components/sibebar/index.vue';
 import Appbar from '~/components/appbar/index.vue';
@@ -40,6 +40,7 @@ import Listbar from '~/components/listbar/index.vue';
 import Vault from '~/components/vault/index.vue';
 import VaultSkeleton from '~/components/vault/skeleton/index.vue';
 import NewVaultForm from '~/components/forms/new-vault/index.vue';
+import * as vaultActionTypes from '~/store/vaults/types';
 
 export default {
   name: 'VaultsPage',
@@ -52,15 +53,35 @@ export default {
     Listbar,
     NewVaultForm,
   },
-  /*   middleware: ['auth'], */
+  middleware: ['auth'],
+  data() {
+    return { loading: true };
+  },
   computed: {
     ...mapState({
-      showVaultList: state => state.vaults.isInit,
+      vaultServiceInit: state => state.vaults.isInit,
       vaults: state => Object.values(state.vaults.all),
     }),
   },
+  watch: {
+    vaultServiceInit() {
+      if (this.vaultServiceInit)
+        this.getVaults().finally(() => (this.loading = false));
+    },
+  },
+  created() {
+    if (this.vaultServiceInit)
+      this.getVaults().finally(() => (this.loading = false));
+  },
   methods: {
-    openVault() {},
+    ...mapActions({
+      getVaults: vaultActionTypes.GET_VAULTS,
+      setCurrentVault: vaultActionTypes.SET_CURRENT_VAULT,
+    }),
+    async openVault(uuid) {
+      await this.setCurrentVault({ uuid });
+      this.$router.push(`/vaults/${uuid}`);
+    },
     manageVault() {},
   },
 };

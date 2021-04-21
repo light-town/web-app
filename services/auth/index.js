@@ -6,7 +6,7 @@ export default class AuthService extends AbstractService {
     { verifier, salt },
     { accountKey, username, avatarUrl },
     { publicKey, encPrivateKey, encSymmetricKey },
-    { encKey, encMetadata }
+    { encKey, encOverview, encCategories }
   ) {
     return this.axios
       .post('/auth/sign-up', {
@@ -27,10 +27,14 @@ export default class AuthService extends AbstractService {
         },
         primaryVault: {
           encKey,
-          encMetadata,
+          encOverview,
+          encCategories,
         },
       })
-      .then(response => response.data);
+      .then(response => response.data)
+      .catch(({ response }) => {
+        throw response.data;
+      });
   }
 
   createSession({ accountKey, deviceUuid }) {
@@ -39,7 +43,10 @@ export default class AuthService extends AbstractService {
         accountKey,
         deviceUuid,
       })
-      .then(response => response.data);
+      .then(response => response.data)
+      .catch(({ response }) => {
+        throw response.data;
+      });
   }
 
   startSession(
@@ -53,7 +60,7 @@ export default class AuthService extends AbstractService {
         clientSessionProofKey,
       })
       .then(response => response.data)
-      .catch(response => {
+      .catch(({ response }) => {
         throw response.data;
       });
   }

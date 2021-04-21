@@ -1,6 +1,7 @@
 <template>
-  <ui-grid direction="column" class="sidebar__menu">
+  <ui-grid component="ul" direction="column" class="sidebar__menu">
     <ui-button
+      component="li"
       variant="text"
       class="sidebar__menu-item"
       @click="redirect('/overview')"
@@ -11,6 +12,7 @@
       </ui-grid>
     </ui-button>
     <ui-button
+      component="li"
       variant="text"
       :class="[
         'sidebar__menu-item',
@@ -24,6 +26,7 @@
       </ui-grid>
     </ui-button>
     <ui-button
+      component="li"
       variant="text"
       :class="[
         'sidebar__menu-item',
@@ -36,13 +39,13 @@
         <p class="sidebar__menu-item-text">Teams</p>
       </ui-grid>
     </ui-button>
-    <ui-button variant="text" class="sidebar__menu-item">
+    <ui-button component="li" variant="text" class="sidebar__menu-item">
       <ui-grid direction="column" align-items="center" justify="center">
         <question-icon class="sidebar__menu-item-icon"></question-icon>
         <p class="sidebar__menu-item-text">Help</p>
       </ui-grid>
     </ui-button>
-    <ui-button variant="text" class="sidebar__menu-item">
+    <ui-button component="li" variant="text" class="sidebar__menu-item">
       <ui-grid direction="column" align-items="center" justify="center">
         <settings-icon class="sidebar__menu-item-icon"></settings-icon>
         <p class="sidebar__menu-item-text">Settings</p>
@@ -73,10 +76,10 @@ export default {
   },
   computed: {
     vaultsPage() {
-      return this.$route.name === 'vaults';
+      return /^\/vaults\/?/.test(this.$route.path);
     },
     teamsPage() {
-      return this.$route.name === 'teams';
+      return /^\/teams\/?/.test(this.$route.path);
     },
   },
 };

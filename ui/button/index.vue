@@ -1,16 +1,22 @@
 <template>
-  <button
+  <component
+    :is="component"
     :type="type"
     :class="['ui-btn', `ui-btn--${variant}`]"
-    @click="e => $emit('click', e)"
+    :disabled="loading"
+    @click="$emit('click', $event)"
   >
+    <ui-loading v-if="loading" class="ui-btn_loading"></ui-loading>
     <slot></slot>
-  </button>
+  </component>
 </template>
 
 <script>
+import UiLoading from '~/ui/loading/index.vue';
+
 export default {
   name: 'UiButton',
+  components: { UiLoading },
   props: {
     type: {
       type: String,
@@ -20,12 +26,25 @@ export default {
         return ['button', 'submit', 'reset'].includes(val);
       },
     },
+    component: {
+      type: String,
+      required: false,
+      default: 'button',
+      validator(val) {
+        return ['button', 'li', 'input', 'a'].includes(val);
+      },
+    },
     variant: {
       type: String,
       required: true,
       validator(val) {
         return ['contained', 'outlined', 'text'].includes(val);
       },
+    },
+    loading: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
 };

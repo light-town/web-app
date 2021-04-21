@@ -16,13 +16,19 @@ import * as vaultsActionTypes from '~/store/vaults/types';
 
 export default {
   name: 'DefaultLayout',
-  async mounted() {
+  async created() {
     await this.initCacheService();
     await this.initAuthService();
     await this.initDevicesService();
     await this.initAccountsService();
     await this.initKeySetsService();
     await this.initVaultsService();
+  },
+  beforeMount() {
+    document.addEventListener('contextmenu', this.preventContextMenu);
+  },
+  beforeDestroy() {
+    document.removeEventListener('contextmenu', this.preventContextMenu);
   },
   methods: {
     ...mapActions({
@@ -33,6 +39,9 @@ export default {
       initKeySetsService: keySetsActionTypes.INIT,
       initVaultsService: vaultsActionTypes.INIT,
     }),
+    preventContextMenu(e) {
+      e.preventDefault();
+    },
   },
 };
 </script>

@@ -2,11 +2,13 @@
   --color-sidebar-menu-item-icon-fill: var(--color-gray-650);
   --color-sidebar-menu-item-text: var(--color-gray-650);
 
-  --color-sidebar-menu-item-hover-bg: var(--color-green-50);
-  --color-sidebar-menu-item-hover-icon: var(--color-green-400);
-  --color-sidebar-menu-item-hover-text: var(--color-green-400);
+  --color-sidebar-menu-item-hover-bg: var(--color-gray-100);
+  --color-sidebar-menu-item-hover-icon: var(--color-gray-650);
+  --color-sidebar-menu-item-hover-text: var(--color-gray-650);
 
-  --color-sidebar-menu-item-active-bg: var(--color-gray-150);
+  --color-sidebar-menu-item-active-bg: var(--color-green-50);
+  --color-sidebar-menu-item-active-icon: var(--color-green-400);
+  --color-sidebar-menu-item-active-text: var(--color-green-400);
 
   --color-sidebar-menu-item-selected-bg: var(--color-green-50);
   --color-sidebar-menu-item-selected-icon: var(--color-green-400);
@@ -22,6 +24,8 @@
       height: 72px;
 
       margin-bottom: 10px;
+
+      transition: all 0.3s ease-out;
 
       &-icon {
         --size: 24px;
@@ -40,7 +44,7 @@
         color: var(--color-sidebar-menu-item-text);
       }
 
-      &:not(.sidebar__menu-item_active):hover:enabled {
+      &:not(.sidebar__menu-item_active, .sidebar__menu-item:active):hover {
         background-color: var(--color-sidebar-menu-item-hover-bg) !important;
 
         .sidebar__menu-item-icon {
@@ -52,8 +56,16 @@
         }
       }
 
-      &:not(.sidebar__menu-item_active):active:enabled {
+      &:not(.sidebar__menu-item_active):active {
         background-color: var(--color-sidebar-menu-item-active-bg) !important;
+
+        .sidebar__menu-item-icon {
+          fill: var(--color-sidebar-menu-item-active-icon);
+        }
+
+        .sidebar__menu-item-text {
+          color: var(--color-sidebar-menu-item-active-text);
+        }
       }
 
       &_active {

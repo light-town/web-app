@@ -1,0 +1,75 @@
+.page[data-theme-mode='light'] {
+  --color-ui-menu-bg: var(--color-white);
+  --color-ui-menu-border: var(--color-gray-150);
+  --color-ui-menu-scroll: var(--color-gray-100);
+  --color-ui-menu-item-text: var(--color-gray-650);
+
+  --color-ui-menu-item-hover-text: var(--color-gray-650);
+  --color-ui-menu-item-hover-bg: var(--color-gray-100);
+
+  --color-ui-menu-item-active-text: var(--color-gray-650);
+  --color-ui-menu-item-active-bg: var(--color-gray-150);
+
+  --color-ui-menu-item-separator-bg: var(--color-gray-150);
+}
+
+.ui-menu {
+  padding: 16px 0;
+
+  background-color: var(--color-ui-menu-bg);
+
+  border: 1px solid var(--color-ui-menu-border);
+  border-radius: 4px;
+
+  --color-ui-menu-bg: var(--color-white);
+  --color-ui-menu-border: var(--color-gray-150);
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: var(--color-ui-menu-scroll);
+  }
+
+  &-item {
+    min-width: 270px;
+    width: 100%;
+    padding: 8px 24px;
+    user-select: none;
+    cursor: pointer;
+
+    font-size: 14px;
+    color: var(--color-ui-menu-item-text);
+    border-radius: 0;
+
+    &:hover {
+      background-color: var(--color-ui-menu-item-hover-bg) !important;
+      color: var(--color-ui-menu-item-hover-text) !important;
+    }
+
+    &:active {
+      background-color: var(--color-ui-menu-item-active-bg) !important;
+      color: var(--color-ui-menu-item-active-text) !important;
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+
+    &__left {
+      display: inline-flex;
+      width: auto;
+      flex-shrink: 0;
+    }
+
+    &-separator {
+      display: flex;
+      width: 100%;
+      margin: 8px 0;
+
+      background-color: var(--color-ui-menu-item-separator-bg);
+    }
+  }
+}

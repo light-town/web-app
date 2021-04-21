@@ -34,7 +34,7 @@ export default {
     TeamTable,
     SearchTeamsByTokens,
   },
-  /*   middleware: ['auth'], */
+  middleware: ['auth'],
   computed: {
     ...mapState({}),
   },

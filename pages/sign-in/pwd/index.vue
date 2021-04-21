@@ -79,16 +79,15 @@ export default {
   data() {
     return {
       password: '',
-      localError: null,
+      error: null,
+      loading: false,
     };
   },
   computed: {
     ...mapState({
       isAccountServiceInit: state => state.accounts.isInit,
       session: state => state.auth.session,
-      error(state) {
-        return this.localError || state.auth.error;
-      },
+      authError: state => state.auth.error,
       showChooseAccountBtn: state =>
         Object.keys(state.accounts.accounts).length,
     }),
@@ -108,9 +107,13 @@ export default {
       if (this.isAccountServiceInit && !this.currentAccount)
         this.$router.push('/sign-in');
     },
+    password() {
+      if (this.error) this.error = null;
+    },
   },
   methods: {
     ...mapActions({
+      clearErrors: authActionTypes.CLEAR_ERRORS,
       createSession: authActionTypes.CREATE_SESSION,
       startSession: authActionTypes.START_SESSION,
       setMasterUnlockKey: keySetsActionTypes.SET_MASTER_UNLOCK_KEY,
@@ -118,24 +121,35 @@ export default {
     async handleSubmitForm(e) {
       e.preventDefault();
 
-      await this.createSession({ password: this.password });
+      try {
+        this.loading = true;
 
-      if (this.error) return;
+        await this.createSession({ password: this.password });
 
-      if (this.session.verifing.stage === SessionVerifyStagesEnum.REQUIRED) {
-        this.$router.push('/sign-in/verify');
-        return;
+        if (this.authError) throw this.authError;
+
+        if (this.session.verifing.stage === SessionVerifyStagesEnum.REQUIRED) {
+          this.$router.push('/sign-in/verify');
+          return;
+        }
+
+        await this.startSession();
+
+        if (this.authError) throw this.authError;
+
+        await this.setMasterUnlockKey({ password: this.password });
+
+        this.$router.push('/vaults');
+      } catch (e) {
+        if (e.message === 'The authentication fails') {
+          this.error = new Error(this.$t('Incorrect master password'));
+        } else {
+          this.error = e;
+        }
+        this.clearErrors();
+      } finally {
+        this.loading = false;
       }
-
-      await this.startSession();
-
-      if (this.error) return;
-
-      await this.setMasterUnlockKey({ password: this.password });
-
-      if (this.error) return;
-
-      this.$router.push('/vaults');
     },
     redirectToSignUpPage() {
       this.$router.push('/sign-up');

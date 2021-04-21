@@ -4,46 +4,41 @@
       <add-icon class="new-vault-btn__icon"></add-icon>
       <p class="new-vault-btn__text">New Vault</p>
     </ui-button>
-    <ui-modal :open="open" @close="handleCloseForm">
-      <form @submit.prevent="handleFormSubmit">
-        <ui-grid direction="column" class="new-vault-form" align-items="center">
-          <p class="new-vault-form__title">New Vault</p>
-          <ui-avatar name="V" class="new-vault-form__avatar"></ui-avatar>
-          <ui-grid direction="column">
-            <ui-alert
-              v-if="error"
-              severity="error"
-              class="new-vault-form__alert"
-            >
-              {{ error.message }}
-            </ui-alert>
-            <ui-input
-              v-model="title"
-              placeholder="Vault Title"
-              class="new-vault-form__input"
-              tabindex="1"
-            ></ui-input>
-            <ui-input
-              v-model="desc"
-              placeholder="Description (optional)"
-              class="new-vault-form__input"
-              tabindex="2"
-            ></ui-input>
-          </ui-grid>
-          <ui-grid
-            align-items="center"
-            justify="space-between"
-            class="new-vault-form__controls"
-          >
-            <ui-button variant="outlined" tabindex="4" @click="handleCloseForm">
-              Cancel
-            </ui-button>
-            <ui-button variant="contained" type="submit" tabindex="3">
-              Create Vault
-            </ui-button>
-          </ui-grid>
+    <ui-modal :open="open" title="New Vault" @close="handleCloseForm">
+      <ui-grid
+        component="form"
+        direction="column"
+        class="new-vault-form"
+        align-items="center"
+        @submit.prevent="handleFormSubmit"
+      >
+        <ui-avatar :name="name" class="new-vault-form__avatar"></ui-avatar>
+        <ui-grid direction="column">
+          <ui-alert v-if="error" severity="error" class="new-vault-form__alert">
+            {{ error.message }}
+          </ui-alert>
+          <ui-input
+            v-model="name"
+            placeholder="Vault Title"
+            class="new-vault-form__input"
+            tabindex="1"
+          ></ui-input>
+          <ui-input
+            v-model="desc"
+            placeholder="Description (optional)"
+            class="new-vault-form__input"
+            tabindex="2"
+          ></ui-input>
         </ui-grid>
-      </form>
+      </ui-grid>
+      <template #footer>
+        <ui-button variant="text" tabindex="4" @click="handleCloseForm">
+          Cancel
+        </ui-button>
+        <ui-button variant="contained" tabindex="3" @click="handleFormSubmit">
+          Create Vault
+        </ui-button>
+      </template>
     </ui-modal>
   </ui-grid>
 </template>
@@ -74,7 +69,7 @@ export default {
     return {
       localError: null,
       open: false,
-      title: '',
+      name: '',
       desc: '',
     };
   },
@@ -87,7 +82,7 @@ export default {
     }),
   },
   watch: {
-    title() {
+    name() {
       this.localError = this.localError ? null : this.localError;
     },
   },
@@ -102,12 +97,15 @@ export default {
       this.open = true;
     },
     async handleFormSubmit() {
-      if (this.title.length < 8) {
+      if (this.name.trim().length < 8) {
         this.localError = new Error('The vault title must has more 8 symbols');
         return;
       }
 
-      await this.createVault({ title: this.title, desc: this.desc });
+      await this.createVault({
+        name: this.name.trim(),
+        desc: this.desc.trim(),
+      });
 
       this.open = false;
     },

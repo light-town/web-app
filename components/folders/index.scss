@@ -1,0 +1,71 @@
+.page[data-theme-mode='light'] {
+  --color-vault-text: var(--color-gray-650);
+  --color-folder-text: var(--color-gray-650);
+}
+
+.ui-tree-view__node:hover .vault__text,
+.ui-tree-view__node:hover .folder__text {
+  color: var(--color-ui-tree-view-node-hover-text);
+}
+
+.ui-tree-view__node_active .vault__text,
+.ui-tree-view__node_active .folder__text {
+  color: var(--color-ui-tree-view-node-active-text);
+}
+
+.treeview {
+  &-folder {
+    &__icon {
+      display: flex;
+      flex-shrink: 0;
+      flex-grow: 0;
+
+      --size: 24px;
+
+      width: var(--size);
+      height: var(--size);
+
+      margin-right: 24px;
+
+      transition: fill 0.3s;
+    }
+
+    &__text {
+      max-width: 128px;
+
+      font-size: 14px;
+      line-height: 16px;
+
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      color: var(--color-folder-text);
+
+      transition: color 0.3s;
+    }
+  }
+
+  &-vault {
+    &__text {
+      max-width: 128px;
+
+      font-size: 14px;
+      line-height: 16px;
+
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+
+      color: var(--color-vault-text);
+    }
+
+    &__icon {
+      margin-right: 24px;
+
+      & > div {
+        font-size: 13px;
+      }
+    }
+  }
+}
