@@ -15,6 +15,9 @@
         <folders-and-items-table
           :folder-uuid="currentVaultFolder ? currentVaultFolder.uuid : null"
         >
+          <template #empty-table>
+            <empty-folder-stub></empty-folder-stub>
+          </template>
         </folders-and-items-table>
       </ui-grid>
     </ui-grid>
@@ -29,6 +32,7 @@ import Appbar from '~/components/appbar/index.vue';
 import Listbar from '~/components/listbar/index.vue';
 import FolderTreeView from '~/components/folders/index.vue';
 import FoldersAndItemsTable from '~/components/tables/folders-and-items/index.vue';
+import EmptyFolderStub from '~/components/stubs/empty-folder/index.vue';
 
 export default {
   name: 'VaultPage',
@@ -39,6 +43,7 @@ export default {
     Listbar,
     FolderTreeView,
     FoldersAndItemsTable,
+    EmptyFolderStub,
   },
   middleware: ['auth'],
   computed: {

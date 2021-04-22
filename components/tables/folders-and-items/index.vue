@@ -1,53 +1,56 @@
 <template>
-  <folder-context-menu :anchor="{ uuid: activeRawUuid }">
-    <template #default="{ open }">
-      <ui-table
-        :fields="fields"
-        :items="raws"
-        br-class="folders-and-items-table__table-body-row"
-        @body-raw-context-menu="
-          (item, event) => {
-            activeRawUuid = item.uuid;
-            open(event);
-          }
-        "
-        @body-raw-dbl-click="handleRawDblClick"
-        @body-raw-click="item => (activeRawUuid = item.uuid)"
-      >
-        <template #cell(name)="{ item }">
-          <ui-grid align-items="center">
-            <folder-icon
-              class="folders-and-items-table__table-body-cell__icon"
-            ></folder-icon>
-            <p class="folders-and-items-table__table-body-cell__title">
-              {{ item.overview.name }}
-            </p>
-          </ui-grid>
-        </template>
-        <template #cell(desc)="{ item }">
-          <ui-grid align-items="center">
-            <p class="folders-and-items-table__table-body-cell__title">
-              {{ item.overview.desc }}
-            </p>
-          </ui-grid>
-        </template>
-        <template #cell(lastUpdatedAt)="{ item }">
-          <ui-grid align-items="center">
-            <p class="folders-and-items-table__table-body-cell__title">
-              {{ item.lastUpdatedAt }}
-            </p>
-          </ui-grid>
-        </template>
-        <template #cell(createdAt)="{ item }">
-          <ui-grid align-items="center">
-            <p class="folders-and-items-table__table-body-cell__title">
-              {{ item.createdAt }}
-            </p>
-          </ui-grid>
-        </template>
-      </ui-table>
-    </template>
-  </folder-context-menu>
+  <ui-grid class="folders-and-items-table">
+    <folder-context-menu v-if="rows.length" :anchor="{ uuid: activeRawUuid }">
+      <template #default="{ open }">
+        <ui-table
+          :fields="fields"
+          :items="rows"
+          br-class="folders-and-items-table__table-body-row"
+          @body-raw-context-menu="
+            (item, event) => {
+              activeRawUuid = item.uuid;
+              open(event);
+            }
+          "
+          @body-raw-dbl-click="handleRawDblClick"
+          @body-raw-click="item => (activeRawUuid = item.uuid)"
+        >
+          <template #cell(name)="{ item }">
+            <ui-grid align-items="center">
+              <folder-icon
+                class="folders-and-items-table__table-body-cell__icon"
+              ></folder-icon>
+              <p class="folders-and-items-table__table-body-cell__title">
+                {{ item.overview.name }}
+              </p>
+            </ui-grid>
+          </template>
+          <template #cell(desc)="{ item }">
+            <ui-grid align-items="center">
+              <p class="folders-and-items-table__table-body-cell__title">
+                {{ item.overview.desc }}
+              </p>
+            </ui-grid>
+          </template>
+          <template #cell(lastUpdatedAt)="{ item }">
+            <ui-grid align-items="center">
+              <p class="folders-and-items-table__table-body-cell__title">
+                {{ item.lastUpdatedAt }}
+              </p>
+            </ui-grid>
+          </template>
+          <template #cell(createdAt)="{ item }">
+            <ui-grid align-items="center">
+              <p class="folders-and-items-table__table-body-cell__title">
+                {{ item.createdAt }}
+              </p>
+            </ui-grid>
+          </template>
+        </ui-table>
+      </template>
+    </folder-context-menu>
+    <slot v-else name="empty-table"></slot>
+  </ui-grid>
 </template>
 
 <script>
@@ -106,7 +109,7 @@ export default {
       items: () => ({}),
     }),
     ...mapGetters(['currentVault', 'currentVaultFolder']),
-    raws() {
+    rows() {
       const folders = Object.values(this.folders)
         .filter(f => f.parentFolderUuid === this.folderUuid)
         .map(f => ({
