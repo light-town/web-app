@@ -20,7 +20,7 @@ export default {
   [mutationTypes.SET_VAULT_FOLDER](state, payload) {
     Vue.set(state.all, payload?.folder?.uuid, {
       ...payload?.folder,
-      ...(state.all[payload.uuid] ?? { expanded: false }),
+      ...(state.all[payload.folder?.uuid] ?? { expanded: false }),
     });
   },
   [mutationTypes.CLEAR_VAULT_FOLDER_LIST](state) {

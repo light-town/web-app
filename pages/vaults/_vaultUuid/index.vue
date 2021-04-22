@@ -1,56 +1,37 @@
 <template>
-  <ui-grid class="main-layout">
-    <sidebar></sidebar>
-    <client-only>
-      <listbar>
-        <template #title> {{ currentVault.overview.name }}</template>
-        <template #menu>
-          <folder-tree-view></folder-tree-view>
-        </template>
-      </listbar>
-    </client-only>
-    <ui-grid direction="column">
-      <appbar> </appbar>
-      <ui-grid direction="column" class="folder-content__table">
-        <folders-and-items-table> </folders-and-items-table>
-      </ui-grid>
-    </ui-grid>
-  </ui-grid>
+  <folder-content-layout>
+    <folder-content-table>
+      <template #empty-table>
+        <empty-folder-stub></empty-folder-stub>
+      </template>
+    </folder-content-table>
+  </folder-content-layout>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
-import UiGrid from '~/ui/grid/index.vue';
-import Sidebar from '~/components/sibebar/index.vue';
-import Appbar from '~/components/appbar/index.vue';
-import Listbar from '~/components/listbar/index.vue';
-import FolderTreeView from '~/components/folders/index.vue';
+import { mapActions } from 'vuex';
+import FolderContentLayout from '~/layouts/folder-content/index.vue';
+import FolderContentTable from '~/components/tables/folder-content/index.vue';
+import EmptyFolderStub from '~/components/stubs/empty-folder/index.vue';
 import * as vaultFolderActionTypes from '~/store/vault-folders/types';
-import FoldersAndItemsTable from '~/components/tables/folders-and-items/index.vue';
 
 export default {
   name: 'VaultPage',
   components: {
-    UiGrid,
-    Sidebar,
-    Appbar,
-    Listbar,
-    FolderTreeView,
-    FoldersAndItemsTable,
+    FolderContentTable,
+    FolderContentLayout,
+    EmptyFolderStub,
   },
   middleware: ['auth'],
-  computed: {
-    ...mapGetters(['currentVault']),
-  },
-  created() {
-    this.loadRootVaultFolders();
+  async created() {
+    await this.setCurrentVaultFolder({ uuid: null });
   },
   methods: {
     ...mapActions({
-      loadRootVaultFolders: vaultFolderActionTypes.INIT,
+      setCurrentVaultFolder: vaultFolderActionTypes.SET_CURRENT_VAULT_FOLDER,
     }),
   },
 };
 </script>
 
-<style lang="scss" src="../index.scss"></style>
+<style lang="scss" src="./index.scss"></style>

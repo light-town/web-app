@@ -1,53 +1,43 @@
 <template>
-  <ui-grid class="main-layout">
-    <sidebar></sidebar>
-    <client-only>
-      <listbar>
-        <template #title> {{ currentVault.overview.name }}</template>
-        <template #menu>
-          <folder-tree-view></folder-tree-view>
-        </template>
-      </listbar>
-    </client-only>
-    <ui-grid direction="column">
-      <appbar> </appbar>
-      <ui-grid direction="column" class="folder-content__table">
-        <folders-and-items-table
-          :folder-uuid="currentVaultFolder ? currentVaultFolder.uuid : null"
-        >
-          <template #empty-table>
-            <empty-folder-stub></empty-folder-stub>
-          </template>
-        </folders-and-items-table>
-      </ui-grid>
-    </ui-grid>
-  </ui-grid>
+  <folder-content-layout>
+    <folder-content-table :folder-uuid="currentVaultFolderUuid">
+      <template #empty-table>
+        <empty-folder-stub></empty-folder-stub>
+      </template>
+    </folder-content-table>
+  </folder-content-layout>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-import UiGrid from '~/ui/grid/index.vue';
-import Sidebar from '~/components/sibebar/index.vue';
-import Appbar from '~/components/appbar/index.vue';
-import Listbar from '~/components/listbar/index.vue';
-import FolderTreeView from '~/components/folders/index.vue';
-import FoldersAndItemsTable from '~/components/tables/folders-and-items/index.vue';
+import { mapGetters, mapActions } from 'vuex';
+import FolderContentLayout from '~/layouts/folder-content/index.vue';
+import FolderContentTable from '~/components/tables/folder-content/index.vue';
 import EmptyFolderStub from '~/components/stubs/empty-folder/index.vue';
+import * as vaultFolderActionTypes from '~/store/vault-folders/types';
 
 export default {
-  name: 'VaultPage',
+  name: 'VaultFolderPage',
   components: {
-    UiGrid,
-    Sidebar,
-    Appbar,
-    Listbar,
-    FolderTreeView,
-    FoldersAndItemsTable,
+    FolderContentTable,
+    FolderContentLayout,
     EmptyFolderStub,
   },
   middleware: ['auth'],
   computed: {
-    ...mapGetters(['currentVault', 'currentVaultFolder']),
+    ...mapGetters(['currentVaultFolder']),
+    currentVaultFolderUuid() {
+      return this.currentVaultFolder?.uuid;
+    },
+  },
+  async created() {
+    await this.setCurrentVaultFolder({
+      uuid: this.$route.params.vaultFolderUuid ?? null,
+    });
+  },
+  methods: {
+    ...mapActions({
+      setCurrentVaultFolder: vaultFolderActionTypes.SET_CURRENT_VAULT_FOLDER,
+    }),
   },
 };
 </script>

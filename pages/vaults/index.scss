@@ -1,11 +1,6 @@
 .page[data-theme-mode='light'] {
   --color-vault-text: var(--color-gray-650);
 }
-.main-layout {
-  height: 100vh;
-
-  overflow: hidden;
-}
 
 .vault-list {
   max-height: calc(100vh - 70px);

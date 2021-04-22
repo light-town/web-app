@@ -16,8 +16,14 @@
           :class="['ui-table__cell', 'ui-table__cell-header', field.thClass]"
           @click="$emit('header-cell-click', field, $event)"
         >
-          <slot :name="`head(${field.key})`" :label="field.label" :item="field">
-            {{ field.label }}
+          <slot :name="`head`">
+            <slot
+              :name="`head(${field.key})`"
+              :label="field.label"
+              :item="field"
+            >
+              {{ field.label }}
+            </slot>
           </slot>
         </ui-grid>
       </ui-grid>
@@ -29,10 +35,10 @@
         component="tr"
         role="row"
         :class="['ui-table__row', brClass, items[i - 1].brClass]"
-        @click.native="$emit('body-raw-click', items[i - 1], $event)"
-        @dblclick.native="$emit('body-raw-dbl-click', items[i - 1], $event)"
+        @click.native="$emit('body-row-click', items[i - 1], $event)"
+        @dblclick.native="$emit('body-row-dbl-click', items[i - 1], $event)"
         @contextmenu.native="
-          $emit('body-raw-context-menu', items[i - 1], $event)
+          $emit('body-row-context-menu', items[i - 1], $event)
         "
       >
         <ui-grid
@@ -44,12 +50,14 @@
           :class="['ui-table__cell', 'ui-table__cell-body', field.thClass]"
           @click="$emit('body-cell-click', field, items, $event)"
         >
-          <slot
-            :name="`cell(${field.key})`"
-            :value="items[i - 1][field.key]"
-            :item="items[i - 1]"
-          >
-            {{ items[i - 1][field.key] }}
+          <slot :name="`cell`">
+            <slot
+              :name="`cell(${field.key})`"
+              :value="items[i - 1][field.key]"
+              :item="items[i - 1]"
+            >
+              {{ items[i - 1][field.key] }}
+            </slot>
           </slot>
         </ui-grid>
       </ui-grid>

@@ -62,5 +62,7 @@
   "Rename": "Переименовать",
   "Сhange color": "Изменить цвет",
   "Detete": "Удалить",
-  "The folder is empty": "Папка пуста"
+  "The folder is empty": "Папка пуста",
+  "Personal": "Личный",
+  "Your default vault for storing elements.": "Ваше основное хранилище для хранения элементов."
 }

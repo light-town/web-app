@@ -1,8 +1,11 @@
 <template>
   <ui-grid direction="column" class="listbar">
-    <p class="listbar__title"><slot name="title"></slot></p>
+    <ui-grid class="listbar__header">
+      <slot name="header"></slot>
+      <!--  <p class="listbar__title"></p> -->
+    </ui-grid>
     <span class="listbar__separator"></span>
-    <ui-grid direction="column" class="listbar__menu">
+    <ui-grid direction="column" class="listbar__body">
       <slot name="menu"></slot>
     </ui-grid>
   </ui-grid>

@@ -63,20 +63,26 @@
 
       transform: rotate(0deg);
       padding: 5px;
+      margin-right: 6px;
 
       box-shadow: none !important;
       background-color: transparent !important;
+
+      &__icon {
+        --size: 8px;
+
+        width: var(--size);
+        height: var(--size);
+      }
+    }
+
+    &__left {
+      display: inline-flex;
+      width: auto;
     }
   }
 
   &__nested-nodes {
     padding-left: 20px;
-  }
-}
-
-.node {
-  &__left {
-    flex-shrink: 0;
-    width: auto;
   }
 }

@@ -10,18 +10,18 @@
     ]"
     @click="$emit('click', $event)"
   >
-    <ui-grid align-items="center" class="node__left">
-      <slot name="icon" :node="node"></slot>
-      <slot name="text" :node="node"></slot>
-    </ui-grid>
-    <ui-grid v-if="expandable" align-items="center" justify="flex-end">
+    <ui-grid align-items="center" class="ui-tree-view__node__left">
       <ui-button
         variant="text"
         class="ui-tree-view__node__btn"
         @click.native.stop="$emit('expand', $event)"
       >
-        <arrow-icon></arrow-icon>
+        <arrow-icon class="ui-tree-view__node__btn__icon"></arrow-icon>
       </ui-button>
+    </ui-grid>
+    <ui-grid align-items="center">
+      <slot name="icon" :node="node"></slot>
+      <slot name="text" :node="node"></slot>
     </ui-grid>
   </ui-button>
 </template>
@@ -29,7 +29,7 @@
 <script>
 import UiGrid from '~/ui/grid/index.vue';
 import UiButton from '~/ui/button/index.vue';
-import ArrowIcon from '~/assets/right-arrow.svg?inline';
+import ArrowIcon from '~/assets/triangle.svg?inline';
 
 export default {
   name: 'UiTreeViewNode',

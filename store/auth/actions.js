@@ -42,8 +42,8 @@ export default {
       );
       const encPrimaryVault = await core.helpers.vaults.createVaultHelper(
         {
-          name: 'Personal',
-          desc: 'Your default vault for storing elements.',
+          name: this.$i18n.t('Personal'),
+          desc: this.$i18n.t('Your default vault for storing elements.'),
         },
         primaryKeySet.publicKey
       );

@@ -27,7 +27,7 @@
         </template>
         <template #footer>
           <ui-grid direction="row-reverse" justify="space-between">
-            <ui-button variant="contained" type="submit">
+            <ui-button variant="contained" type="submit" :loading="loading">
               {{ $t('Next') }}
             </ui-button>
             <ui-button

@@ -2,11 +2,15 @@
   <component
     :is="component"
     :type="type"
-    :class="['ui-btn', `ui-btn--${variant}`]"
+    :class="['ui-btn', `ui-btn--${variant}`, { 'ui-btn_loading': loading }]"
     :disabled="loading"
     @click="$emit('click', $event)"
   >
-    <ui-loading v-if="loading" class="ui-btn_loading"></ui-loading>
+    <ui-loading
+      v-if="loading"
+      class="ui-btn_loading__icon"
+      :size="14"
+    ></ui-loading>
     <slot></slot>
   </component>
 </template>

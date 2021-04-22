@@ -62,5 +62,7 @@
   "Rename": "Rename",
   "Сhange color": "Сhange color",
   "Detete": "Detete",
-  "The folder is empty": "The folder is empty"
+  "The folder is empty": "The folder is empty",
+  "Personal": "Personal",
+  "Your default vault for storing elements.": "Your default vault for storing elements."
 }

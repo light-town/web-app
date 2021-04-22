@@ -6,13 +6,11 @@
 .appbar {
   height: 70px;
 
-  padding: 0 40px;
+  padding: 0 20px;
 
   &__separator {
     width: 100%;
     height: 1px;
-
-    margin-left: 20px;
 
     background-color: var(--color-appbar-border);
   }
