@@ -54,8 +54,9 @@ export default {
       this.y = e.pageY;
       this.root = e.target;
     },
-    handleClose() {
+    handleClose(e) {
       this.root = null;
+      this.$emit('close', e);
     },
   },
 };

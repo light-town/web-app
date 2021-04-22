@@ -1,26 +1,48 @@
 <template>
-  <table role="table" class="ui-table">
-    <thead role="rowgroup">
-      <tr role="row" class="ui-table__row">
-        <th
+  <ui-grid component="table" role="table" class="ui-table" direction="column">
+    <ui-grid component="thead" role="rowgroup">
+      <ui-grid
+        component="thead"
+        role="row"
+        :class="['ui-table__row', hrClass]"
+        @click="$emit('header-row-click', $event)"
+      >
+        <ui-grid
           v-for="field in fields"
           :key="field.key"
+          component="th"
           role="cell"
-          :class="['ui-table__cell', 'ui-table__head', field.thClass]"
+          align-items="center"
+          :class="['ui-table__cell', 'ui-table__cell-header', field.thClass]"
+          @click="$emit('header-cell-click', field, $event)"
         >
-          <slot :name="`head(${field.key})`" :label="field.label">
+          <slot :name="`head(${field.key})`" :label="field.label" :item="field">
             {{ field.label }}
           </slot>
-        </th>
-      </tr>
-    </thead>
-    <tbody role="rowgroup">
-      <tr v-for="i in items.length" :key="i" role="row" class="ui-table__row">
-        <td
+        </ui-grid>
+      </ui-grid>
+    </ui-grid>
+    <ui-grid component="tbody" role="rowgroup" direction="column">
+      <ui-grid
+        v-for="i in items.length"
+        :key="i"
+        component="tr"
+        role="row"
+        :class="['ui-table__row', brClass, items[i - 1].brClass]"
+        @click.native="$emit('body-raw-click', items[i - 1], $event)"
+        @dblclick.native="$emit('body-raw-dbl-click', items[i - 1], $event)"
+        @contextmenu.native="
+          $emit('body-raw-context-menu', items[i - 1], $event)
+        "
+      >
+        <ui-grid
           v-for="field in fields"
           :key="field.key"
+          component="td"
           role="cell"
-          :class="['ui-table__cell', field.thClass]"
+          align-items="center"
+          :class="['ui-table__cell', 'ui-table__cell-body', field.thClass]"
+          @click="$emit('body-cell-click', field, items, $event)"
         >
           <slot
             :name="`cell(${field.key})`"
@@ -29,15 +51,20 @@
           >
             {{ items[i - 1][field.key] }}
           </slot>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+        </ui-grid>
+      </ui-grid>
+    </ui-grid>
+  </ui-grid>
 </template>
 
 <script>
+import UiGrid from '~/ui/grid/index.vue';
+
 export default {
   name: 'UiTable',
+  components: {
+    UiGrid,
+  },
   props: {
     fields: {
       type: Array,
@@ -46,6 +73,16 @@ export default {
     items: {
       type: Array,
       required: true,
+    },
+    hrClass: {
+      type: String,
+      required: false,
+      default: '',
+    },
+    brClass: {
+      type: String,
+      required: false,
+      default: '',
     },
   },
 };

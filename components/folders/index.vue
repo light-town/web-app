@@ -65,42 +65,74 @@ export default {
     FolderIcon,
     ContextMenu,
   },
-  data() {
-    return {
-      nodes: [],
-    };
-  },
   computed: {
     ...mapState({
       folders: state => state['vault-folders'].all,
     }),
     ...mapGetters(['currentVaultFolder', 'currentVault']),
+    nodes() {
+      const vaultNode = {
+        ...this.currentVault,
+        vault: true,
+        expanded: true,
+      };
+      const folderNodes = Object.values(this.folders).map(folder => ({
+        ...folder,
+        parentFolderUuid: folder.parentFolderUuid ?? vaultNode.uuid,
+      }));
+
+      return [vaultNode, ...folderNodes];
+    },
   },
   watch: {
-    folders() {
-      this.initNodes();
+    nodes() {
+      this.leadWay();
+    },
+    currentVaultFolder() {
+      this.leadWay();
     },
   },
   created() {
-    this.initNodes();
+    this.getRootVaultFolders();
+
+    if (!this.$route.params.vaultFolderUuid) return;
+
+    this.setCurrentVaultFolder({
+      uuid: this.$route.params.vaultFolderUuid,
+    });
+
+    this.leadWay();
   },
   methods: {
     ...mapActions({
       getRootVaultFolders: vaultFolderActionTypes.GET_ROOT_VAULT_FOLDERS,
       getNestedVaultFolders: vaultFolderActionTypes.GET_NESTED_VAULT_FOLDERS,
+      setCurrentVaultFolder: vaultFolderActionTypes.SET_CURRENT_VAULT_FOLDER,
+      setExpandedVaultFolder: vaultFolderActionTypes.SET_EXPANDED_VAULT_FOLDER,
     }),
-    activeFolder(folder) {
-      if (folder.vault) return;
+    async activeFolder(folder) {
+      if (folder.vault) {
+        await this.setCurrentVaultFolder({ uuid: null });
+        this.$router.push(`/vaults/${folder.uuid}/`);
+        return;
+      }
 
       this.$router.push(
         `/vaults/${this.currentVault.uuid}/folders/${folder.uuid}`
       );
     },
-    expandFolderNode(folder) {
+    async expandFolderNode(folder) {
       const intex = this.nodes.indexOf(folder);
-      this.nodes[intex].expanded = !this.nodes[intex].expanded;
+      const currentExpandState = !this.nodes[intex].expanded;
 
-      if (!this.nodes[intex].expanded) return;
+      if (folder.vault) this.nodes[intex].expanded = currentExpandState;
+      else
+        await this.setExpandedVaultFolder({
+          uuid: folder.uuid,
+          expanded: currentExpandState,
+        });
+
+      if (!currentExpandState) return;
 
       if (folder.vault) {
         this.getRootVaultFolders();
@@ -111,23 +143,15 @@ export default {
         parentFolderUuid: folder.uuid,
       });
     },
-    initNodes() {
-      const isExpanded = folder => {
-        return this.nodes.find(f => f.uuid === folder.uuid)?.expanded;
-      };
-
-      const vaultNode = {
-        ...this.currentVault,
-        vault: true,
-        expanded: !this.nodes.length ? true : isExpanded(this.currentVault),
-      };
-      const folderNodes = Object.values(this.folders).map(folder => ({
-        ...folder,
-        parentFolderUuid: folder.parentFolderUuid ?? vaultNode.uuid,
-        expanded: isExpanded(folder),
-      }));
-
-      this.nodes = [vaultNode, ...folderNodes];
+    leadWay() {
+      let currentFolderUuid = this.currentVaultFolder?.parentFolderUuid;
+      while (currentFolderUuid) {
+        this.setExpandedVaultFolder({
+          uuid: currentFolderUuid,
+          expanded: true,
+        });
+        currentFolderUuid = this.folders[currentFolderUuid]?.parentFolderUuid;
+      }
     },
   },
 };

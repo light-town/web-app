@@ -1,5 +1,5 @@
 <template>
-  <ui-modal :open="open" title="Create Vault Folder" @close="handleCloseModal">
+  <ui-modal :open="open" :title="$t('Create Folder')" @close="handleCloseModal">
     <ui-grid
       component="form"
       direction="column"
@@ -9,19 +9,21 @@
       <ui-input
         v-model="title"
         class="new-vault-folder-modal__input"
-        placeholder="Title"
+        :placeholder="$t('Title')"
       ></ui-input>
       <ui-input
         v-model="desc"
         class="new-vault-folder-modal__input"
-        placeholder="Description (optional)"
+        :placeholder="$t('Description (optional)')"
       ></ui-input>
     </ui-grid>
     <template #footer>
-      <ui-button variant="text" @click="handleCloseModal">Cancel</ui-button>
-      <ui-button variant="contained" @click="handleClickCreateBtn"
-        >Create Folder</ui-button
-      >
+      <ui-button variant="text" @click="handleCloseModal">{{
+        $t('Cancel')
+      }}</ui-button>
+      <ui-button variant="contained" @click="handleClickCreateBtn">{{
+        $t('Create')
+      }}</ui-button>
     </template>
   </ui-modal>
 </template>

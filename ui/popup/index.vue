@@ -81,6 +81,7 @@ export default {
         this.$nextTick(() => {
           this.$nextTick(() => {
             this.$refs.content.focus();
+            this.updatePos();
           });
         });
       }
@@ -97,15 +98,32 @@ export default {
       this.$emit('close');
     },
     updatePos() {
+      if (!this.$refs.content) return;
+
+      const rect = this.$refs.content.getBoundingClientRect();
+
       if (this.x !== null && this.y !== null) {
-        this.localX = `${this.x}px`;
-        this.localY = `${this.y}px`;
+        const popupWidth = rect.width;
+        const popupHeight = rect.height;
+
+        const maxAvailableWidth = window.innerWidth;
+        const maxAvailableHeight = window.innerHeight;
+
+        const x =
+          this.x + popupWidth > maxAvailableWidth
+            ? this.x - popupWidth
+            : this.x;
+        const y =
+          this.y + popupHeight > maxAvailableHeight
+            ? this.y - popupHeight
+            : this.y;
+
+        this.localX = `${x}px`;
+        this.localY = `${y}px`;
         return;
       }
 
-      if (!this.anchor || !this.$refs.content) return;
-
-      const rect = this.$refs.content.$el.getBoundingClientRect();
+      if (!this.root) return;
 
       const x =
         this.position === 'left-top' || this.position === 'left-bottom'

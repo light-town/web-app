@@ -11,6 +11,9 @@
     </client-only>
     <ui-grid direction="column">
       <appbar> </appbar>
+      <ui-grid direction="column" class="folder-content__table">
+        <folders-and-items-table> </folders-and-items-table>
+      </ui-grid>
     </ui-grid>
   </ui-grid>
 </template>
@@ -23,6 +26,7 @@ import Appbar from '~/components/appbar/index.vue';
 import Listbar from '~/components/listbar/index.vue';
 import FolderTreeView from '~/components/folders/index.vue';
 import * as vaultFolderActionTypes from '~/store/vault-folders/types';
+import FoldersAndItemsTable from '~/components/tables/folders-and-items/index.vue';
 
 export default {
   name: 'VaultPage',
@@ -32,6 +36,7 @@ export default {
     Appbar,
     Listbar,
     FolderTreeView,
+    FoldersAndItemsTable,
   },
   middleware: ['auth'],
   computed: {
@@ -48,4 +53,4 @@ export default {
 };
 </script>
 
-<style lang="scss" src="./index.scss"></style>
+<style lang="scss" src="../index.scss"></style>

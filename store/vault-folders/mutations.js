@@ -18,12 +18,18 @@ export default {
     state.currentVaultFolderUuid = payload.uuid;
   },
   [mutationTypes.SET_VAULT_FOLDER](state, payload) {
-    Vue.set(state.all, payload?.folder?.uuid, payload?.folder);
+    Vue.set(state.all, payload?.folder?.uuid, {
+      ...payload?.folder,
+      ...(state.all[payload.uuid] ?? { expanded: false }),
+    });
   },
   [mutationTypes.CLEAR_VAULT_FOLDER_LIST](state) {
     state.all = {};
   },
   [mutationTypes.INCREASE_CONTAINED_VAULT_FOLDER_COUNT](state, payload) {
     state.all[payload.uuid].containedFoldersCount++;
+  },
+  [mutationTypes.SET_EXPANDED_VAULT_FOLDER](state, payload) {
+    state.all[payload.uuid].expanded = payload.expanded;
   },
 };

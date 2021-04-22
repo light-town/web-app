@@ -4,7 +4,7 @@
       <ui-avatar :name="title" :size="44" class="vault__icon"></ui-avatar>
       <p class="vault__title">{{ title }}</p>
       <p class="vault__items">
-        <span>{{ items }}</span> items
+        <span>{{ items }}</span> {{ $t('items') }}
       </p>
       <p class="vault__desc">{{ desc }}</p>
     </ui-grid>
@@ -16,7 +16,7 @@
       >
         <ui-grid align-items="center" justify="center">
           <settings-icon class="control-btn__icon"></settings-icon>
-          <p class="control-btn__text">Manage</p>
+          <p class="control-btn__text">{{ $t('Manage') }}</p>
         </ui-grid>
       </ui-button>
       <ui-button
@@ -25,7 +25,7 @@
         @click="handleOpenVaultBtnClick"
       >
         <ui-grid align-items="center" justify="center">
-          <p class="control-btn__text">Open Vault</p>
+          <p class="control-btn__text">{{ $t('Open Vault') }}</p>
           <arrow-icon
             class="control-btn__icon control-btn__icon_flip"
           ></arrow-icon>

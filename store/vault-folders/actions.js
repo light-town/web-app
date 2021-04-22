@@ -117,4 +117,13 @@ export default {
   [actionTypes.CLEAR_VAULT_FOLDER_LIST]({ commit }) {
     commit(mutationTypes.CLEAR_VAULT_FOLDER_LIST);
   },
+  [actionTypes.SET_CURRENT_VAULT_FOLDER]({ commit }, payload) {
+    commit(mutationTypes.SET_CURRENT_VAULT_FOLDER_UUID, { uuid: payload.uuid });
+  },
+  [actionTypes.SET_EXPANDED_VAULT_FOLDER]({ commit }, payload) {
+    commit(mutationTypes.SET_EXPANDED_VAULT_FOLDER, {
+      uuid: payload.uuid,
+      expanded: payload.expanded,
+    });
+  },
 };

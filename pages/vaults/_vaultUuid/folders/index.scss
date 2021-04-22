@@ -1,0 +1,104 @@
+.page[data-theme-mode='light'] {
+  --color-vault-text: var(--color-gray-650);
+
+  --color-folder-content-table-row-hover-bg: var(--color-gray-50);
+
+  --color-folder-content-table-row-active-bg: var(--color-green-50);
+  --color-folder-content-table-cell-active-text: var(--color-green-400);
+  --color-folder-content-table-cell-active-icon-fill: var(--color-green-400);
+
+  --color-folder-content-table-cell-icon-fill: var(--color-gray-450);
+}
+
+.main-layout {
+  height: 100vh;
+
+  overflow: hidden;
+}
+
+.vault-list {
+  max-height: calc(100vh - 70px);
+
+  padding: 40px;
+
+  overflow-y: auto;
+
+  &__vault {
+    margin-right: 40px;
+    margin-bottom: 40px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.folder-content {
+  &__table {
+    padding: 20px;
+
+    &-body {
+      &-row {
+        cursor: pointer;
+
+        &:hover {
+          background-color: var(--color-folder-content-table-row-hover-bg);
+        }
+
+        &:active {
+          background-color: var(--color-folder-content-table-row-active-bg);
+
+          .folder-content__table-body-cell__title {
+            color: var(--color-folder-content-table-cell-active-text);
+          }
+
+          .folder-content__table-body-cell__icon {
+            fill: var(--color-folder-content-table-cell-active-icon-fill);
+          }
+        }
+
+        &_hovered {
+          background-color: var(--color-folder-content-table-row-active-bg);
+
+          .folder-content__table-body-cell__title {
+            color: var(--color-folder-content-table-cell-active-text);
+          }
+
+          .folder-content__table-body-cell__icon {
+            fill: var(--color-folder-content-table-cell-active-icon-fill);
+          }
+        }
+      }
+
+      &-cell {
+        &-name {
+          flex: 1 1 auto;
+        }
+        &-desc {
+          flex: 0 0 320px;
+        }
+        &-updated-at {
+          flex: 0 0 200px;
+        }
+        &-created-at {
+          flex: 0 0 200px;
+        }
+        &__title {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        &__icon {
+          margin-right: 16px;
+
+          --size: 24px;
+
+          width: var(--size);
+          height: var(--size);
+
+          fill: var(--color-folder-content-table-cell-icon-fill);
+        }
+      }
+    }
+  }
+}

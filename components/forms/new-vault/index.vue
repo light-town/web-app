@@ -2,9 +2,9 @@
   <ui-grid>
     <ui-button variant="outlined" class="new-vault-btn" @click="openForm">
       <add-icon class="new-vault-btn__icon"></add-icon>
-      <p class="new-vault-btn__text">New Vault</p>
+      <p class="new-vault-btn__text">{{ $t('New Vault') }}</p>
     </ui-button>
-    <ui-modal :open="open" title="New Vault" @close="handleCloseForm">
+    <ui-modal :open="open" :title="$t('New vault')" @close="handleCloseForm">
       <ui-grid
         component="form"
         direction="column"
@@ -19,13 +19,13 @@
           </ui-alert>
           <ui-input
             v-model="name"
-            placeholder="Vault Title"
+            :placeholder="$t('Title')"
             class="new-vault-form__input"
             tabindex="1"
           ></ui-input>
           <ui-input
             v-model="desc"
-            placeholder="Description (optional)"
+            :placeholder="$t('Description (optional)')"
             class="new-vault-form__input"
             tabindex="2"
           ></ui-input>
@@ -33,10 +33,10 @@
       </ui-grid>
       <template #footer>
         <ui-button variant="text" tabindex="4" @click="handleCloseForm">
-          Cancel
+          {{ $t('Cancel') }}
         </ui-button>
         <ui-button variant="contained" tabindex="3" @click="handleFormSubmit">
-          Create Vault
+          {{ $t('Create') }}
         </ui-button>
       </template>
     </ui-modal>

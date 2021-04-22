@@ -1,13 +1,13 @@
 <template>
   <ui-grid>
-    <ui-context-menu :items="items">
+    <ui-context-menu :items="items" @close="$emit('close', $event)">
       <template #anchor="{ open, opened }">
         <slot :open="open" :opened="opened"></slot>
       </template>
       <template #menu-item-template="{ item, close }">
         <ui-menu-item
           v-if="!item.separator"
-          @click="handleItemClick(item.name, close)"
+          @click="handleItemClick(item.key, close)"
         >
           <template #text>
             <p>{{ item.name }}</p>
@@ -49,19 +49,19 @@ export default {
   data() {
     return {
       items: [
-        { name: 'Create folder' },
+        { key: 'create-folder', name: this.$t('Create folder') },
         { separator: true },
-        { name: 'Rename' },
-        { name: 'Сhange color' },
+        { key: 'rename', name: this.$t('Rename') },
+        { key: 'change-color', name: this.$t('Сhange color') },
         { separator: true },
-        { name: 'Detete' },
+        { key: 'delete', name: this.$t('Detete') },
       ],
       showNewVaultFolderModal: false,
     };
   },
   methods: {
-    handleItemClick(itemName, closeFn) {
-      if (itemName === 'Create folder') this.showNewVaultFolderModal = true;
+    handleItemClick(itemKey, closeFn) {
+      if (itemKey === 'create-folder') this.showNewVaultFolderModal = true;
       closeFn();
     },
   },

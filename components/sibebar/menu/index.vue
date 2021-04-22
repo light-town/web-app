@@ -8,7 +8,7 @@
     >
       <ui-grid direction="column" align-items="center" justify="center">
         <home-icon class="sidebar__menu-item-icon"></home-icon>
-        <p class="sidebar__menu-item-text">Overview</p>
+        <p class="sidebar__menu-item-text">{{ $t('Overview') }}</p>
       </ui-grid>
     </ui-button>
     <ui-button
@@ -22,7 +22,7 @@
     >
       <ui-grid direction="column" align-items="center" justify="center">
         <supplies-icon class="sidebar__menu-item-icon"></supplies-icon>
-        <p class="sidebar__menu-item-text">Vaults</p>
+        <p class="sidebar__menu-item-text">{{ $t('Vaults') }}</p>
       </ui-grid>
     </ui-button>
     <ui-button
@@ -36,19 +36,19 @@
     >
       <ui-grid direction="column" align-items="center" justify="center">
         <teams-icon class="sidebar__menu-item-icon"></teams-icon>
-        <p class="sidebar__menu-item-text">Teams</p>
+        <p class="sidebar__menu-item-text">{{ $t('Teams') }}</p>
       </ui-grid>
     </ui-button>
     <ui-button component="li" variant="text" class="sidebar__menu-item">
       <ui-grid direction="column" align-items="center" justify="center">
         <question-icon class="sidebar__menu-item-icon"></question-icon>
-        <p class="sidebar__menu-item-text">Help</p>
+        <p class="sidebar__menu-item-text">{{ $t('Help') }}</p>
       </ui-grid>
     </ui-button>
     <ui-button component="li" variant="text" class="sidebar__menu-item">
       <ui-grid direction="column" align-items="center" justify="center">
         <settings-icon class="sidebar__menu-item-icon"></settings-icon>
-        <p class="sidebar__menu-item-text">Settings</p>
+        <p class="sidebar__menu-item-text">{{ $t('Settings') }}</p>
       </ui-grid>
     </ui-button>
   </ui-grid>
