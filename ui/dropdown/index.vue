@@ -1,44 +1,48 @@
 <template>
   <ui-grid aligh-items="center" class="ui-dropdown">
-    <slot name="anchor" :open="open" :opened="Boolean(anchor)">
+    <slot name="anchor" :open="open" :opened="Boolean(root)">
       <ui-button variant="text" @click="open">{{ title }}</ui-button>
     </slot>
-    <ui-popup
-      :open="Boolean(anchor)"
-      :anchor="{ root: anchor }"
-      position="left-bottom"
-      @close="handlePopupClose"
-    >
-      <ui-menu :items="items">
-        <template #menu-item-template="{ item }">
-          <slot name="dropdown-item-template" :item="item">
-            <ui-menu-item @click="$emit('dropdown-item-click')">
-              <template #text>
-                <p>{{ item.name }}</p>
-              </template>
-            </ui-menu-item>
+    <ui-portal v-if="Boolean(root)" :anchor="{ root }" position="left-bottom">
+      <ui-menu ref="menu">
+        <template v-if="items.length">
+          <template v-for="item in items">
+            <slot
+              name="dropdown-item-template"
+              :item="item"
+              :click="handleMenuItemClick.bind(this, item)"
+            >
+            </slot>
+          </template>
+        </template>
+        <template v-else-if="loading">
+          <slot name="loading">
+            <ui-menu-loading></ui-menu-loading>
           </slot>
         </template>
+        <template v-else>
+          <slot name="empty"></slot>
+        </template>
       </ui-menu>
-    </ui-popup>
+    </ui-portal>
   </ui-grid>
 </template>
 
 <script>
 import UiGrid from '~/ui/grid/index.vue';
-import UiPopup from '~/ui/popup/index.vue';
+import UiPortal from '~/ui/portal/index.vue';
 import UiButton from '~/ui/button/index.vue';
 import UiMenu from '~/ui/menu/index.vue';
-import UiMenuItem from '~/ui/menu/item.vue';
+import UiMenuLoading from '~/ui/menu/loading.vue';
 
 export default {
   name: 'UiDropdown',
   components: {
     UiGrid,
-    UiPopup,
+    UiPortal,
     UiButton,
     UiMenu,
-    UiMenuItem,
+    UiMenuLoading,
   },
   props: {
     items: {
@@ -50,19 +54,62 @@ export default {
       required: false,
       default: '',
     },
+    loading: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   data() {
-    return { anchor: null };
+    return { root: null, request: false };
+  },
+  mounted() {
+    window.addEventListener('blur', this.close);
+  },
+  beforeDestroy() {
+    window.removeEventListener('blur', this.close);
   },
   methods: {
-    open(e) {
-      this.anchor = e.currentTarget ?? e.target;
-    },
     handlePopupClose() {
-      this.anchor = null;
+      this.close();
     },
-    handleItemClick() {
-      this.anchor = null;
+    handleMenuItemClick(item, event) {
+      this.$emit('dropdown-item-click', item, event);
+      this.close();
+    },
+    open(e) {
+      if (this.root) {
+        this.close();
+        this.$nextTick(() => {
+          this.$nextTick(() => {
+            this.open(e);
+          });
+        });
+        return;
+      }
+
+      this.root = e.currentTarget;
+
+      this.$emit('open');
+
+      const root = document.getElementsByClassName('page-layout')[0];
+      root.addEventListener('click', this.close, {
+        once: true,
+        capture: true,
+      });
+      root.addEventListener('contextmenu', this.close, {
+        once: true,
+        capture: true,
+      });
+    },
+    close(e) {
+      if (!this.$refs.menu || !this.root) return;
+
+      this.$refs.menu.close();
+      this.$nextTick(() => {
+        this.root = null;
+        this.$emit('close', e);
+      });
     },
   },
 };

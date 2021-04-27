@@ -14,7 +14,7 @@
           role="cell"
           align-items="center"
           :class="['ui-table__cell', 'ui-table__cell-header', field.thClass]"
-          @click="$emit('header-cell-click', field, $event)"
+          @click="$emit('header-cell-click', $event, field)"
         >
           <slot :name="`head`">
             <slot
@@ -35,10 +35,13 @@
         component="tr"
         role="row"
         :class="['ui-table__row', brClass, items[i - 1].brClass]"
-        @click.native="$emit('body-row-click', items[i - 1], $event)"
-        @dblclick.native="$emit('body-row-dbl-click', items[i - 1], $event)"
+        @click.native="$emit('body-row-click', $event, items[i - 1])"
+        @dblclick.native="$emit('body-row-dbl-click', $event, items[i - 1])"
         @contextmenu.native="
-          $emit('body-row-context-menu', items[i - 1], $event)
+          e => {
+            $emit('body-row-context-menu', e, items[i - 1]);
+            $emit('contextmenu', e, items[i - 1]);
+          }
         "
       >
         <ui-grid
@@ -48,7 +51,7 @@
           role="cell"
           align-items="center"
           :class="['ui-table__cell', 'ui-table__cell-body', field.thClass]"
-          @click="$emit('body-cell-click', field, items, $event)"
+          @click="$emit('body-cell-click', $event, field, items)"
         >
           <slot :name="`cell`">
             <slot

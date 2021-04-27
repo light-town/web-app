@@ -1,0 +1,76 @@
+.page[data-theme-mode='light'] {
+  --color-item-field-controls: var(--color-gray-150);
+  --color-item-field-controls-btn-border: var(--color-gray-150);
+  --color-item-field-controls-btn-text: var(--color-gray-450);
+
+  --color-item-field-controls-btn-active-border: var(--color-green-400);
+  --color-item-field-controls-btn-active-text: var(--color-green-400);
+  --color-item-field-controls-btn-active-bg: var(--color-green-50);
+}
+
+.item-field {
+  &__controls {
+    display: inline-flex;
+
+    width: auto;
+    padding: 6px;
+
+    border: 1px dashed transparent;
+    border-radius: 4px;
+
+    cursor: pointer;
+
+    &:not(&_disabled):hover {
+      border: 1px dashed var(--color-item-field-controls);
+
+      .item-field__control-btn {
+        visibility: visible;
+      }
+    }
+
+    &_disabled {
+      cursor: default;
+    }
+
+    &_active {
+      border: 1px dashed var(--color-item-field-controls);
+
+      .item-field__control-btn {
+        visibility: visible;
+      }
+    }
+
+    &:focus {
+      border: 1px dashed var(--color-item-field-controls);
+
+      .item-field__control-btn {
+        visibility: visible;
+      }
+    }
+
+    & > * {
+      margin-left: 6px;
+    }
+
+    & > *:first-child {
+      margin-left: 0;
+    }
+  }
+
+  &__control-btn {
+    visibility: hidden;
+
+    padding: 6px 12px;
+
+    font-size: 13px;
+
+    color: var(--color-item-field-controls-btn-text);
+    border: 1px solid var(--color-item-field-controls-btn-border);
+
+    &_active {
+      border: 1px solid var(--color-item-field-controls-btn-active-border);
+      color: var(--color-item-field-controls-btn-active-text);
+      background-color: var(--color-item-field-controls-btn-active-bg);
+    }
+  }
+}

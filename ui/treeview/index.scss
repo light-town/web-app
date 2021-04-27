@@ -32,19 +32,20 @@
     color: var(--color-ui-tree-view-node-text);
 
     &:not(.ui-tree-view__node_active):hover {
-      background-color: var(--color-ui-tree-view-node-hover-bg);
       fill: var(--color-ui-tree-view-node-hover-fill);
       color: var(--color-ui-tree-view-node-hover-text);
     }
 
     &_active {
-      background-color: var(--color-ui-tree-view-node-active-bg);
       fill: var(--color-ui-tree-view-node-active-fill);
       color: var(--color-ui-tree-view-node-active-text);
+
+      .ui-tree-view__node__btn__icon {
+        fill: var(--color-ui-tree-view-node-active-fill);
+      }
     }
 
     &_hovered {
-      background-color: var(--color-ui-tree-view-node-hover-bg);
       fill: var(--color-ui-tree-view-node-hover-fill);
       color: var(--color-ui-tree-view-node-hover-text);
     }
@@ -69,7 +70,7 @@
       background-color: transparent !important;
 
       &__icon {
-        --size: 8px;
+        --size: 7px;
 
         width: var(--size);
         height: var(--size);

@@ -16,7 +16,7 @@ export default {
       type: String,
       required: false,
       validator(val) {
-        return ['text', 'password', 'email'].includes(val);
+        return ['text', 'password', 'email', 'url', 'tel'].includes(val);
       },
       default: 'text',
     },

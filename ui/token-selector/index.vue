@@ -7,6 +7,7 @@
         'ui-token-selector_focus': isFocus,
       },
     ]"
+    tabindex="0"
     @click.native="handleGlobalClick"
     @keydown.native="handleGlobalKeyDown"
   >
@@ -18,7 +19,7 @@
       @keydown.native="handleGlobalKeyDown"
     >
       <slot
-        name="token-content"
+        name="token-template"
         :token="token"
         :handleCloseBtnClick="handleCloseBtnClick"
       >
@@ -37,68 +38,68 @@
       @keydown="handleInputKeyDown"
     />
 
-    <ui-popup
-      :open="Boolean(anchor)"
-      :anchor="{ root: anchor }"
-      position="left-bottom"
-      @close="closeDropdown"
-    >
-      <ui-grid
-        ref="dropdown"
-        direction="column"
-        class="ui-token-selector__dropdown"
+    <ui-popup v-if="Boolean(root)" :anchor="{ root }" position="left-bottom">
+      <ui-menu
+        ref="menu"
+        :focusable="false"
         @keydown.native="handleGlobalKeyDown"
       >
         <template v-if="remainingDropdownItems.length">
-          <ui-grid
+          <ui-menu-item
             v-for="dropdownItem in remainingDropdownItems"
+            :id="dropdownItem.id"
             :key="dropdownItem.id"
-            tabindex="-1"
-            class="ui-token-selector__dropdown-item"
             :data-index="dropdownItem.id"
             @click="handleDropdownItemClick(dropdownItem)"
           >
-            <slot name="dropdown-item-content" :dropdownItem="dropdownItem">
-              <ui-button
-                variant="text"
-                class="ui-token-selector__dropdown-item-btn"
+            <template #icon>
+              <slot
+                name="dropdown-item-icon-template"
+                :dropdownItem="dropdownItem"
+              >
+              </slot>
+            </template>
+            <template #text>
+              <slot
+                name="dropdown-item-text-template"
+                :dropdownItem="dropdownItem"
               >
                 {{ dropdownItem.name }}
-              </ui-button>
-            </slot>
-          </ui-grid>
+              </slot>
+            </template>
+            <template #controls>
+              <slot
+                name="dropdown-item-controls-template"
+                :dropdownItem="dropdownItem"
+              >
+              </slot>
+            </template>
+          </ui-menu-item>
         </template>
         <template v-else-if="allowUserDefinedTokens && inputText.length">
-          <slot name="user-defined-token-content" :inputText="inputText">
-            <ui-grid tabindex="-1" class="ui-token-selector__dropdown-item">
-              <ui-button
-                variant="text"
-                class="ui-token-selector__dropdown-item-btn"
-              >
-                Add "{{ inputText }}"
-              </ui-button>
-            </ui-grid>
+          <slot name="user-defined-token-template" :inputText="inputText">
+            <ui-menu-item
+              id="user-defined-token"
+              tabindex="-1"
+              @click="handleDropdownItemClick(dropdownItem)"
+            >
+              <template #text> Add "{{ inputText }}" </template>
+            </ui-menu-item>
           </slot>
         </template>
         <template v-else-if="loading">
-          <slot name="loading-content">
-            <ui-grid
-              class="ui-token-selector__dropdown-item-loading"
-              align-items="center"
-              justify="center"
-            >
-              <ui-loading></ui-loading>
-            </ui-grid>
+          <slot name="loading-template">
+            <ui-menu-loading> </ui-menu-loading>
           </slot>
         </template>
         <template v-else>
-          <slot name="no-results-content">
-            <ui-grid class="ui-token-selector__dropdown-item-empty">
-              <p>No matches found</p>
-            </ui-grid>
+          <slot name="no-results-template">
+            <ui-menu-item id="no-matches-found">
+              <template #text> No matches found </template>
+            </ui-menu-item>
           </slot>
         </template>
-      </ui-grid>
+      </ui-menu>
     </ui-popup>
   </ui-grid>
 </template>
@@ -107,9 +108,10 @@
 import * as uuid from 'uuid';
 import UiGrid from '~/ui/grid/index.vue';
 import UiToken from '~/ui/token/index.vue';
-import UiPopup from '~/ui/popup/index.vue';
-import UiButton from '~/ui/button/index.vue';
-import UiLoading from '~/ui/loading/index.vue';
+import UiPopup from '~/ui/portal/index.vue';
+import UiMenu from '~/ui/menu/index.vue';
+import UiMenuItem from '~/ui/menu/item.vue';
+import UiMenuLoading from '~/ui/menu/loading.vue';
 
 export default {
   name: 'UiTokenSelector',
@@ -117,8 +119,9 @@ export default {
     UiGrid,
     UiToken,
     UiPopup,
-    UiButton,
-    UiLoading,
+    UiMenuLoading,
+    UiMenu,
+    UiMenuItem,
   },
   props: {
     placeholder: {
@@ -150,16 +153,17 @@ export default {
     return {
       isFocus: false,
       inputText: '',
-      anchor: null,
+      root: null,
       tokens: [],
     };
   },
   computed: {
     remainingDropdownItems() {
+      const re = new RegExp(`^${this.inputText.toLowerCase()}`);
       return this.dropdownItems.filter(
         i =>
           !this.tokens.find(t => t.id === i.id) &&
-          (!this.inputText.length || i.name.includes(this.inputText))
+          (!this.inputText.length || re.test(i.name.trim().toLowerCase()))
       );
     },
   },
@@ -186,10 +190,26 @@ export default {
       if (!this.remainingDropdownItems.length && this.hideDropdownWithNoItems)
         return;
 
-      this.anchor = this.$refs.input;
+      this.root = this.$refs.input;
+
+      const root = document.getElementsByClassName('page-layout')[0];
+      root.addEventListener('click', this.closeDropdown, {
+        once: true,
+        capture: true,
+      });
+      root.addEventListener('contextmenu', this.closeDropdown, {
+        once: true,
+        capture: true,
+      });
     },
-    closeDropdown() {
-      this.anchor = null;
+    closeDropdown(e) {
+      if (!this.$refs.menu) return;
+
+      this.$refs.menu.close();
+      this.$nextTick(() => {
+        this.root = null;
+        this.$emit('close', e);
+      });
     },
     clearTextInput() {
       this.inputText = '';
@@ -227,7 +247,7 @@ export default {
       this.openDropdown();
     },
     handleGlobalKeyDown(e) {
-      if (!this.anchor || !['ArrowUp', 'ArrowDown', 'Enter'].includes(e.code))
+      if (!this.root || !['ArrowUp', 'ArrowDown', 'Enter'].includes(e.code))
         return;
 
       if (
@@ -244,35 +264,42 @@ export default {
 
       e.preventDefault();
 
-      const currentFocusedItem = this.$refs.dropdown.$el.querySelector(
-        '.ui-token-selector__dropdown-item:focus'
-      );
-
-      if (!currentFocusedItem) {
-        this.$refs.dropdown.$el
-          .querySelector('.ui-token-selector__dropdown-item')
-          ?.focus();
-        return;
-      }
-
       if (e.code === 'ArrowUp') {
-        if (!currentFocusedItem.previousSibling) {
-          this.setTextInputFocus();
+        if (
+          !this.$refs.menu.hasPreviousItem(this.$refs.menu.context.activeItemId)
+        ) {
+          this.$refs.menu.setActiveItem(null);
         } else {
-          currentFocusedItem.previousSibling.focus();
+          this.$refs.menu.setActiveItem(
+            this.$refs.menu.getPreviousItem(
+              this.$refs.menu.context.activeItemId
+            ).id
+          );
         }
-      } else if (e.code === 'ArrowDown' && currentFocusedItem.nextSibling) {
-        currentFocusedItem.nextSibling.focus();
+      } else if (e.code === 'ArrowDown') {
+        if (!this.$refs.menu.context.activeItemId)
+          this.$refs.menu.setActiveItem(this.$refs.menu.context.items[0].id);
+        else if (
+          this.$refs.menu.hasNextItem(this.$refs.menu.context.activeItemId)
+        )
+          this.$refs.menu.setActiveItem(
+            this.$refs.menu.getNextItem(this.$refs.menu.context.activeItemId).id
+          );
       } else if (e.code === 'Enter') {
-        const currentItemIndex = currentFocusedItem.getAttribute('data-index');
+        const currentItemId = this.$refs.menu.getActiveItem()?.id;
 
         const currentItem = this.remainingDropdownItems.find(
-          i => i.id.toString() === currentItemIndex
+          i => i.id === currentItemId
         );
+
+        if (!currentItem) return;
 
         this.addToken(currentItem);
         this.clearTextInput();
-        this.setTextInputFocus();
+
+        this.$nextTick(() => {
+          this.$refs.menu.setActiveItem(this.$refs.menu.context.items[0]?.id);
+        });
       }
     },
     handleInputKeyDown(e) {

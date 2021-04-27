@@ -1,0 +1,31 @@
+.page[data-theme-mode='light'] {
+  --color-link-item-field-title: var(--color-gray-650);
+  --color-link-item-field-text: var(--color-gray-300);
+  --color-link-item-field-link: var(--color-green-400);
+}
+
+.link-item-field {
+  &__title {
+    font-size: 15px;
+    font-weight: 400;
+
+    color: var(--color-link-item-field-title);
+  }
+
+  &__text {
+    font-size: 15px;
+    font-weight: 400;
+
+    color: var(--color-link-item-field-text);
+
+    &_editing {
+      padding: 6px 22px;
+    }
+  }
+
+  &__link {
+    &:hover {
+      color: var(--color-link-item-field-link);
+    }
+  }
+}

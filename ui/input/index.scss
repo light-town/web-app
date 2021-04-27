@@ -4,6 +4,8 @@
 
   --color-ui-input-focus-border: var(--color-green-200);
   --color-ui-input-focus-bs: var(--color-green-100);
+
+  --color-ui-input-placeholder-text: var(--color-gray-300);
 }
 
 .ui-input {
@@ -20,5 +22,9 @@
   &:focus {
     border: 1px solid var(--color-ui-input-focus-border);
     box-shadow: 0 0 0 0.25rem var(--color-ui-input-focus-bs);
+  }
+
+  &::-webkit-input-placeholder {
+    color: var(--color-ui-input-placeholder-text);
   }
 }

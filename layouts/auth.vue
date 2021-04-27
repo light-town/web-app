@@ -1,6 +1,6 @@
 <template>
   <div class="page" data-theme-mode="light">
-    <ui-grid class="page__container" justify="center">
+    <ui-grid class="page-layout auth-page-layout" justify="center">
       <ui-grid
         direction="column"
         align-items="center"
@@ -49,4 +49,32 @@ export default {
 };
 </script>
 
-<style lang="scss" src="./auth.scss"></style>
+<style lang="scss">
+.page[data-theme-mode='light'] {
+  --color--color-sign-in-page-bg: var(--color-gray-50);
+  --color-sign-in-page-link-text: var(--color-green-400);
+  --color-sign-in-page-link-hover-text: var(--color-green-500);
+}
+
+.page-layout {
+  width: 100%;
+  height: 100vh;
+}
+
+.auth-page-layout {
+  background-color: var(--color--color-sign-in-page-bg);
+}
+
+.auth-form__layout {
+  width: auto !important;
+}
+
+.link {
+  font-size: 15px;
+  color: var(--color-sign-in-page-link-text);
+
+  &:hover {
+    color: var(--color-sign-in-page-link-hover-text);
+  }
+}
+</style>

@@ -1,15 +1,22 @@
 <template>
-  <span
-    class="ui-menu-item-separator"
-    :style="{
-      height: `${weight}px`,
-    }"
-  ></span>
+  <ui-grid component="li" class="ui-menu-separator">
+    <span
+      class="ui-menu-separator__marker"
+      :style="{
+        height: `${weight}px`,
+      }"
+    ></span>
+  </ui-grid>
 </template>
 
 <script>
+import UiGrid from '~/ui/grid/index.vue';
+
 export default {
-  name: 'UiMenuItemSeparator',
+  name: 'UiMenuSeparator',
+  components: {
+    UiGrid,
+  },
   props: {
     weight: {
       type: Number,

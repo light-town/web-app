@@ -1,30 +1,15 @@
 <template>
   <ui-select v-model="selectedItem" :items="items">
-    <template #anchor="{ selectedItem: item, handle }">
-      <ui-button variant="text" class="links__btn" @click="handle">
-        <ui-grid align-items="center">
-          <p>{{ item.name }}</p>
-          <arrow-icon class="links__icon"></arrow-icon>
-        </ui-grid>
+    <template #anchor="{ selectedItem: item, open }">
+      <ui-button variant="text" class="links__btn" @click="open">
+        <p>{{ item.name }}</p>
+        <arrow-icon class="links__icon"></arrow-icon>
       </ui-button>
-    </template>
-    <template #items="{ handle }">
-      <ui-grid direction="column" class="select-langs__items">
-        <ui-grid
-          v-for="item in items"
-          :key="item.iso"
-          class="select-langs__item"
-          @click="handle(item)"
-        >
-          <p>{{ item.name }}</p>
-        </ui-grid>
-      </ui-grid>
     </template>
   </ui-select>
 </template>
 
 <script>
-import UiGrid from '~/ui/grid/index.vue';
 import UiButton from '~/ui/button/index.vue';
 import UiSelect from '~/ui/select/index.vue';
 import ArrowIcon from '~/assets/right-arrow.svg?inline';
@@ -32,7 +17,6 @@ import ArrowIcon from '~/assets/right-arrow.svg?inline';
 export default {
   name: 'SelectLanguages',
   components: {
-    UiGrid,
     UiButton,
     UiSelect,
     ArrowIcon,

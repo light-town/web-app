@@ -1,6 +1,6 @@
 <template>
   <div class="page" data-theme-mode="light">
-    <Nuxt />
+    <div class="page-layout"><Nuxt /></div>
     <portal-target name="modals-location" multiple> </portal-target>
   </div>
 </template>
@@ -45,3 +45,10 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.page-layout {
+  width: 100%;
+  min-height: 100vh;
+}
+</style>

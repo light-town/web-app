@@ -6,9 +6,10 @@
       'ui-tree-view__node',
       { 'ui-tree-view__node_active': active },
       { 'ui-tree-view__node_expanded': expanded },
-      { 'ui-tree-view__node_hovered': hovered },
+      { 'ui-tree-view__node_hovered': opened },
     ]"
     @click="$emit('click', $event)"
+    @contextmenu.native="$emit('contextmenu', $event)"
   >
     <ui-grid align-items="center" class="ui-tree-view__node__left">
       <ui-button
@@ -58,11 +59,11 @@ export default {
       required: false,
       default: false,
     },
-    hovered: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
+  },
+  data() {
+    return {
+      opened: false,
+    };
   },
 };
 </script>

@@ -1,0 +1,24 @@
+.page[data-theme-mode='light'] {
+  --color-text-item-field-title: var(--color-gray-650);
+  --color-text-item-field-text: var(--color-gray-300);
+}
+
+.text-item-field {
+  &__title {
+    font-size: 15px;
+    font-weight: 400;
+
+    color: var(--color-text-item-field-title);
+  }
+
+  &__text {
+    font-size: 15px;
+    font-weight: 400;
+
+    color: var(--color-text-item-field-text);
+
+    &_editing {
+      padding: 6px 22px;
+    }
+  }
+}

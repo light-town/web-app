@@ -3,69 +3,79 @@
   --color-folder-text: var(--color-gray-650);
 }
 
-.ui-tree-view__node:hover .vault__text,
-.ui-tree-view__node:hover .folder__text {
-  color: var(--color-ui-tree-view-node-hover-text);
-}
+.folders-treeview {
+  &__node {
+    &__folder {
+      &-icon {
+        display: flex;
+        flex-shrink: 0;
+        flex-grow: 0;
 
-.ui-tree-view__node_active .vault__text,
-.ui-tree-view__node_active .folder__text {
-  color: var(--color-ui-tree-view-node-active-text);
-}
+        --size: 24px;
 
-.treeview {
-  &-folder {
-    &__icon {
-      display: flex;
-      flex-shrink: 0;
-      flex-grow: 0;
+        width: var(--size);
+        height: var(--size);
 
-      --size: 24px;
+        margin-right: 24px;
 
-      width: var(--size);
-      height: var(--size);
+        transition: fill 0.3s;
+      }
 
-      margin-right: 24px;
+      &-text {
+        max-width: 128px;
 
-      transition: fill 0.3s;
+        font-size: 14px;
+        line-height: 16px;
+
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
+        color: var(--color-folder-text);
+
+        transition: color 0.3s;
+      }
     }
 
-    &__text {
-      max-width: 128px;
+    &__vault {
+      &-text {
+        max-width: 128px;
 
-      font-size: 14px;
-      line-height: 16px;
+        font-size: 14px;
+        line-height: 16px;
 
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
 
-      color: var(--color-folder-text);
+        color: var(--color-vault-text);
+      }
 
-      transition: color 0.3s;
+      &-icon {
+        margin-right: 24px;
+
+        & > .ui-avatar__badge {
+          font-size: 13px;
+
+          background-color: transparent !important;
+        }
+      }
     }
   }
 
-  &-vault {
-    &__text {
-      max-width: 128px;
-
-      font-size: 14px;
-      line-height: 16px;
-
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-
-      color: var(--color-vault-text);
+  & .ui-tree-view__node_active {
+    .folders-treeview__node__vault-icon > .ui-avatar__badge {
+      color: var(--color-ui-tree-view-node-active-text);
+      border-color: var(--color-ui-tree-view-node-active-text);
+      background-color: var(--color-green-50) !important;
     }
 
-    &__icon {
-      margin-right: 24px;
+    .folders-treeview__node__vault-text {
+      color: var(--color-ui-tree-view-node-active-text);
+    }
 
-      & > div {
-        font-size: 13px;
-      }
+    .folders-treeview__node__folder-text {
+      color: var(--color-ui-tree-view-node-active-text);
     }
   }
 }

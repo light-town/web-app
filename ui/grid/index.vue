@@ -9,6 +9,7 @@
       [`ui-grid_wrap-${wrap}`]: wrap,
     }"
     @click="$emit('click', $event)"
+    @contextmenu="$emit('contextmenu', $event)"
   >
     <slot></slot>
   </component>

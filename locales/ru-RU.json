@@ -64,5 +64,19 @@
   "Detete": "Удалить",
   "The folder is empty": "Папка пуста",
   "Personal": "Личный",
-  "Your default vault for storing elements.": "Ваше основное хранилище для хранения элементов."
+  "Your default vault for storing elements.": "Ваше основное хранилище для хранения элементов.",
+  "Conceal": "Скрыть",
+  "Reveal": "Раскрыть",
+  "Copy": "Копировать",
+  "Open": "Открыть",
+  "Add field": "Добавить поле",
+  "Edit": "Изменить",
+  "Options": "Опции",
+  "Move up": "Переместить вверх",
+  "Move down": "Переместить вниз",
+  "Delete": "Удалить",
+  "Username": "Имя пользователя",
+  "Password": "Пароль",
+  "Website URL": "Адрес сайта",
+  "Create item": "Создать элемент"
 }

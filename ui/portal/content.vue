@@ -1,20 +1,12 @@
 <template>
-  <portal to="modals-location">
-    <ui-grid
-      v-if="open"
-      class="ui-popup"
-      :style="{ left: localX, top: localY }"
-    >
-      <div
-        ref="content"
-        tabindex="-1"
-        direction="column"
-        @blur.prevent="handleBackgroundClick"
-      >
-        <slot></slot>
-      </div>
-    </ui-grid>
-  </portal>
+  <ui-grid
+    v-if="!forceClose"
+    :class="['ui-popup', { 'ui-popup_visible': show }]"
+    direction="column"
+    :style="{ left: localX, top: localY }"
+  >
+    <slot></slot>
+  </ui-grid>
 </template>
 
 <script>
@@ -26,10 +18,6 @@ export default {
     UiGrid,
   },
   props: {
-    open: {
-      type: Boolean,
-      required: true,
-    },
     anchor: {
       type: Object,
       required: false,
@@ -60,7 +48,7 @@ export default {
     },
     y: {
       type: Number,
-      requird: false,
+      required: false,
       default: null,
     },
   },
@@ -68,6 +56,8 @@ export default {
     return {
       localX: 0,
       localY: 0,
+      show: false,
+      forceClose: false,
     };
   },
   computed: {
@@ -75,36 +65,19 @@ export default {
       return this.anchor?.root?.getBoundingClientRect();
     },
   },
-  watch: {
-    open() {
-      if (this.open) {
-        this.$nextTick(() => {
-          this.$nextTick(() => {
-            this.$refs.content.focus();
-            this.updatePos();
-          });
-        });
-      }
-    },
-  },
-  beforeUpdate() {
-    this.updatePos();
-  },
   mounted() {
     this.updatePos();
   },
+  updated() {
+    this.updatePos();
+  },
   methods: {
-    handleBackgroundClick() {
-      this.$emit('close');
-    },
     updatePos() {
-      if (!this.$refs.content) return;
-
-      const rect = this.$refs.content.getBoundingClientRect();
+      const contentRect = this.$el.getBoundingClientRect();
 
       if (this.x !== null && this.y !== null) {
-        const popupWidth = rect.width;
-        const popupHeight = rect.height;
+        const popupWidth = contentRect.width;
+        const popupHeight = contentRect.height;
 
         const maxAvailableWidth = window.innerWidth;
         const maxAvailableHeight = window.innerHeight;
@@ -120,36 +93,46 @@ export default {
 
         this.localX = `${x}px`;
         this.localY = `${y}px`;
+
+        this.show = true;
         return;
       }
 
       if (!this.root) return;
 
       const x =
-        this.position === 'left-top' || this.position === 'left-bottom'
+        window.scrollX +
+        (this.position === 'left-top' || this.position === 'left-bottom'
           ? this.root.left
-          : this.root.left + this.root.width;
+          : this.root.left + this.root.width);
 
       const y =
-        this.position === 'left-top' || this.position === 'right-top'
+        window.scrollY +
+        (this.position === 'left-top' || this.position === 'right-top'
           ? this.root.top
-          : this.root.top + this.root.height;
+          : this.root.top + this.root.height);
 
-      const width = this.root.width;
-      const height = this.root.height;
+      const anchorWidth = this.root.width;
+      const anchorHeight = this.root.height;
 
-      const maxWidth = window.innerWidth;
-      const maxHeight = window.innerHeight;
+      const maxWidth = window.innerWidth + window.scrollX;
+      const maxHeight = window.innerHeight + window.scrollY;
 
-      const diffX = x + rect.width > maxWidth ? maxWidth - x - rect.width : 0;
+      const diffX =
+        x + contentRect.width > maxWidth ? maxWidth - x - contentRect.width : 0;
+
       const diffY =
-        y + rect.height > maxHeight ? maxHeight - y - rect.height : 0;
+        y + contentRect.height > maxHeight
+          ? maxHeight - y - contentRect.height
+          : 0;
 
-      if (diffX < 0) this.localX = `${x - rect.width + width}px`;
+      if (diffX < 0) this.localX = `${x - contentRect.width - anchorWidth}px`;
       else this.localX = `${x}px`;
 
-      if (diffY < 0) this.localY = `${y - rect.height + height}px`;
+      if (diffY < 0) this.localY = `${y - contentRect.height - anchorHeight}px`;
       else this.localY = `${y}px`;
+
+      this.show = true;
     },
   },
 };

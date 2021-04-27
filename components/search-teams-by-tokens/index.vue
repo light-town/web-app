@@ -9,7 +9,7 @@
     @token-added="handleTokenAdded"
     @token-removed="handleTokenRemoved"
   >
-    <template #token-content="{ token }">
+    <template #token-template="{ token }">
       <ui-token
         :class="{
           'search-teams-by-tokens__token-head':
@@ -24,21 +24,8 @@
       </ui-token>
     </template>
 
-    <template #dropdown-item-content="{ dropdownItem }">
-      <ui-button variant="text" class="ui-token-selector__dropdown-item-btn">
-        <ui-grid align-items="center" justify="space-between">
-          <ui-grid align-items="center"
-            ><p>{{ dropdownItem.name }}</p></ui-grid
-          >
-          <ui-grid
-            align-items="center"
-            justify="flex-end"
-            class="search-teams-by-tokens__dropdown-item-desc"
-          >
-            <p>{{ dropdownItem.desc }}</p>
-          </ui-grid>
-        </ui-grid>
-      </ui-button>
+    <template #dropdown-item-controls-template="{ dropdownItem }">
+      <p>{{ dropdownItem.desc }}</p>
     </template>
   </ui-token-selector>
 </template>
@@ -47,13 +34,11 @@
 import * as uuid from 'uuid';
 import UiGrid from '~/ui/grid/index.vue';
 import UiToken from '~/ui/token/index.vue';
-import UiButton from '~/ui/button/index.vue';
 import UiTokenSelector from '~/ui/token-selector/index.vue';
 
 export default {
   name: 'SearchTeamsByTokens',
   components: {
-    UiButton,
     UiToken,
     UiTokenSelector,
     UiGrid,
@@ -62,9 +47,9 @@ export default {
     return {
       tokens: [],
       criterias: [
-        { id: 1, name: 'Folder name', type: 'criteria' },
-        { id: 2, name: 'Item name', type: 'criteria' },
-        { id: 3, name: 'Owner', type: 'criteria' },
+        { id: '1', name: 'Folder name', type: 'criteria' },
+        { id: '2', name: 'Item name', type: 'criteria' },
+        { id: '3', name: 'Owner', type: 'criteria' },
       ],
       currentDropdownItems: [],
     };
@@ -91,14 +76,13 @@ export default {
         this.currentDropdownItems = this.getValues();
       }
     },
-    handleRemoveTokenBtnClick(_, token) {
+    handleRemoveTokenBtnClick(token) {
       const currentTokenIndex = this.tokens.indexOf(token);
 
       this.tokens.splice(currentTokenIndex - 2, 3);
 
       if (!this.tokens.length) this.currentDropdownItems = this.criterias;
     },
-    /* handle(token); */
     getOperators() {
       return [
         { id: uuid.v4(), name: '=', type: 'operator', desc: 'is' },

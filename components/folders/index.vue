@@ -3,39 +3,40 @@
     :nodes="nodes"
     unique-node-key="uuid"
     nested-node-key="parentFolderUuid"
+    class="folders-treeview"
   >
     <template #default="{ node }">
       <context-menu :anchor="node.isVault ? { uuid: null } : node">
-        <template #default="{ open, opened }">
-          <ui-tree-view-node
-            :node="node"
-            :active="isNodeActive(node)"
-            :expanded="node.expanded"
-            :expandable="node.containedFoldersCount > 0"
-            :hovered="opened"
-            @expand="expandFolderNode(node)"
-            @click="activeFolderNode(node)"
-            @contextmenu.native.prevent="open"
-          >
-            <template #icon>
-              <ui-avatar
-                v-if="node.isVault"
-                :name="node.overview.name"
-                :size="24"
-                class="treeview-vault__icon"
-              ></ui-avatar>
-              <folder-icon v-else class="treeview-folder__icon"></folder-icon>
-            </template>
-            <template #text>
-              <p v-if="node.isVault" class="treeview-vault__text">
-                {{ node.overview.name }}
-              </p>
-              <p v-else class="treeview-folder__text">
-                {{ node.overview.name }}
-              </p>
-            </template>
-          </ui-tree-view-node>
-        </template>
+        <ui-tree-view-node
+          :node="node"
+          :active="isNodeActive(node)"
+          :expanded="node.expanded"
+          :expandable="node.containedFoldersCount > 0"
+          class="folders-treeview__node"
+          @expand="expandFolderNode(node)"
+          @click="activeFolderNode(node)"
+        >
+          <template #icon>
+            <ui-avatar
+              v-if="node.isVault"
+              :name="node.overview.name"
+              :size="24"
+              class="folders-treeview__node__vault-icon"
+            ></ui-avatar>
+            <folder-icon
+              v-else
+              class="folders-treeview__node__folder-icon"
+            ></folder-icon>
+          </template>
+          <template #text>
+            <p v-if="node.isVault" class="folders-treeview__node__vault-text">
+              {{ node.overview.name }}
+            </p>
+            <p v-else class="folders-treeview__node__folder-text">
+              {{ node.overview.name }}
+            </p>
+          </template>
+        </ui-tree-view-node>
       </context-menu>
     </template>
   </ui-tree-view>

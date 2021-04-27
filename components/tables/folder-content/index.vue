@@ -1,50 +1,48 @@
 <template>
   <ui-grid direction="column" class="folder-content-table">
     <folder-context-menu v-if="showTable" :anchor="{ uuid: activeRowUuid }">
-      <template #default="{ open }">
-        <ui-table
-          :fields="fields"
-          :items="rows"
-          br-class="folder-content-table__table-body-row"
-          @body-row-context-menu="
-            (item, event) => handleRowContextMenu(item, open, event)
-          "
-          @body-row-dbl-click="handleRowDblClick"
-          @body-row-click="item => (activeRowUuid = item.uuid)"
-        >
-          <template #cell(name)="{ item }">
-            <ui-grid align-items="center">
-              <folder-icon
-                class="folder-content-table__table-body-cell__icon"
-              ></folder-icon>
-              <p class="folder-content-table__table-body-cell__title">
-                {{ item.overview.name }}
-              </p>
-            </ui-grid>
-          </template>
-          <template #cell(desc)="{ item }">
-            <ui-grid align-items="center">
-              <p class="folder-content-table__table-body-cell__title">
-                {{ item.overview.desc }}
-              </p>
-            </ui-grid>
-          </template>
-          <template #cell(lastUpdatedAt)="{ item }">
-            <ui-grid align-items="center">
-              <p class="folder-content-table__table-body-cell__title">
-                {{ item.lastUpdatedAt }}
-              </p>
-            </ui-grid>
-          </template>
-          <template #cell(createdAt)="{ item }">
-            <ui-grid align-items="center">
-              <p class="folder-content-table__table-body-cell__title">
-                {{ item.createdAt }}
-              </p>
-            </ui-grid>
-          </template>
-        </ui-table>
-      </template>
+      <ui-table
+        :fields="fields"
+        :items="rows"
+        br-class="folder-content-table__table-body-row"
+        @body-row-context-menu="
+          (event, item) => handleRowContextMenu(item, event)
+        "
+        @body-row-dbl-click="handleRowDblClick"
+        @body-row-click="(_, item) => (activeRowUuid = item.uuid)"
+      >
+        <template #cell(name)="{ item }">
+          <ui-grid align-items="center">
+            <folder-icon
+              class="folder-content-table__table-body-cell__icon"
+            ></folder-icon>
+            <p class="folder-content-table__table-body-cell__title">
+              {{ item.overview.name }}
+            </p>
+          </ui-grid>
+        </template>
+        <template #cell(desc)="{ item }">
+          <ui-grid align-items="center">
+            <p class="folder-content-table__table-body-cell__title">
+              {{ item.overview.desc }}
+            </p>
+          </ui-grid>
+        </template>
+        <template #cell(lastUpdatedAt)="{ item }">
+          <ui-grid align-items="center">
+            <p class="folder-content-table__table-body-cell__title">
+              {{ item.lastUpdatedAt }}
+            </p>
+          </ui-grid>
+        </template>
+        <template #cell(createdAt)="{ item }">
+          <ui-grid align-items="center">
+            <p class="folder-content-table__table-body-cell__title">
+              {{ item.createdAt }}
+            </p>
+          </ui-grid>
+        </template>
+      </ui-table>
     </folder-context-menu>
     <slot v-if="isTableEmpty" name="empty-table">table is empty</slot>
     <slot v-if="loading" name="loading-table">
@@ -174,7 +172,7 @@ export default {
         1
       )} ${d.getFullYear()} at ${d.getHours()}:${d.getMinutes()}`;
     },
-    handleRowDblClick(item) {
+    handleRowDblClick(_, item) {
       if (item.isFolder) {
         this.$router.push(
           `/vaults/${this.currentVault.uuid}/folders/${item.uuid}`
@@ -182,9 +180,9 @@ export default {
         /* return; */
       }
     },
-    handleRowContextMenu(item, open, event) {
+    handleRowContextMenu(item, event) {
       this.activeRowUuid = item.uuid;
-      open(event);
+      this.$emit('contextmenu', event);
     },
   },
 };

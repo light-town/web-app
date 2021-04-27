@@ -22,13 +22,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import UiGrid from '~/ui/grid/index.vue';
 import Sidebar from '~/components/sibebar/index.vue';
 import Appbar from '~/components/appbar/index.vue';
 import Listbar from '~/components/listbar/index.vue';
 import FolderTreeView from '~/components/folders/index.vue';
 import Breadcrumbs from '~/components/breadcrumbs/index.vue';
+import * as vaultFolderActionTypes from '~/store/vault-folders/types';
 
 export default {
   name: 'FolderContentLayout',
@@ -41,7 +42,20 @@ export default {
     FolderTreeView,
   },
   computed: {
-    ...mapGetters(['currentVault', 'currentVaultFolder', 'pathToFolder']),
+    ...mapGetters(['currentVault', 'currentVaultFolder']),
+    currentVaultFolderUuid() {
+      return this.currentVaultFolder?.uuid;
+    },
+  },
+  async created() {
+    await this.setCurrentVaultFolder({
+      uuid: this.$route.params.vaultFolderUuid ?? null,
+    });
+  },
+  methods: {
+    ...mapActions({
+      setCurrentVaultFolder: vaultFolderActionTypes.SET_CURRENT_VAULT_FOLDER,
+    }),
   },
 };
 </script>

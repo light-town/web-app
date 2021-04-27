@@ -11,17 +11,17 @@
         <slot
           name="item-tempalte"
           :item="item"
-          :click="e => hadnleItemClick(item, e)"
+          :click="e => handleItemClick(item, () => {}, e)"
         >
           <slot
             :name="`item-tempalte(${item[uniqueKey]})`"
             :item="item"
-            :click="e => hadnleItemClick(item, e)"
+            :click="e => handleItemClick(item, () => {}, e)"
           >
             <ui-button
               variant="text"
               class="ui-breadcrumbs__item__btn"
-              @click="hadnleItemClick(item, $event)"
+              @click="handleItemClick(item, () => {}, $event)"
             >
               {{ item[labelKey] }}
             </ui-button>
@@ -42,13 +42,16 @@
               <more-icon class="ui-breadcrumbs__dotted-btn__icon"></more-icon>
             </ui-button>
           </template>
-          <template #dropdown-item-template="{ item: dropdownItem }">
+          <template #dropdown-item-template="{ item: dropdownItem, click }">
             <slot
               name="dropdown-item-template"
-              :click="e => hadnleItemClick(dropdownItem, e)"
+              :click="e => handleItemClick(dropdownItem, click, e)"
               :item="dropdownItem"
             >
-              <ui-menu-item @click="e => hadnleItemClick(dropdownItem, e)">
+              <ui-menu-item
+                :id="dropdownItem[uniqueKey]"
+                @click="e => handleItemClick(dropdownItem, click, e)"
+              >
                 <template #text>
                   <p class="ui-breadcrumbs__dropdown-item__text">
                     {{ dropdownItem[labelKey] }}
@@ -129,8 +132,10 @@ export default {
     },
   },
   methods: {
-    hadnleItemClick(item, e) {
+    handleItemClick(item, click, e) {
       if (item.isDropdown) return;
+
+      click(e);
 
       this.$emit('item-click', item, e);
     },

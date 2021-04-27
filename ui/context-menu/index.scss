@@ -1,0 +1,13 @@
+.ui-context-menu {
+  user-select: none;
+
+  transition: height 267ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,
+    margin-top 267ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 267ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: height, margin-top, opacity;
+  transition-duration: 267ms, 267ms, 267ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1),
+    cubic-bezier(0.4, 0, 0.2, 1), cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: 0ms, 0s, 0s;
+  will-change: height, margin-top, opacity;
+}

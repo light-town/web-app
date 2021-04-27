@@ -9,11 +9,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapState } from 'vuex';
 import FolderContentLayout from '~/layouts/folder-content/index.vue';
 import FolderContentTable from '~/components/tables/folder-content/index.vue';
 import EmptyFolderStub from '~/components/stubs/empty-folder/index.vue';
-import * as vaultFolderActionTypes from '~/store/vault-folders/types';
 
 export default {
   name: 'VaultFolderPage',
@@ -24,19 +23,9 @@ export default {
   },
   middleware: ['auth'],
   computed: {
-    ...mapGetters(['currentVaultFolder']),
-    currentVaultFolderUuid() {
-      return this.currentVaultFolder?.uuid;
-    },
-  },
-  async created() {
-    await this.setCurrentVaultFolder({
-      uuid: this.$route.params.vaultFolderUuid ?? null,
-    });
-  },
-  methods: {
-    ...mapActions({
-      setCurrentVaultFolder: vaultFolderActionTypes.SET_CURRENT_VAULT_FOLDER,
+    ...mapState({
+      currentVaultFolderUuid: state =>
+        state['vault-folders'].currentVaultFolderUuid,
     }),
   },
 };

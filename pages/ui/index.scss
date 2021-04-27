@@ -1,0 +1,44 @@
+.page[data-theme-mode='light'] {
+  --color-templates-section-border: var(--color-gray-150);
+  --color-templates-section-context-menu-border: var(--color-green-400);
+  --color-templates-section-context-menu-text: var(--color-green-400);
+}
+
+.templates {
+  padding: 20px;
+
+  &__section {
+    padding: 20px;
+
+    border: 1px solid var(--color-templates-section-border);
+    border-radius: 4px;
+
+    margin-bottom: 20px;
+  }
+
+  &__title {
+    font-size: 18px;
+    font-weight: 500;
+
+    margin-bottom: 20px;
+  }
+
+  &__context-menu {
+    height: 120px;
+
+    border: 1px dashed var(--color-templates-section-context-menu-border);
+    border-radius: 4px;
+
+    font-size: 20px;
+    font-weight: 300;
+    text-transform: uppercase;
+
+    color: var(--color-templates-section-context-menu-text);
+
+    cursor: default;
+  }
+
+  &__button {
+    margin-bottom: 20px;
+  }
+}

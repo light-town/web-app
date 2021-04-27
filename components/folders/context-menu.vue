@@ -1,19 +1,39 @@
 <template>
   <ui-grid>
-    <ui-context-menu :items="items" @close="$emit('close', $event)">
-      <template #anchor="{ open, opened }">
-        <slot :open="open" :opened="opened"></slot>
-      </template>
-      <template #menu-item-template="{ item, close }">
-        <ui-menu-item
-          v-if="!item.separator"
-          @click="handleItemClick(item.key, close)"
-        >
-          <template #text>
-            <p>{{ item.name }}</p>
+    <ui-context-menu
+      @close="$emit('close', $event)"
+      @menu-item-click="handleItemClick"
+    >
+      <slot></slot>
+      <template #menu-items>
+        <ui-menu-item id="create">
+          <template #text> Create </template>
+          <template #submenu:items>
+            <ui-menu-item id="create-folder">
+              <template #text> Folder </template>
+            </ui-menu-item>
+            <ui-menu-separator></ui-menu-separator>
+            <ui-menu-item id="create-item">
+              <template #text> Item </template>
+              <template #submenu:items>
+                <ui-menu-item id="create-item-password">
+                  <template #text> Password </template>
+                </ui-menu-item>
+                <ui-menu-item id="create-item-secure-note">
+                  <template #text> Secure Note </template>
+                </ui-menu-item>
+              </template>
+            </ui-menu-item>
           </template>
         </ui-menu-item>
-        <ui-menu-item-separator v-else></ui-menu-item-separator>
+        <ui-menu-separator></ui-menu-separator>
+        <ui-menu-item id="rename">
+          <template #text> Rename </template>
+        </ui-menu-item>
+        <ui-menu-separator></ui-menu-separator>
+        <ui-menu-item id="detele-folder">
+          <template #text> Delete </template>
+        </ui-menu-item>
       </template>
     </ui-context-menu>
     <new-vault-folder-modal
@@ -28,7 +48,7 @@
 import UiGrid from '~/ui/grid/index.vue';
 import UiContextMenu from '~/ui/context-menu/index.vue';
 import UiMenuItem from '~/ui/menu/item.vue';
-import UiMenuItemSeparator from '~/ui/menu/separator.vue';
+import UiMenuSeparator from '~/ui/menu/separator.vue';
 import NewVaultFolderModal from '~/components/modals/new-vault-folder/index.vue';
 
 export default {
@@ -37,7 +57,7 @@ export default {
     UiGrid,
     UiContextMenu,
     UiMenuItem,
-    UiMenuItemSeparator,
+    UiMenuSeparator,
     NewVaultFolderModal,
   },
   props: {
@@ -48,21 +68,12 @@ export default {
   },
   data() {
     return {
-      items: [
-        { key: 'create-folder', name: this.$t('Create folder') },
-        { separator: true },
-        { key: 'rename', name: this.$t('Rename') },
-        { key: 'change-color', name: this.$t('Сhange color') },
-        { separator: true },
-        { key: 'delete', name: this.$t('Detete') },
-      ],
       showNewVaultFolderModal: false,
     };
   },
   methods: {
-    handleItemClick(itemKey, closeFn) {
-      if (itemKey === 'create-folder') this.showNewVaultFolderModal = true;
-      closeFn();
+    handleItemClick({ id }) {
+      if (id === 'create-folder') this.showNewVaultFolderModal = true;
     },
   },
 };
