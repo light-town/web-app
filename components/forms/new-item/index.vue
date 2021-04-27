@@ -1,10 +1,7 @@
 <template>
   <ui-grid direction="column" align-items="center" class="new-item-form">
     <ui-grid component="form" direction="column" class="new-item-form__form">
-      <avatar-item-field
-        :name="item.overview.name"
-        :mode="mode"
-      ></avatar-item-field>
+      <avatar-item-field :name="name" :mode="mode"></avatar-item-field>
       <template v-for="field in fields">
         <component
           :is="field.component"
@@ -119,6 +116,9 @@ export default {
     };
   },
   computed: {
+    name() {
+      return this.item?.overview.name ?? '';
+    },
     lastModified() {
       return DateFormater.formatFromString(this.item.lastUpdatedAt);
     },
@@ -176,7 +176,7 @@ export default {
     },
   },
   created() {
-    if (this.item) {
+    if (this.item?.details) {
       this.itemFields = this.item.details.fields;
       return;
     }

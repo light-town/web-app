@@ -11,6 +11,8 @@
   --color-ui-menu-item-active-bg: var(--color-gray-150);
 
   --color-ui-menu-item-separator-bg: var(--color-gray-150);
+
+  --color-ui-menu-item-title-text: var(--color-gray-300);
 }
 
 .ui-menu {
@@ -85,5 +87,16 @@
 
   &-loading {
     padding: 8px 0;
+  }
+
+  &-title {
+    padding: 8px 24px;
+
+    &__text {
+      font-size: 13px;
+      font-weight: 400;
+
+      color: var(--color-ui-menu-item-title-text);
+    }
   }
 }

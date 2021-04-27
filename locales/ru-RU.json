@@ -78,5 +78,9 @@
   "Username": "Имя пользователя",
   "Password": "Пароль",
   "Website URL": "Адрес сайта",
-  "Create item": "Создать элемент"
+  "Create item": "Создать элемент",
+  "Item": "Элемент",
+  "Folder": "Папка",
+  "Categories": "Категории",
+  "Save": "Сохранить"
 }

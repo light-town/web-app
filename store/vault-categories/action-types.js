@@ -1,0 +1,4 @@
+export const INIT = 'INIT';
+
+export const GET_VAULT_CATEGORIES = 'GET_VAULT_CATEGORIES';
+export const GET_VAULT_CATEGORY = 'GET_VAULT_CATEGORY';

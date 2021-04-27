@@ -9,7 +9,7 @@ import UiGrid from '~/ui/grid/index.vue';
 import UiLoading from '~/ui/loading/index.vue';
 
 export default {
-  name: 'UiMenuSeparator',
+  name: 'UiMenuLoading',
   components: {
     UiGrid,
     UiLoading,

@@ -30,6 +30,7 @@ import Listbar from '~/components/listbar/index.vue';
 import FolderTreeView from '~/components/folders/index.vue';
 import Breadcrumbs from '~/components/breadcrumbs/index.vue';
 import * as vaultFolderActionTypes from '~/store/vault-folders/types';
+import * as vaultCategoryActionTypes from '~/store/vault-categories/types';
 
 export default {
   name: 'FolderContentLayout',
@@ -51,10 +52,12 @@ export default {
     await this.setCurrentVaultFolder({
       uuid: this.$route.params.vaultFolderUuid ?? null,
     });
+    this.getVaultCategories();
   },
   methods: {
     ...mapActions({
       setCurrentVaultFolder: vaultFolderActionTypes.SET_CURRENT_VAULT_FOLDER,
+      getVaultCategories: vaultCategoryActionTypes.GET_VAULT_CATEGORIES,
     }),
   },
 };

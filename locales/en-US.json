@@ -78,5 +78,9 @@
   "Username": "Username",
   "Password": "Password",
   "Website URL": "Website URL",
-  "Create item": "Create item"
+  "Create item": "Create item",
+  "Item": "Item",
+  "Folder": "Folder",
+  "Categories": "Categories",
+  "Save": "Save"
 }

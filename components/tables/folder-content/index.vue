@@ -1,6 +1,6 @@
 <template>
   <ui-grid direction="column" class="folder-content-table">
-    <folder-context-menu v-if="showTable" :anchor="{ uuid: activeRowUuid }">
+    <folder-context-menu v-if="showTable" :folder-uuid="activeRowUuid">
       <ui-table
         :fields="fields"
         :items="rows"
@@ -58,7 +58,7 @@ import { mapState, mapGetters, mapActions } from 'vuex';
 import UiGrid from '~/ui/grid/index.vue';
 import UiTable from '~/ui/table/index.vue';
 import UiLoading from '~/ui/loading/index.vue';
-import FolderContextMenu from '~/components/folders/context-menu.vue';
+import FolderContextMenu from '~/components/context-menus/folder/index.vue';
 import FolderIcon from '~/assets/folder.svg?inline';
 import * as vaultFolderActionTypes from '~/store/vault-folders/types';
 

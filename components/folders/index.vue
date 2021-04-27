@@ -6,7 +6,7 @@
     class="folders-treeview"
   >
     <template #default="{ node }">
-      <context-menu :anchor="node.isVault ? { uuid: null } : node">
+      <folder-context-menu :folder-uuid="node.isVault ? null : node.uuid">
         <ui-tree-view-node
           :node="node"
           :active="isNodeActive(node)"
@@ -37,14 +37,14 @@
             </p>
           </template>
         </ui-tree-view-node>
-      </context-menu>
+      </folder-context-menu>
     </template>
   </ui-tree-view>
 </template>
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
-import ContextMenu from './context-menu.vue';
+import FolderContextMenu from '../context-menus/folder/index.vue';
 import UiTreeView from '~/ui/treeview/index.vue';
 import UiTreeViewNode from '~/ui/treeview/node.vue';
 import UiAvatar from '~/ui/avatar/index.vue';
@@ -58,7 +58,7 @@ export default {
     UiTreeViewNode,
     UiAvatar,
     FolderIcon,
-    ContextMenu,
+    FolderContextMenu,
   },
   data() {
     return {

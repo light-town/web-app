@@ -17,12 +17,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import UiGrid from '~/ui/grid/index.vue';
 import Sidebar from '~/components/sibebar/index.vue';
 import Appbar from '~/components/appbar/index.vue';
 import Listbar from '~/components/listbar/index.vue';
-/* import FolderTreeView from '~/components/folders/index.vue'; */
+import FolderTreeView from '~/components/folders/index.vue';
+import * as vaultFolderActionTypes from '~/store/vault-folders/types';
+import * as vaultCategoryActionTypes from '~/store/vault-categories/types';
 
 export default {
   name: 'ItemContentLayout',
@@ -31,10 +33,22 @@ export default {
     Sidebar,
     Appbar,
     Listbar,
-    /* FolderTreeView, */
+    FolderTreeView,
   },
   computed: {
     ...mapGetters(['currentVault']),
+  },
+  async created() {
+    await this.setCurrentVaultFolder({
+      uuid: this.$route.params.vaultFolderUuid ?? null,
+    });
+    this.getVaultCategories();
+  },
+  methods: {
+    ...mapActions({
+      setCurrentVaultFolder: vaultFolderActionTypes.SET_CURRENT_VAULT_FOLDER,
+      getVaultCategories: vaultCategoryActionTypes.GET_VAULT_CATEGORIES,
+    }),
   },
 };
 </script>

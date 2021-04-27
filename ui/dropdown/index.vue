@@ -12,6 +12,11 @@
               :item="item"
               :click="handleMenuItemClick.bind(this, item)"
             >
+              <ui-menu-item :id="item.name" @click="handleMenuItemClick(item)">
+                <template #text>
+                  {{ item.name }}
+                </template>
+              </ui-menu-item>
             </slot>
           </template>
         </template>
@@ -21,7 +26,13 @@
           </slot>
         </template>
         <template v-else>
-          <slot name="empty"></slot>
+          <slot name="empty">
+            <ui-menu-item id="empty-menu-item">
+              <template #text>
+                {{ $t('Empty') }}
+              </template>
+            </ui-menu-item>
+          </slot>
         </template>
       </ui-menu>
     </ui-portal>
@@ -33,6 +44,7 @@ import UiGrid from '~/ui/grid/index.vue';
 import UiPortal from '~/ui/portal/index.vue';
 import UiButton from '~/ui/button/index.vue';
 import UiMenu from '~/ui/menu/index.vue';
+import UiMenuItem from '~/ui/menu/item.vue';
 import UiMenuLoading from '~/ui/menu/loading.vue';
 
 export default {
@@ -42,6 +54,7 @@ export default {
     UiPortal,
     UiButton,
     UiMenu,
+    UiMenuItem,
     UiMenuLoading,
   },
   props: {
