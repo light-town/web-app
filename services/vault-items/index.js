@@ -1,6 +1,17 @@
 import AbstractService from '../abstract-service';
 
 export default class VaultItemsService extends AbstractService {
+  getItems({ onlyOverview = false, folderUuid = null } = {}) {
+    if (folderUuid)
+      return this.axios
+        .get(`/items?only-overview=${onlyOverview}&fodler-uuid=${folderUuid}`)
+        .then(response => response.data);
+
+    return this.axios
+      .get(`/items?only-overview=${onlyOverview}`)
+      .then(response => response.data);
+  }
+
   getVaultItems(vaultUuid, { onlyOverview = false, folderUuid = null } = {}) {
     return this.axios
       .get(

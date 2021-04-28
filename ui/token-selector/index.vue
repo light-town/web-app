@@ -36,6 +36,7 @@
       class="ui-token-selector__input"
       :placeholder="tokens.length ? '' : placeholder"
       @keydown="handleInputKeyDown"
+      @blur="handleBlurInput"
     />
 
     <ui-popup v-if="Boolean(root)" :anchor="{ root }" position="left-bottom">
@@ -148,6 +149,11 @@ export default {
       requred: false,
       defualt: false,
     },
+    value: {
+      type: Array,
+      required: false,
+      default: () => [],
+    },
   },
   data() {
     return {
@@ -167,6 +173,14 @@ export default {
       );
     },
   },
+  watch: {
+    value() {
+      this.tokens = this.value;
+    },
+  },
+  created() {
+    this.tokens = this.value;
+  },
   mounted() {
     this.isFocus = document.activeElement === this.$refs?.input;
   },
@@ -177,14 +191,14 @@ export default {
     addToken(token) {
       this.tokens.push(token);
 
-      this.$emit('token-added', token);
       this.$emit('input', this.tokens);
+      this.$emit('token-added', token);
     },
     removeToken(token) {
       this.tokens = this.tokens.filter(t => t !== token);
 
-      this.$emit('token-removed', token);
       this.$emit('input', this.tokens);
+      this.$emit('token-removed', token);
     },
     openDropdown() {
       if (!this.remainingDropdownItems.length && this.hideDropdownWithNoItems)
@@ -292,7 +306,10 @@ export default {
           i => i.id === currentItemId
         );
 
-        if (!currentItem) return;
+        if (!currentItem) {
+          if (!this.inputText.length) this.$emit('enter', e);
+          return;
+        }
 
         this.addToken(currentItem);
         this.clearTextInput();
@@ -317,6 +334,12 @@ export default {
     },
     setTextInputFocus() {
       this.$refs.input.focus();
+    },
+    handleBlurInput() {
+      if (!this.inputText.length) return;
+
+      this.addToken({ id: uuid.v4(), name: this.inputText });
+      this.clearTextInput();
     },
   },
 };

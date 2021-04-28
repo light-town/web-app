@@ -7,6 +7,10 @@ export default class VaultFoldersService extends AbstractService {
       .then(response => response.data);
   }
 
+  getFolders() {
+    return this.axios.get(`/folders`).then(response => response.data);
+  }
+
   getVaultFolders(vaultUuid) {
     return this.axios
       .get(`/vaults/${vaultUuid}/folders`)

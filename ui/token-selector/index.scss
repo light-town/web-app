@@ -34,10 +34,16 @@
   &__input {
     display: flex;
 
+    min-width: 200px;
+
     width: 100%;
     height: 100%;
 
+    font-size: 14px;
+
     border: 0;
+
+    background-color: transparent;
   }
 
   &__token {

@@ -1,0 +1,98 @@
+.page[data-theme-mode='light'] {
+  --color-vault-content-search-line-bg: var(--color-gray-75);
+
+  --color-vault-content-search-line-token-bg: var(--color-gray-150);
+
+  --color-vault-content-search-line-dropdown-item-desc: var(--color-gray-400);
+
+  --color-vault-content-search-line-btn-hover-bg: var(--color-gray-150);
+  --color-vault-content-search-line-btn-focus-bg: var(--color-gray-200);
+  --color-vault-content-search-line-btn: var(--color-gray-100);
+
+  --color-vault-content-search-line-scroll-btn: var(--color-gray-150);
+}
+
+.vault-content-search-line {
+  max-width: 760px;
+
+  background-color: var(--color-vault-content-search-line-bg);
+
+  border-radius: 4px;
+
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: var(--color-vault-content-search-line-scroll-btn);
+  }
+
+  &__tokens {
+    border: 0;
+    padding-left: 0;
+    padding-right: 0;
+
+    &:focus {
+      box-shadow: none !important;
+    }
+
+    &.ui-token-selector_focus {
+      box-shadow: none !important;
+    }
+  }
+
+  &__head {
+    top: 0;
+    left: 0;
+    position: sticky;
+
+    display: inline-flex;
+    width: auto;
+
+    background-color: var(--color-vault-content-search-line-bg);
+  }
+
+  &__token-head {
+    margin-left: 0.25rem;
+  }
+
+  &__token {
+    background-color: var(
+      --color-vault-content-search-line-token-bg
+    ) !important;
+  }
+
+  &__dropdown-item-desc > p {
+    font-size: 13px;
+    color: var(--color-vault-content-search-line-dropdown-item-desc);
+  }
+
+  &__icon {
+    --size: 16px;
+
+    width: var(--size);
+    height: var(--size);
+  }
+
+  &__btn {
+    padding: 8px;
+    margin: 5px;
+
+    border-radius: 50%;
+
+    &:hover {
+      background-color: var(
+        --color-vault-content-search-line-btn-hover-bg
+      ) !important;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.25rem
+        var(--color-vault-content-search-line-btn-focus-bg);
+    }
+  }
+}

@@ -83,7 +83,7 @@ export default {
     });
   },
   updated() {
-    if (this.context.items.length) this.close();
+    /*  if (this.context.items.length) this.close(); */
 
     this.context.items = (this.$slots.default || [])
       .filter(i => i.componentInstance)
