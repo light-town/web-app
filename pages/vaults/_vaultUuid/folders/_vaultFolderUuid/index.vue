@@ -1,6 +1,9 @@
 <template>
   <folder-content-layout>
-    <folder-content-table :folder-uuid="currentVaultFolderUuid">
+    <folder-content-table
+      v-if="currentVaultFolderUuid"
+      :folder-uuid="currentVaultFolderUuid"
+    >
       <template #empty-table>
         <empty-folder-stub></empty-folder-stub>
       </template>
@@ -9,9 +12,9 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapGetters } from 'vuex';
 import FolderContentLayout from '~/layouts/folder-content/index.vue';
-import FolderContentTable from '~/components/tables/folder-content/index.vue';
+import FolderContentTable from '~/components/tables/content/folder.vue';
 import EmptyFolderStub from '~/components/stubs/empty-folder/index.vue';
 
 export default {
@@ -27,6 +30,7 @@ export default {
       currentVaultFolderUuid: state =>
         state['vault-folders'].currentVaultFolderUuid,
     }),
+    ...mapGetters(['currentVaultFolder']),
   },
 };
 </script>

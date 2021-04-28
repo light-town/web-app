@@ -21,14 +21,28 @@ export default {
     UiPortal,
     UiMenu,
   },
+  props: {
+    anchor: {
+      type: Object,
+      required: false,
+      default: null,
+    },
+  },
   data() {
     return { x: 0, y: 0, root: null };
   },
+  computed: {
+    anchorRef() {
+      const slotElement = this.$slots.default?.length
+        ? this.$slots.default[0].componentInstance
+        : null;
+      return slotElement || this.anchor;
+    },
+  },
   mounted() {
-    const anchor = this.$slots.default[0].componentInstance;
-    anchor.$on('contextmenu', this.open);
+    if (this.anchorRef) this.anchorRef.$on('contextmenu', this.open);
 
-    window.addEventListener('blur', this.close);
+    /*  window.addEventListener('blur', this.close); */
 
     const root = document.getElementsByClassName('page-layout')[0];
     root.addEventListener('click', this.close, {
@@ -39,10 +53,9 @@ export default {
     });
   },
   beforeDestroy() {
-    const anchor = this.$slots.default[0].componentInstance;
-    anchor.$off('contextmenu', this.open);
+    if (this.anchorRef) this.anchorRef.$off('contextmenu', this.open);
 
-    window.removeEventListener('blur', this.close);
+    /*  window.removeEventListener('blur', this.close); */
 
     const root = document.getElementsByClassName('page-layout')[0];
     root.removeEventListener('click', this.close, {
@@ -68,8 +81,7 @@ export default {
       this.y = e.pageY;
       this.root = e.target;
 
-      const anchor = this.$slots.default[0].componentInstance;
-      anchor._data.opened = true;
+      if (this.anchorRef) this.anchorRef._data.opened = true;
     },
     close(e) {
       if (!this.$refs.menu) return;
@@ -83,8 +95,10 @@ export default {
       });
     },
     handleItemClick(e) {
-      this.$emit('menu-item-click', e);
-      this.close(e);
+      this.$nextTick(() => {
+        this.$emit('menu-item-click', e);
+        this.close(e);
+      });
     },
   },
 };

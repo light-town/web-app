@@ -34,7 +34,7 @@ import * as vaultCategoryActionTypes from '~/store/vault-categories/types';
 import * as vaultItemActionTypes from '~/store/vault-items/types';
 
 export default {
-  name: 'FolderContentLayout',
+  name: 'VaultContentLayout',
   components: {
     UiGrid,
     Breadcrumbs,
@@ -51,14 +51,15 @@ export default {
   },
   async created() {
     await this.setCurrentVaultFolder({
-      uuid: this.$route.params.vaultFolderUuid ?? null,
+      uuid: null,
     });
 
     await this.getVaultCategories();
 
-    await this.getVaultItems({
-      folderUuid: this.$route.params.vaultFolderUuid,
-    });
+    /* if (this.$route.params.vaultFolderUuid)
+      await this.getVaultItems({
+        folderUuid: this.$route.params.vaultFolderUuid,
+      }); */
   },
   methods: {
     ...mapActions({

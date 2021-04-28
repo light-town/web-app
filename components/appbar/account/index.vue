@@ -1,10 +1,6 @@
 <template>
   <ui-grid align-items="center" class="appbar__account">
-    <ui-avatar
-      name="Michael"
-      :size="44"
-      class="appbar__account-icon"
-    ></ui-avatar>
+    <ui-avatar name="Xame" :size="44" class="appbar__account-icon"></ui-avatar>
     <!--   <p class="appbar__account-text">Michail Shcherbakov</p>
     <arrow-icon class="appbar__account-btn"></arrow-icon> -->
   </ui-grid>

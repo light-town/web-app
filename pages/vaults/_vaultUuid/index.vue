@@ -1,23 +1,23 @@
 <template>
-  <folder-content-layout>
-    <folder-content-table>
+  <vault-content-layout>
+    <vault-content-table>
       <template #empty-table>
         <empty-folder-stub></empty-folder-stub>
       </template>
-    </folder-content-table>
-  </folder-content-layout>
+    </vault-content-table>
+  </vault-content-layout>
 </template>
 
 <script>
-import FolderContentLayout from '~/layouts/folder-content/index.vue';
-import FolderContentTable from '~/components/tables/folder-content/index.vue';
+import VaultContentLayout from '~/layouts/vault-content/index.vue';
+import VaultContentTable from '~/components/tables/content/vault.vue';
 import EmptyFolderStub from '~/components/stubs/empty-folder/index.vue';
 
 export default {
   name: 'VaultPage',
   components: {
-    FolderContentTable,
-    FolderContentLayout,
+    VaultContentLayout,
+    VaultContentTable,
     EmptyFolderStub,
   },
   middleware: ['auth'],

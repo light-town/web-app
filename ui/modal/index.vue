@@ -16,12 +16,12 @@
         </ui-grid>
         <ui-grid class="ui-modal__footer" justify="flex-end">
           <slot name="footer">
-            <ui-button variant="outlined" @click="$emit('canceled', $event)"
-              >Cancel</ui-button
-            >
-            <ui-button variant="contained" @click="$emit('granted', $event)"
-              >Ok</ui-button
-            >
+            <ui-button variant="outlined" @click="$emit('canceled', $event)">{{
+              $t('Cancel')
+            }}</ui-button>
+            <ui-button variant="contained" @click="$emit('granted', $event)">{{
+              $t('Ok')
+            }}</ui-button>
           </slot>
         </ui-grid>
       </ui-grid>
@@ -51,8 +51,8 @@ export default {
     },
   },
   methods: {
-    handleBackgroundClick() {
-      this.$emit('close');
+    handleBackgroundClick(e) {
+      this.$emit('close', e);
     },
   },
 };

@@ -1,10 +1,10 @@
 <template>
   <ui-grid>
     <ui-context-menu
+      ref="contextMenu"
       @close="$emit('close', $event)"
       @menu-item-click="handleItemClick"
     >
-      <slot></slot>
       <template #menu-items>
         <ui-menu-item id="create">
           <template #text> {{ $t('Create') }} </template>
@@ -69,8 +69,7 @@ export default {
   props: {
     folderUuid: {
       type: String,
-      required: false,
-      default: null,
+      required: true,
     },
   },
   data() {
@@ -92,16 +91,13 @@ export default {
       }
 
       if (this.vaultCategories.find(c => c.uuid === id)) {
-        if (!this.folderUuid) {
-          this.$router.push(
-            `/vaults/${this.currentVault.uuid}/new-item?category-uuid=${id}`
-          );
-        } else {
-          this.$router.push(
-            `/vaults/${this.currentVault.uuid}/folders/${this.folderUuid}/new-item?category-uuid=${id}`
-          );
-        }
+        this.$router.push(
+          `/vaults/${this.currentVault.uuid}/folders/${this.folderUuid}/new-item?category-uuid=${id}`
+        );
       }
+    },
+    open(e) {
+      this.$refs.contextMenu.open(e);
     },
   },
 };

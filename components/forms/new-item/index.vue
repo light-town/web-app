@@ -1,7 +1,11 @@
 <template>
   <ui-grid direction="column" align-items="center" class="new-item-form">
     <ui-grid component="form" direction="column" class="new-item-form__form">
-      <avatar-item-field :name="name" :mode="mode"></avatar-item-field>
+      <avatar-item-field
+        v-model="avatar"
+        :name="name"
+        :mode="mode"
+      ></avatar-item-field>
       <template v-for="field in fields">
         <component
           :is="field.component"
@@ -45,12 +49,12 @@
       </template>
       <text-item-field
         v-if="mode === 'viewing'"
-        title="last modified"
+        :title="$t('Last modified')"
         :value="lastModified"
       ></text-item-field>
       <text-item-field
         v-if="mode === 'viewing'"
-        title="created"
+        :title="$t('Created')"
         :value="created"
       ></text-item-field>
       <button-item-field
@@ -112,6 +116,7 @@ export default {
   },
   data() {
     return {
+      avatar: {},
       itemFields: [],
     };
   },
@@ -172,7 +177,15 @@ export default {
   },
   watch: {
     itemFields() {
-      this.$emit('input', this.itemFields);
+      this.$emit('input', {
+        overview: {
+          name: this.avatar.name,
+          desc: this.avatar.desc,
+        },
+        details: {
+          fields: this.itemFields,
+        },
+      });
     },
   },
   created() {

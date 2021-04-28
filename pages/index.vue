@@ -48,11 +48,6 @@ export default {
     UiMenuItem,
     UiMenuSeparator,
   },
-  methods: {
-    handleItemClick(e) {
-      /* console.log(e); */
-    },
-  },
 };
 </script>
 

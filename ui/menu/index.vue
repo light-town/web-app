@@ -83,6 +83,8 @@ export default {
     });
   },
   updated() {
+    if (this.context.items.length) this.close();
+
     this.context.items = (this.$slots.default || [])
       .filter(i => i.componentInstance)
       .map(({ componentInstance: vm }) => {
@@ -229,8 +231,9 @@ export default {
           i.vm.existsSubmenu ? this.handleMenuItemClick : this.handleItemClick
         );
 
-        if (i.vm.submenu) {
-          i.vm.submenu.close();
+        if (i.vm.$refs.submenu) {
+          i.vm.$refs.submenu.close();
+          i.vm.$refs.submenu.$destroy();
           return;
         }
         i.vm.$destroy();
@@ -240,6 +243,7 @@ export default {
       this.context.items.forEach(i => {
         if (i.vm.$refs.submenu) {
           i.vm.$refs.submenu.close();
+          i.vm.$refs.submenu.$destroy();
         }
       });
     },

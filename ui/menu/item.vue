@@ -69,7 +69,6 @@ export default {
   data() {
     return {
       anchor: { root: null },
-      forceClose: false,
     };
   },
   computed: {

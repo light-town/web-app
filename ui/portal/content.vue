@@ -1,6 +1,5 @@
 <template>
   <ui-grid
-    v-if="!forceClose"
     :class="['ui-popup', { 'ui-popup_visible': show }]"
     direction="column"
     :style="{ left: localX, top: localY }"
@@ -57,7 +56,6 @@ export default {
       localX: 0,
       localY: 0,
       show: false,
-      forceClose: false,
     };
   },
   computed: {

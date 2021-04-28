@@ -47,13 +47,11 @@ export default {
   props: {
     open: {
       type: Boolean,
-      required: false,
-      default: false,
+      required: true,
     },
     folderUuid: {
       type: String,
-      required: false,
-      default: null,
+      required: true,
     },
   },
   data() {

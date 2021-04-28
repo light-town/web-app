@@ -270,7 +270,7 @@ import UiMenuSeparator from '~/ui/menu/separator.vue';
 import UiTokenSelector from '~/ui/token-selector/index.vue';
 import UiBreadcrumbs from '~/ui/breadcrumbs/index.vue';
 
-import SearchTeamsByTokens from '~/components/search-teams-by-tokens/index.vue';
+import SearchTeamsByTokens from '~/components/search-lines/vault-content/index.vue';
 
 export default {
   name: 'IndexPage',

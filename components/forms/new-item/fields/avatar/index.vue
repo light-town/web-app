@@ -69,7 +69,10 @@ export default {
   },
   watch: {
     data() {
-      this.$emit('input', this.data);
+      this.$emit('input', {
+        name: this.data,
+        desc: '',
+      });
     },
     name() {
       this.data = this.name;

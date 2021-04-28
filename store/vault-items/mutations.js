@@ -14,9 +14,12 @@ export default {
   [mutationTypes.SET_ERROR](state, payload) {
     state.error = payload.error;
   },
-  [mutationTypes.SET_VAULT_CATEGORY](state, payload) {
-    Vue.set(state.all, payload.category.uuid, {
-      ...payload.category,
+  [mutationTypes.SET_CURRENT_VAULT_ITEM_UUID](state, payload) {
+    state.currentVaultItemUuid = payload.uuid;
+  },
+  [mutationTypes.SET_VAULT_ITEM](state, payload) {
+    Vue.set(state.all, payload.item.uuid, {
+      ...payload.item,
     });
   },
 };

@@ -7,6 +7,7 @@ import KeySetsService from './key-sets';
 import VaultsService from './vaults';
 import VaultFoldersService from './vault-folders';
 import VaultCategoriesService from './vault-categories';
+import VaultItemsService from './vault-items';
 
 export default axios => ({
   storage: new StorageService(),
@@ -18,4 +19,5 @@ export default axios => ({
   vaults: new VaultsService({ axios }),
   vaultFolders: new VaultFoldersService({ axios }),
   vaultCategories: new VaultCategoriesService({ axios }),
+  vaultItems: new VaultItemsService({ axios }),
 });

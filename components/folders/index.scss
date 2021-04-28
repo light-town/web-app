@@ -1,6 +1,8 @@
 .page[data-theme-mode='light'] {
-  --color-vault-text: var(--color-gray-650);
-  --color-folder-text: var(--color-gray-650);
+  --color-folders-treeview-vault-text: var(--color-gray-650);
+  --color-folders-treeview-folder-text: var(--color-gray-650);
+
+  --color-folders-treeview-active-bg: var(--color-green-50);
 }
 
 .folders-treeview {
@@ -31,7 +33,7 @@
         white-space: nowrap;
         text-overflow: ellipsis;
 
-        color: var(--color-folder-text);
+        color: var(--color-folders-treeview-folder-text);
 
         transition: color 0.3s;
       }
@@ -48,7 +50,7 @@
         white-space: nowrap;
         text-overflow: ellipsis;
 
-        color: var(--color-vault-text);
+        color: var(--color-folders-treeview-vault-text);
       }
 
       &-icon {
@@ -58,8 +60,13 @@
           font-size: 13px;
 
           background-color: transparent !important;
+          border-color: var(--color-ui-tree-view-node-text);
         }
       }
+    }
+
+    &_active {
+      background-color: var(--color-folders-treeview-active-bg) !important;
     }
   }
 

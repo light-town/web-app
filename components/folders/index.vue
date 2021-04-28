@@ -6,37 +6,45 @@
     class="folders-treeview"
   >
     <template #default="{ node }">
-      <folder-context-menu :folder-uuid="node.isVault ? null : node.uuid">
-        <ui-tree-view-node
-          :node="node"
-          :active="isNodeActive(node)"
-          :expanded="node.expanded"
-          :expandable="node.containedFoldersCount > 0"
-          class="folders-treeview__node"
-          @expand="expandFolderNode(node)"
-          @click="activeFolderNode(node)"
-        >
-          <template #icon>
-            <ui-avatar
-              v-if="node.isVault"
-              :name="node.overview.name"
-              :size="24"
-              class="folders-treeview__node__vault-icon"
-            ></ui-avatar>
-            <folder-icon
-              v-else
-              class="folders-treeview__node__folder-icon"
-            ></folder-icon>
-          </template>
-          <template #text>
-            <p v-if="node.isVault" class="folders-treeview__node__vault-text">
-              {{ node.overview.name }}
-            </p>
-            <p v-else class="folders-treeview__node__folder-text">
-              {{ node.overview.name }}
-            </p>
-          </template>
-        </ui-tree-view-node>
+      <ui-tree-view-node
+        :node="node"
+        :active="isNodeActive(node)"
+        :expanded="node.expanded"
+        :expandable="node.containedFoldersCount > 0"
+        :class="[
+          'folders-treeview__node',
+          { 'folders-treeview__node_active': nodeContextMenu === node.uuid },
+        ]"
+        @expand="expandFolderNode(node)"
+        @click="activeFolderNode(node)"
+        @contextmenu="e => openContextMenu(e, node)"
+      >
+        <template #icon>
+          <ui-avatar
+            v-if="node.isVault"
+            :name="node.overview.name"
+            :size="24"
+            class="folders-treeview__node__vault-icon"
+          ></ui-avatar>
+          <folder-icon
+            v-else
+            class="folders-treeview__node__folder-icon"
+          ></folder-icon>
+        </template>
+        <template #text>
+          <p v-if="node.isVault" class="folders-treeview__node__vault-text">
+            {{ node.overview.name }}
+          </p>
+          <p v-else class="folders-treeview__node__folder-text">
+            {{ node.overview.name }}
+          </p>
+        </template>
+      </ui-tree-view-node>
+      <folder-context-menu
+        v-if="nodeContextMenu"
+        ref="folderContextMenu"
+        :folder-uuid="nodeContextMenu"
+      >
       </folder-context-menu>
     </template>
   </ui-tree-view>
@@ -64,6 +72,7 @@ export default {
     return {
       loading: false,
       vaultNodeExpanded: true,
+      nodeContextMenu: null,
     };
   },
   computed: {
@@ -160,6 +169,14 @@ export default {
         (!this.currentVaultFolderUuid && node.isVault) ||
         node.uuid === this.currentVaultFolderUuid
       );
+    },
+    openContextMenu(e, node) {
+      if (node.isVault) return;
+
+      this.nodeContextMenu = node.uuid;
+      this.$nextTick(() => {
+        this.$refs.folderContextMenu.open(e);
+      });
     },
   },
 };
