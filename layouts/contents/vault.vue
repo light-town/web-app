@@ -33,6 +33,7 @@ import Breadcrumbs from '~/components/breadcrumbs/index.vue';
 import SearchVaultContentByTokens from '~/components/search-lines/vault-content/index.vue';
 import * as vaultFolderActionTypes from '~/store/vault-folders/types';
 import * as vaultCategoryActionTypes from '~/store/vault-categories/types';
+import * as vaultItemActionTypes from '~/store/vault-items/types';
 
 export default {
   name: 'VaultContentLayout',
@@ -51,11 +52,14 @@ export default {
     });
 
     this.getVaultCategories();
+
+    this.getVaultItems({ folderUuid: null });
   },
   methods: {
     ...mapActions({
       setCurrentVaultFolder: vaultFolderActionTypes.SET_CURRENT_VAULT_FOLDER,
       getVaultCategories: vaultCategoryActionTypes.GET_VAULT_CATEGORIES,
+      getVaultItems: vaultItemActionTypes.GET_VAULT_ITEMS,
     }),
   },
 };

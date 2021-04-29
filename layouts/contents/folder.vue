@@ -33,6 +33,7 @@ import Breadcrumbs from '~/components/breadcrumbs/index.vue';
 import SearchVaultContentByTokens from '~/components/search-lines/vault-content/index.vue';
 import * as vaultFolderActionTypes from '~/store/vault-folders/types';
 import * as vaultCategoryActionTypes from '~/store/vault-categories/types';
+import * as vaultItemActionTypes from '~/store/vault-items/types';
 
 export default {
   name: 'FolderContentLayout',
@@ -49,16 +50,23 @@ export default {
     this.setCurrentVaultFolder({
       uuid: this.$route.params.vaultFolderUuid ?? null,
     });
+
     this.getVaultFolder({
       uuid: this.$route.params.vaultFolderUuid ?? null,
     });
+
     this.getVaultCategories();
+
+    this.getVaultItems({
+      folderUuid: this.$route.params.vaultFolderUuid ?? null,
+    });
   },
   methods: {
     ...mapActions({
       setCurrentVaultFolder: vaultFolderActionTypes.SET_CURRENT_VAULT_FOLDER,
       getVaultFolder: vaultFolderActionTypes.GET_VAULT_FOLDER,
       getVaultCategories: vaultCategoryActionTypes.GET_VAULT_CATEGORIES,
+      getVaultItems: vaultItemActionTypes.GET_VAULT_ITEMS,
     }),
   },
 };
