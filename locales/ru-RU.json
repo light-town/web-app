@@ -85,5 +85,12 @@
   "Save": "Сохранить",
   "Last modified": "Последнее изменение",
   "Okey": "Okey",
-  "Ok": "Ok"
+  "Ok": "Ok",
+  "Location Folder": "Папка расположения",
+  "Vault": "Хранилище",
+  "Vault name": "Имя хранилища",
+  "Folder name": "Имя папки",
+  "Item name": "Имя элемента",
+  "is": "равен",
+  "is not": "не равен"
 }

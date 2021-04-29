@@ -1,7 +1,11 @@
 <template>
   <ui-grid align-items="center" class="vault-content-search-line">
     <ui-grid align-items="center" class="vault-content-search-line__head">
-      <ui-button variant="text" class="vault-content-search-line__btn">
+      <ui-button
+        variant="text"
+        class="vault-content-search-line__btn"
+        @click="search"
+      >
         <loupe-icon class="vault-content-search-line__icon"></loupe-icon>
       </ui-button>
     </ui-grid>
@@ -16,7 +20,7 @@
       class="vault-content-search-line__tokens"
       @token-added="handleTokenAdded"
       @token-removed="handleTokenRemoved"
-      @enter="handleEnter"
+      @enter="search"
     >
       <template #token-template="{ token }">
         <ui-token
@@ -71,36 +75,34 @@ export default {
       criterias: [
         {
           id: uuid.v4(),
-          name: 'Vault name',
+          name: this.$t('Vault'),
           queryName: 'vault-name',
           type: 'criteria',
         },
         {
           id: uuid.v4(),
-          name: 'Folder name',
+          name: this.$t('Folder'),
           queryName: 'folder-name',
           type: 'criteria',
         },
         {
           id: uuid.v4(),
-          name: 'Item name',
+          name: this.$t('Item'),
           queryName: 'item-name',
           type: 'criteria',
         },
       ],
       operators: [
         {
-          id: uuid.v4(),
           name: '=',
           type: 'operator',
-          desc: 'is',
+          desc: this.$t('is'),
           queryName: 'equal',
         },
         {
-          id: uuid.v4(),
           name: '!=',
           type: 'operator',
-          desc: 'is not',
+          desc: this.$t('is not'),
           queryName: 'not',
         },
       ],
@@ -108,10 +110,10 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(['currentAccount']),
     ...mapState({
       muk: state => state['key-sets'].masterUnlockKey,
     }),
-    ...mapGetters(['currentAccount']),
   },
   created() {
     this.currentDropdownItems = this.criterias;
@@ -121,8 +123,6 @@ export default {
     const regex = /^(\w+)\[([a-zA-Z0-9\- ]+)\]$/u;
     Object.entries(this.$route.query).forEach(([queryName, value]) => {
       const matches = queryName.match(regex);
-
-      console.log(matches, queryName);
 
       if (!matches || matches.length !== 3) {
         console.error('invalud key search');
@@ -163,15 +163,13 @@ export default {
       this.allowUserDefinedTokens = false;
       this.currentDropdownItems = [];
 
-      const currentTokenIndex = this.tokens.indexOf(token);
-
       if (token.type === 'criteria') {
         this.currentDropdownItems = this.criterias;
       } else if (token.type === 'operator') {
         this.currentDropdownItems = this.getOperators();
       } else if (token.type === 'value') {
         this.allowUserDefinedTokens = true;
-        this.getValues(this.tokens[currentTokenIndex - 2]);
+        this.getValues(this.tokens[this.tokens.length - 2]);
       }
     },
     handleRemoveTokenBtnClick(token) {
@@ -182,13 +180,13 @@ export default {
       if (!this.tokens.length) this.currentDropdownItems = this.criterias;
     },
     getOperators() {
-      return this.operators;
+      return this.operators.map(op => ({ ...op, id: uuid.v4() }));
     },
     async getValues(criteria) {
       this.loading = true;
 
-      switch (criteria.name) {
-        case 'Vault name': {
+      switch (criteria.queryName) {
+        case 'vault-name': {
           const { data: encKeySets } = await this.$api.keySets.getKeySets(
             this.currentAccount.uuid
           );
@@ -207,7 +205,7 @@ export default {
           ];
           break;
         }
-        case 'Folder name': {
+        case 'folder-name': {
           const { data: encKeySets } = await this.$api.keySets.getKeySets(
             this.currentAccount.uuid
           );
@@ -239,7 +237,7 @@ export default {
           }));
           break;
         }
-        case 'Item name': {
+        case 'item-name': {
           const { data: encKeySets } = await this.$api.keySets.getKeySets(
             this.currentAccount.uuid
           );
@@ -275,10 +273,12 @@ export default {
 
       this.loading = false;
     },
-    handleEnter() {
+    search() {
       let options = '';
 
       for (let i = 0; i < this.tokens.length; i += 3) {
+        if (i + 2 >= this.tokens.length) continue;
+
         const criteria = this.tokens[i].queryName;
         const operator = this.tokens[i + 1].queryName;
         const value = this.tokens[i + 2].name;

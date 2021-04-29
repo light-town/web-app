@@ -45,6 +45,17 @@
         :focusable="false"
         @keydown.native="handleGlobalKeyDown"
       >
+        <template v-if="allowUserDefinedTokens && inputText.length && !loading">
+          <slot name="user-defined-token-template" :inputText="inputText">
+            <ui-menu-item
+              id="user-defined-token"
+              tabindex="-1"
+              @click="handleDropdownItemClick(dropdownItem)"
+            >
+              <template #text> Add "{{ inputText }}" </template>
+            </ui-menu-item>
+          </slot>
+        </template>
         <template v-if="remainingDropdownItems.length">
           <ui-menu-item
             v-for="dropdownItem in remainingDropdownItems"
@@ -77,23 +88,12 @@
             </template>
           </ui-menu-item>
         </template>
-        <template v-else-if="allowUserDefinedTokens && inputText.length">
-          <slot name="user-defined-token-template" :inputText="inputText">
-            <ui-menu-item
-              id="user-defined-token"
-              tabindex="-1"
-              @click="handleDropdownItemClick(dropdownItem)"
-            >
-              <template #text> Add "{{ inputText }}" </template>
-            </ui-menu-item>
-          </slot>
-        </template>
         <template v-else-if="loading">
           <slot name="loading-template">
             <ui-menu-loading> </ui-menu-loading>
           </slot>
         </template>
-        <template v-else>
+        <template v-else-if="!allowUserDefinedTokens">
           <slot name="no-results-template">
             <ui-menu-item id="no-matches-found">
               <template #text> No matches found </template>
@@ -267,8 +267,9 @@ export default {
       if (
         e.code === 'Enter' &&
         this.allowUserDefinedTokens &&
-        this.inputText.length &&
-        !this.remainingDropdownItems.length
+        this.inputText
+          .length /* &&
+        !this.remainingDropdownItems.length */
       ) {
         this.addToken({ id: uuid.v4(), name: this.inputText });
         this.clearTextInput();
@@ -336,7 +337,7 @@ export default {
       this.$refs.input.focus();
     },
     handleBlurInput() {
-      if (!this.inputText.length) return;
+      if (!this.inputText.length || !this.allowUserDefinedTokens) return;
 
       this.addToken({ id: uuid.v4(), name: this.inputText });
       this.clearTextInput();

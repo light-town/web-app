@@ -8,7 +8,9 @@
       </template>
     </listbar>
     <ui-grid direction="column">
-      <appbar> </appbar>
+      <appbar>
+        <search-vault-content-by-tokens></search-vault-content-by-tokens>
+      </appbar>
       <ui-grid direction="column" class="container-layout">
         <ui-grid align-items="center" class="controls-layout">
           <breadcrumbs></breadcrumbs>
@@ -29,6 +31,7 @@ import Appbar from '~/components/appbar/index.vue';
 import Listbar from '~/components/listbar/index.vue';
 import FolderTreeView from '~/components/folders/index.vue';
 import Breadcrumbs from '~/components/breadcrumbs/index.vue';
+import SearchVaultContentByTokens from '~/components/search-lines/vault-content/index.vue';
 import * as vaultFolderActionTypes from '~/store/vault-folders/types';
 import * as vaultCategoryActionTypes from '~/store/vault-categories/types';
 import * as vaultItemActionTypes from '~/store/vault-items/types';
@@ -42,6 +45,7 @@ export default {
     Appbar,
     Listbar,
     FolderTreeView,
+    SearchVaultContentByTokens,
   },
   computed: {
     ...mapGetters(['currentVault', 'currentVaultFolder']),

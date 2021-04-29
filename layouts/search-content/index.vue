@@ -11,7 +11,7 @@
         <search-vault-content-by-tokens></search-vault-content-by-tokens>
       </appbar>
       <ui-grid direction="column" class="container-layout">
-        <ui-grid align-items="center" class="search-content-layout">
+        <ui-grid class="search-content-layout">
           <slot></slot>
         </ui-grid>
       </ui-grid>

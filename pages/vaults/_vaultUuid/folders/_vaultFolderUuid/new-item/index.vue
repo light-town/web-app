@@ -122,7 +122,7 @@ export default {
         details: this.item.details,
       });
 
-      this.$router(
+      this.$router.push(
         `/vaults/${this.currentVault.uuid}/folders/${this.currentVaultFolder.uuid}`
       );
       this.saving = false;
