@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import VaultContentLayout from '~/layouts/vault-content/index.vue';
+import VaultContentLayout from '~/layouts/contents/vault.vue';
 import VaultContentTable from '~/components/tables/content/vault.vue';
 import EmptyFolderStub from '~/components/stubs/empty-folder/index.vue';
 

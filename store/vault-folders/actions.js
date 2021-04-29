@@ -126,4 +126,27 @@ export default {
       expanded: payload.expanded,
     });
   },
+  async [actionTypes.GET_VAULT_FOLDER]({ commit }, payload) {
+    try {
+      commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.LOADING });
+
+      const response = await this.$api.vaultFolders.getVaultFolder(
+        this.getters.currentVault.uuid,
+        payload.uuid
+      );
+
+      const vaultFolder = await core.helpers.vaultFolders.decryptVaultFolderHelper(
+        response.data,
+        this.getters.currentVault.key
+      );
+
+      commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.SUCCESS });
+
+      commit(mutationTypes.SET_VAULT_FOLDER, {
+        folder: vaultFolder,
+      });
+    } catch (e) {
+      commit(mutationTypes.SET_ERROR, { error: e });
+    }
+  },
 };

@@ -13,7 +13,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex';
-import FolderContentLayout from '~/layouts/folder-content/index.vue';
+import FolderContentLayout from '~/layouts/contents/folder.vue';
 import FolderContentTable from '~/components/tables/content/folder.vue';
 import EmptyFolderStub from '~/components/stubs/empty-folder/index.vue';
 

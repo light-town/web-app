@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import SearchContentLayout from '~/layouts/search-content/index.vue';
+import SearchContentLayout from '~/layouts/contents/search.vue';
 import GlobalContentTable from '~/components/tables/content/global.vue';
 
 export default {

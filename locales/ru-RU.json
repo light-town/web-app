@@ -92,5 +92,9 @@
   "Folder name": "Имя папки",
   "Item name": "Имя элемента",
   "is": "равен",
-  "is not": "не равен"
+  "is not": "не равен",
+  "Sorry, your filter produced no results": "К сожалению, ваш фильтр не дал никаких результатов",
+  "To widen your search, change or remove filters above": "Чтобы расширить поиск, измените или удалите фильтры выше",
+  "Your folder is empty": "Ваша папка пуста",
+  "To create a folder or item, right-click on an empty space": "Чтобы создать папку или элемент, щелкните правой кнопкой мыши по свободному месту"
 }

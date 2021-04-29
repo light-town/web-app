@@ -19,7 +19,7 @@
 import { mapState, mapActions, mapGetters } from 'vuex';
 import UiGrid from '~/ui/grid/index.vue';
 import UiButton from '~/ui/button/index.vue';
-import ItemContentLayout from '~/layouts/item-content/index.vue';
+import ItemContentLayout from '~/layouts/contents/item.vue';
 import NewItemForm from '~/components/forms/new-item/index.vue';
 import * as vaultCategoryActionTypes from '~/store/vault-categories/types';
 import * as vaultItemActionTypes from '~/store/vault-items/types';

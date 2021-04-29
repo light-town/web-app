@@ -13,12 +13,14 @@
           type="password"
           :placeholder="$t('Enter a password')"
           class="auth-form__input"
+          autocomplete="off"
         ></ui-input>
         <ui-input
           v-model="repeatPassword"
           type="password"
           :placeholder="$t('Confirm your password')"
           class="auth-form__input"
+          autocomplete="off"
         ></ui-input>
         <ui-grid align-items="center" class="warning">
           <padlock-icon class="warning__icon"></padlock-icon>

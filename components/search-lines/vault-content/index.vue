@@ -29,6 +29,10 @@
             {
               'vault-content-search-line__token-head':
                 token.type === 'criteria' && tokens[0] !== token,
+              'vault-content-search-line__token-start':
+                token.type === 'criteria',
+              'vault-content-search-line__token-end':
+                !token.type || token.type === 'value',
             },
           ]"
           :view-only="token.type !== 'value'"

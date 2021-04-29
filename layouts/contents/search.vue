@@ -24,7 +24,7 @@ import UiGrid from '~/ui/grid/index.vue';
 import Sidebar from '~/components/sibebar/index.vue';
 import Appbar from '~/components/appbar/index.vue';
 import Listbar from '~/components/listbar/index.vue';
-import FolderTreeView from '~/components/folders/index.vue';
+import FolderTreeView from '~/components/treeviews/folders/index.vue';
 import SearchVaultContentByTokens from '~/components/search-lines/vault-content/index.vue';
 
 export default {

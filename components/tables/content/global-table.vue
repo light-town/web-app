@@ -1,6 +1,5 @@
 <template>
   <ui-table
-    v-if="show"
     :fields="fields"
     :items="rows"
     br-class="folder-content-table__table-body-row"
@@ -58,6 +57,30 @@
         </p>
       </ui-grid>
     </template>
+    <template #table-empty-template>
+      <ui-grid
+        direction="column"
+        align-items="center"
+        justify="center"
+        class="folder-content-table__plug"
+      >
+        <search-empty-icon
+          class="folder-content-table__plug__illustrate"
+        ></search-empty-icon>
+        <ui-grid
+          direction="column"
+          align-items="center"
+          class="folder-content-table__plug__text"
+        >
+          <p class="folder-content-table__plug__title">
+            {{ $t('Sorry, your filter produced no results') }}
+          </p>
+          <p class="folder-content-table__plug__desc">
+            {{ $t('To widen your search, change or remove filters above') }}
+          </p>
+        </ui-grid>
+      </ui-grid>
+    </template>
   </ui-table>
 </template>
 
@@ -66,6 +89,7 @@ import UiGrid from '~/ui/grid/index.vue';
 import UiTable from '~/ui/table/index.vue';
 import FolderIcon from '~/assets/folder.svg?inline';
 import KeyIcon from '~/assets/key.svg?inline';
+import SearchEmptyIcon from '~/assets/search-empty.svg?inline';
 
 export default {
   name: 'EntityContentTable',
@@ -74,13 +98,9 @@ export default {
     UiTable,
     FolderIcon,
     KeyIcon,
+    SearchEmptyIcon,
   },
   props: {
-    show: {
-      type: Boolean,
-      required: false,
-      default: true,
-    },
     rows: {
       type: Array,
       required: true,
@@ -136,4 +156,4 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss" src="./index.scss"></style>

@@ -9,3 +9,4 @@ export const GET_NESTED_VAULT_FOLDERS = `${namespace}/${actionTypes.GET_NESTED_V
 export const GET_ROOT_VAULT_FOLDERS = `${namespace}/${actionTypes.GET_ROOT_VAULT_FOLDERS}`;
 export const CLEAR_VAULT_FOLDER_LIST = `${namespace}/${actionTypes.CLEAR_VAULT_FOLDER_LIST}`;
 export const SET_EXPANDED_VAULT_FOLDER = `${namespace}/${actionTypes.SET_EXPANDED_VAULT_FOLDER}`;
+export const GET_VAULT_FOLDER = `${namespace}/${actionTypes.GET_VAULT_FOLDER}`;

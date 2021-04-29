@@ -52,7 +52,7 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
-import FolderContextMenu from '../context-menus/folder/index.vue';
+import FolderContextMenu from '~/components/context-menus/folder/index.vue';
 import UiTreeView from '~/ui/treeview/index.vue';
 import UiTreeViewNode from '~/ui/treeview/node.vue';
 import UiAvatar from '~/ui/avatar/index.vue';
@@ -99,13 +99,19 @@ export default {
   },
   watch: {
     currentVaultFolderUuid() {
+      if (!this.currentVaultFolderUuid) return;
+
       this.leadWay();
     },
   },
   async created() {
     this.loading = true;
 
-    if (!this.currentVaultFolderUuid) await this.getRootVaultFolders();
+    if (!this.currentVaultFolderUuid) {
+      await this.getRootVaultFolders();
+      this.loading = false;
+      return;
+    }
 
     await this.leadWay();
 
@@ -117,6 +123,7 @@ export default {
       getNestedVaultFolders: vaultFolderActionTypes.GET_NESTED_VAULT_FOLDERS,
       setCurrentVaultFolder: vaultFolderActionTypes.SET_CURRENT_VAULT_FOLDER,
       setExpandedVaultFolder: vaultFolderActionTypes.SET_EXPANDED_VAULT_FOLDER,
+      getVaultFolder: vaultFolderActionTypes.GET_VAULT_FOLDER,
     }),
     async activeFolderNode(node) {
       if (node.isVault) {
@@ -154,6 +161,14 @@ export default {
       });
     },
     async leadWay() {
+      let currentVaultFolderUuid = this.currentVaultFolderUuid;
+
+      while (currentVaultFolderUuid) {
+        await this.getVaultFolder({ uuid: currentVaultFolderUuid });
+        currentVaultFolderUuid = this.folders[currentVaultFolderUuid]
+          ?.parentFolderUuid;
+      }
+
       const folders = this.pathToFolder(this.currentVaultFolderUuid);
       folders.pop(); /// detete current folder
 

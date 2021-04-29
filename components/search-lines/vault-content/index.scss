@@ -57,13 +57,23 @@
   }
 
   &__token-head {
-    margin-left: 0.25rem;
+    margin-left: 4px;
   }
 
   &__token {
     background-color: var(
       --color-vault-content-search-line-token-bg
     ) !important;
+
+    &-start {
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+    }
+
+    &-end {
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+    }
   }
 
   &__dropdown-item-desc > p {

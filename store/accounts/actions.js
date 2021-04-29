@@ -39,7 +39,7 @@ export default {
 
       commit(mutationTypes.SET_IS_INIT);
     } catch (e) {
-      commit(mutationTypes.SET_USER, { error: e });
+      commit(mutationTypes.SET_ERROR, { error: e });
     }
   },
   async [actionTypes.LOAD_ACCOUNT]({ commit, state }, payload) {

@@ -1,7 +1,7 @@
 <template>
   <ui-grid direction="column" class="folder-content-table">
     <content-table
-      :open="showTable"
+      v-if="showTable"
       :rows="rows"
       @body-row-context-menu="handleRowContextMenu"
       @body-row-dbl-click="handleRowDblClick"
@@ -13,7 +13,6 @@
       :folder-uuid="activeRowUuid"
     >
     </folder-context-menu>
-    <slot v-if="isTableEmpty" name="empty-table">table is empty</slot>
     <slot v-if="loading" name="loading-table">
       <ui-grid align-items="center" justify="center">
         <ui-loading :size="24"></ui-loading>
@@ -73,11 +72,8 @@ export default {
             : '',
       }));
     },
-    isTableEmpty() {
-      return !this.rows.length && !this.loading;
-    },
     showTable() {
-      return !this.isTableEmpty && !this.loading;
+      return !this.loading;
     },
   },
   async created() {

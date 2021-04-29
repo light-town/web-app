@@ -23,7 +23,7 @@
 import { mapState, mapActions, mapGetters } from 'vuex';
 import UiGrid from '~/ui/grid/index.vue';
 import UiButton from '~/ui/button/index.vue';
-import ItemContentLayout from '~/layouts/item-content/index.vue';
+import ItemContentLayout from '~/layouts/contents/item.vue';
 import NewItemForm from '~/components/forms/new-item/index.vue';
 import * as vaultCategoryActionTypes from '~/store/vault-categories/types';
 import * as vaultItemActionTypes from '~/store/vault-items/types';
@@ -44,13 +44,15 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['currentVault', 'currentVaultFolder', 'currentVaultItem']),
+    ...mapGetters(['currentVault', 'currentVaultItem']),
     ...mapState({
       currentVaultCategory(state) {
         return state['vault-categories'].all[
           this.currentVaultItem?.categoryUuid
         ];
       },
+      currentVaultFolderUuid: state =>
+        state['vault-folders'].currentVaultFolderUuid,
     }),
   },
   async created() {
@@ -59,7 +61,7 @@ export default {
     await this.setCurrentVaultItem({ uuid: this.$route.params.vaultItemUuid });
     await this.getVaultItem({
       uuid: this.$route.params.vaultItemUuid,
-      folderUuid: this.currentVaultFolder.uuid,
+      folderUuid: this.currentVaultFolderUuid,
     });
     await this.getVaultCategory({ uuid: this.currentVaultItem.categoryUuid });
 

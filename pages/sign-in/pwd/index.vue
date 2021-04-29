@@ -20,6 +20,7 @@
             type="password"
             :placeholder="$t('Enter Master Password')"
             class="auth-form__input"
+            autocomplete="on"
           ></ui-input>
           <NuxtLink to="/" class="link">{{
             $t('Forgot Master Password?')

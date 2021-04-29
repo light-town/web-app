@@ -92,5 +92,9 @@
   "Folder name": "Folder name",
   "Item name": "Item name",
   "is": "is",
-  "is not": "is not"
+  "is not": "is not",
+  "Sorry, your filter produced no results": "Sorry, your filter produced no results",
+  "To widen your search, change or remove filters above": "To widen your search, change or remove filters above",
+  "Your folder is empty": "Your folder is empty",
+  "To create a folder or item, right-click on an empty space": "To create a folder or item, right-click on an empty space"
 }
