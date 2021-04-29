@@ -5,7 +5,8 @@
         <slot></slot>
       </ui-grid>
       <ui-grid align-items="center" justify="flex-end">
-        <account></account>
+        <account v-if="currentAccount" :name="currentAccount.name"></account>
+        <account-skeleton v-else></account-skeleton>
       </ui-grid>
     </ui-grid>
     <div class="appbar__separator"></div>
@@ -13,7 +14,9 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Account from './account/index.vue';
+import AccountSkeleton from './account/skeleton.vue';
 import UiGrid from '~/ui/grid/index.vue';
 
 export default {
@@ -21,6 +24,10 @@ export default {
   components: {
     UiGrid,
     Account,
+    AccountSkeleton,
+  },
+  computed: {
+    ...mapGetters(['currentAccount']),
   },
 };
 </script>

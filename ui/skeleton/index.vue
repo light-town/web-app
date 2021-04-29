@@ -20,7 +20,8 @@ export default {
     },
     radius: {
       type: String,
-      required: true,
+      required: false,
+      default: '4px',
     },
   },
 };

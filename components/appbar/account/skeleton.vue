@@ -1,24 +1,18 @@
 <template>
   <ui-grid align-items="center" class="appbar__account">
-    <ui-avatar :name="name" :size="44" class="appbar__account-icon"></ui-avatar>
+    <ui-skeleton width="44px" height="44px"></ui-skeleton>
   </ui-grid>
 </template>
 
 <script>
 import UiGrid from '~/ui/grid/index.vue';
-import UiAvatar from '~/ui/avatar/index.vue';
+import UiSkeleton from '~/ui/skeleton/index.vue';
 
 export default {
   name: 'Account',
   components: {
     UiGrid,
-    UiAvatar,
-  },
-  props: {
-    name: {
-      type: String,
-      required: true,
-    },
+    UiSkeleton,
   },
 };
 </script>
