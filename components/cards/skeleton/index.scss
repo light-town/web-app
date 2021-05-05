@@ -1,0 +1,52 @@
+.skeleton-card {
+  cursor: default;
+
+  &__edit-btn {
+    margin: 0.5rem;
+  }
+
+  &__avatar {
+    margin-bottom: 1rem;
+  }
+
+  &:hover {
+    box-shadow: none;
+  }
+
+  &__name {
+    margin: 0.5rem 0;
+  }
+
+  &__desc {
+    margin: 0.5rem 0;
+  }
+
+  &__footer {
+    height: 24px;
+  }
+
+  &__badge {
+    margin-right: 0.75rem;
+
+    &-text {
+    }
+  }
+
+  &__category {
+    padding: 0.5rem 0;
+
+    &-icon {
+      margin-right: 0.5rem;
+    }
+  }
+
+  &__name,
+  &__desc,
+  &__datetime {
+    margin: 0.25rem 0;
+  }
+
+  &__tags {
+    margin: 0.5rem 0;
+  }
+}

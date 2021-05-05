@@ -258,46 +258,65 @@
       <ui-grid direction="column" class="templates__section">
         <p class="templates__title">Cards</p>
         <ui-grid direction="row" class="templates__row">
-          <vault-card
+          <entry-card
+            variant="vault"
             name="Personal"
             desc="Your default vault for storing items. zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
             :entries-count="11"
-          ></vault-card>
-          <vault-card
+          ></entry-card>
+          <entry-card
+            variant="vault"
             name="Personal zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
             desc="Your default vault for storing items."
-          ></vault-card>
-          <vault-card name="Personal" desc=""></vault-card>
-          <vault-card name="Personal" desc="" :entries-count="9"></vault-card>
+          ></entry-card>
+          <entry-card variant="vault" name="Personal" desc=""></entry-card>
+          <entry-card
+            variant="vault"
+            name="Personal"
+            desc=""
+            :entries-count="9"
+          ></entry-card>
+          <skeleton-card variant="primary"></skeleton-card>
         </ui-grid>
         <ui-grid direction="row" class="templates__row">
-          <folder-card
+          <entry-card
+            variant="folder"
             name="Folder"
             desc="Your default folder for storing items. zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
             :entries-count="11"
-          ></folder-card>
-          <folder-card
+          ></entry-card>
+          <entry-card
+            variant="folder"
             name="Folder zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
             desc="Your default folder for storing items."
-          ></folder-card>
-          <folder-card name="Folder" desc=""></folder-card>
-          <folder-card name="Folder" desc="" :entries-count="9"></folder-card>
+          ></entry-card>
+          <entry-card variant="folder" name="Folder" desc=""></entry-card>
+          <entry-card
+            variant="folder"
+            name="Folder"
+            desc=""
+            :entries-count="9"
+          ></entry-card>
+          <skeleton-card variant="primary"></skeleton-card>
         </ui-grid>
         <ui-grid direction="row" class="templates__row">
-          <item-card
+          <entry-card
+            variant="item"
             name="Light Town Account"
             desc="A3-A6488L •••••• ••••• ••••• ••••• •••••"
             datetime="18.09.17 at 15:58"
             category-name="Password"
             :tags="['Starter Kit']"
-          ></item-card>
-          <item-card
+          ></entry-card>
+          <entry-card
+            variant="item"
             name="Item Name zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
             desc="Item Desc zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
             datetime="18.09.17 at 15:58"
             category-name="Note"
             :tags="['Security']"
-          ></item-card>
+          ></entry-card>
+          <skeleton-card variant="secondary"></skeleton-card>
         </ui-grid>
       </ui-grid>
     </ui-grid>
@@ -316,9 +335,8 @@ import UiTokenSelector from '~/ui/token-selector/index.vue';
 import UiBreadcrumbs from '~/ui/breadcrumbs/index.vue';
 
 import SearchTeamsByTokens from '~/components/search-lines/vault-content/index.vue';
-import VaultCard from '~/components/cards/vault/index.vue';
-import FolderCard from '~/components/cards/folder/index.vue';
-import ItemCard from '~/components/cards/item/index.vue';
+import EntryCard from '~/components/cards/entry/index.vue';
+import SkeletonCard from '~/components/cards/skeleton/index.vue';
 
 export default {
   name: 'IndexPage',
@@ -333,9 +351,8 @@ export default {
     UiTokenSelector,
     UiBreadcrumbs,
     SearchTeamsByTokens,
-    VaultCard,
-    FolderCard,
-    ItemCard,
+    EntryCard,
+    SkeletonCard,
   },
   methods: {
     handleItemClick(vm) {

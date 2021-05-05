@@ -1,15 +1,15 @@
 .page[data-theme-mode='light'] {
-  --color-item-card-name-text-color: var(--color-gray-650);
-  --color-item-card-desc-text-color: var(--color-gray-450);
-  --color-item-card-datetime-text-color: var(--color-gray-450);
+  --color-secondary-card-name-text-color: var(--color-gray-650);
+  --color-secondary-card-desc-text-color: var(--color-gray-450);
+  --color-secondary-card-datetime-text-color: var(--color-gray-450);
 
-  --color-item-card-badge-desc-text-color: var(--color-gray-400);
+  --color-secondary-card-badge-desc-text-color: var(--color-gray-400);
 
-  --color-item-card-category-text-color: var(--color-gray-650);
-  --color-item-card-category-icon-fill: var(--color-gray-650);
+  --color-secondary-card-category-text-color: var(--color-gray-650);
+  --color-secondary-card-category-icon-fill: var(--color-gray-650);
 }
 
-.item-card {
+.secondary-card {
   &__category {
     width: 50%;
     padding: 0.5rem 0;
@@ -23,7 +23,7 @@
       font-size: 14px;
       font-weight: 400;
 
-      color: var(--color-item-card-category-text-color);
+      color: var(--color-secondary-card-category-text-color);
     }
 
     &-icon {
@@ -34,7 +34,7 @@
       min-height: var(--size);
       max-height: var(--size);
 
-      fill: var(--color-item-card-category-icon-fill);
+      fill: var(--color-secondary-card-category-icon-fill);
 
       margin-right: 0.5rem;
     }
@@ -55,19 +55,19 @@
     font-size: 18px;
     font-weight: 600;
 
-    color: var(--color-item-card-name-text-color);
+    color: var(--color-secondary-card-name-text-color);
   }
 
   &__desc {
     font-size: 13px;
 
-    color: var(--color-item-card-desc-text-color);
+    color: var(--color-secondary-card-desc-text-color);
   }
 
   &__datetime {
     font-size: 13px;
 
-    color: var(--color-item-card-datetime-text-color);
+    color: var(--color-secondary-card-datetime-text-color);
   }
 
   &__tags {
@@ -85,7 +85,7 @@
       font-size: 13px;
       font-weight: 500;
 
-      color: var(--color-item-card-badge-desc-text-color);
+      color: var(--color-secondary-card-badge-desc-text-color);
     }
   }
 

@@ -1,11 +1,11 @@
 .page[data-theme-mode='light'] {
-  --color-entry-card-edit-btn-icon-fill: var(--color-gray-450);
-  --color-entry-card-edit-btn-text-color: var(--color-gray-450);
+  --color-template-card-edit-btn-icon-fill: var(--color-gray-450);
+  --color-template-card-edit-btn-text-color: var(--color-gray-450);
 
-  --color-entry-card-hover-box-shadow: var(--color-green-50);
+  --color-template-card-hover-box-shadow: var(--color-green-50);
 }
 
-.entry-card {
+.template-card {
   --size: 340px;
 
   width: var(--size);
@@ -22,7 +22,7 @@
   cursor: pointer;
 
   &:hover {
-    box-shadow: 0 0 0 0.5rem var(--color-entry-card-hover-box-shadow);
+    box-shadow: 0 0 0 0.5rem var(--color-template-card-hover-box-shadow);
   }
 
   &__edit-btn {
@@ -44,7 +44,7 @@
       width: var(--size);
       height: var(--size);
 
-      fill: var(--color-entry-card-edit-btn-icon-fill);
+      fill: var(--color-template-card-edit-btn-icon-fill);
     }
   }
 
