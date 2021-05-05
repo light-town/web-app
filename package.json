@@ -1,6 +1,6 @@
 {
   "name": "@light-town/web-app",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "dev": "nuxt",
@@ -24,7 +24,7 @@
   },
   "homepage": "https://github.com/light-town/web-app#readme",
   "dependencies": {
-    "@light-town/core": "^0.2.6",
+    "@light-town/core": "^0.2.9",
     "@nuxtjs/axios": "^5.13.1",
     "cookie-universal-nuxt": "^2.1.4",
     "core-js": "^3.9.1",

@@ -58,7 +58,7 @@ export default {
       vaultFolderActionTypes.CLEAR_VAULT_FOLDER_LIST,
       {},
       { root: true }
-    ); /// [TODO] make plugin
+    );
 
     commit(mutationTypes.SET_CURRENT_VAULT_UUID, {
       uuid: payload.uuid,

@@ -1,15 +1,13 @@
 import AbstractService from '../abstract-service';
 
 export default class KeySetsService extends AbstractService {
-  getKeySets(accountUuid) {
-    return this.axios
-      .get(`/accounts/${accountUuid}/key-sets`)
-      .then(response => response.data);
+  getKeySets() {
+    return this.axios.get(`/key-sets`).then(response => response.data);
   }
 
-  getPrimaryKeySet(accountUuid) {
+  getPrimaryKeySet() {
     return this.axios
-      .get(`/accounts/${accountUuid}/key-sets?primary=true`)
+      .get(`/key-sets?primary=true`)
       .then(response => response.data);
   }
 }

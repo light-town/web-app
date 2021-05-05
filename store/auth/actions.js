@@ -36,10 +36,12 @@ export default {
       const encPrimaryKeySet = await core.helpers.keySets.createPrimaryKeySetHelper(
         masterUnlockKey
       );
+
       const primaryKeySet = await core.helpers.keySets.decryptPrimaryKeySetHelper(
         encPrimaryKeySet,
         masterUnlockKey
       );
+
       const encPrimaryVault = await core.helpers.vaults.createVaultHelper(
         {
           name: this.$i18n.t('Personal'),
@@ -47,10 +49,12 @@ export default {
         },
         primaryKeySet.publicKey
       );
+
       const primaryVault = await core.helpers.vaults.decryptVaultByPrivateKeyHelper(
         encPrimaryVault,
         primaryKeySet.privateKey
       );
+
       const encPrimaryVaultItemCategories = await core.helpers.vaultItemCategories.createDefaultVaultItemCategories(
         primaryVault.key
       );

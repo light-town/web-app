@@ -41,4 +41,20 @@
   &__button {
     margin-bottom: 20px;
   }
+
+  &__row {
+    margin-bottom: 1.25rem;
+
+    & > * {
+      margin-right: 1.25rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }

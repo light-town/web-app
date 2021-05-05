@@ -1,0 +1,59 @@
+.page[data-theme-mode='light'] {
+  --color-vault-card-title-text-color: var(--color-gray-650);
+  --color-vault-card-desc-text-color: var(--color-gray-450);
+
+  --color-vault-card-badge-desc-text-color: var(--color-gray-400);
+}
+
+.vault-card {
+  &__avatar,
+  &__name,
+  &__desc {
+    margin-bottom: 0.5rem;
+  }
+
+  &__avatar {
+    & > .ui-avatar__badge {
+      background-color: transparent;
+    }
+
+    margin-bottom: 1rem;
+  }
+
+  &__name {
+    font-size: 24px;
+    font-weight: 600;
+
+    color: var(--color-vault-card-title-text-color);
+  }
+
+  &__desc {
+    font-size: 14px;
+
+    color: var(--color-vault-card-desc-text-color);
+  }
+
+  &__name,
+  &__desc {
+    width: 100%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__badge {
+    margin-right: 10px;
+
+    &-desc {
+      font-size: 13px;
+      font-weight: 500;
+
+      color: var(--color-vault-card-badge-desc-text-color);
+    }
+  }
+
+  &__footer {
+    height: 24px;
+  }
+}

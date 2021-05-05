@@ -49,6 +49,8 @@ export default {
       const response = await this.$api.accounts.getAccount(payload.accountKey);
       const account = response.data[0];
 
+      if (!account) throw new Error(`The account was not found`);
+
       commit(mutationTypes.SET_FETCH_STATUS, {
         status: fetchStatuses.SUCCESS,
       });

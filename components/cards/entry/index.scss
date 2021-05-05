@@ -1,0 +1,56 @@
+.page[data-theme-mode='light'] {
+  --color-entry-card-edit-btn-icon-fill: var(--color-gray-450);
+  --color-entry-card-edit-btn-text-color: var(--color-gray-450);
+
+  --color-entry-card-hover-box-shadow: var(--color-green-50);
+}
+
+.entry-card {
+  --size: 340px;
+
+  width: var(--size);
+  height: var(--size);
+
+  flex-shrink: 0;
+  flex-grow: 0;
+
+  transition: background 0.3s ease-out, color 0.3s ease-out, fill 0.3s ease-out,
+    box-shadow 0.3s, border 0.3s;
+
+  user-select: none;
+
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 0 0 0.5rem var(--color-entry-card-hover-box-shadow);
+  }
+
+  &__edit-btn {
+    align-items: center;
+    justify-content: center;
+
+    --size: 32px;
+
+    width: var(--size);
+    height: var(--size);
+
+    padding: 0;
+
+    border-radius: 50%;
+
+    &-icon {
+      --size: 16px;
+
+      width: var(--size);
+      height: var(--size);
+
+      fill: var(--color-entry-card-edit-btn-icon-fill);
+    }
+  }
+
+  &__header,
+  &__body,
+  &__footer {
+    padding: 0.25rem 0;
+  }
+}
