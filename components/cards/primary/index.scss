@@ -13,6 +13,11 @@
   }
 
   &__icon {
+    --size: 120px;
+
+    width: var(--size);
+    height: var(--size);
+
     & > .ui-avatar__badge {
       background-color: transparent;
     }

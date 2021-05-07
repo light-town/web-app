@@ -1,0 +1,54 @@
+<template>
+  <div class="page" data-theme-mode="light">
+    <div class="page-layout"><Nuxt /></div>
+    <portal-target name="modals-location" multiple> </portal-target>
+  </div>
+</template>
+
+<script>
+import { mapActions } from 'vuex';
+import * as authActionTypes from '~/store/auth/types';
+import * as devicesActionTypes from '~/store/devices/types';
+import * as accountsActionTypes from '~/store/accounts/types';
+import * as cacheActionTypes from '~/store/cache/types';
+import * as keySetsActionTypes from '~/store/key-sets/types';
+import * as vaultsActionTypes from '~/store/vaults/types';
+
+export default {
+  name: 'DefaultLayout',
+  async created() {
+    await this.initCacheService();
+    await this.initAuthService();
+    await this.initDevicesService();
+    await this.initAccountsService();
+    await this.initKeySetsService();
+    await this.initVaultsService();
+  },
+  beforeMount() {
+    document.addEventListener('contextmenu', this.preventContextMenu);
+  },
+  beforeDestroy() {
+    document.removeEventListener('contextmenu', this.preventContextMenu);
+  },
+  methods: {
+    ...mapActions({
+      initCacheService: cacheActionTypes.INIT,
+      initAuthService: authActionTypes.INIT,
+      initDevicesService: devicesActionTypes.INIT,
+      initAccountsService: accountsActionTypes.INIT,
+      initKeySetsService: keySetsActionTypes.INIT,
+      initVaultsService: vaultsActionTypes.INIT,
+    }),
+    preventContextMenu(e) {
+      e.preventDefault();
+    },
+  },
+};
+</script>
+
+<style lang="scss">
+.page-layout {
+  width: 100%;
+  min-height: 100vh;
+}
+</style>

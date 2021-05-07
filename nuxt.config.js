@@ -4,6 +4,10 @@ export default {
     port: process.env.PORT,
     host: process.env.HOST,
   },
+
+  /* env: {
+    API_HTTP_URL: `http://${process.env.API_HOST}:${process.env.API_PORT}/v1/api`,
+  }, */
   head: {
     title: 'web-app',
     htmlAttrs: {
@@ -34,11 +38,16 @@ export default {
   ],
   modules: [
     '@nuxtjs/axios',
+    '@nuxtjs/proxy',
     'cookie-universal-nuxt',
     'portal-vue/nuxt',
     'nuxt-i18n',
   ],
-  build: {},
+  build: {
+    babel: {
+      plugins: [['@babel/plugin-proposal-private-methods', { loose: true }]],
+    },
+  },
   i18n: {
     locales: [
       { code: 'en', name: 'English (US)', iso: 'en-US', file: 'en-US.json' },
@@ -53,5 +62,8 @@ export default {
       cookieKey: 'i18n_locale',
       onlyOnRoot: true,
     },
+  },
+  axios: {
+    withCredentials: true,
   },
 };

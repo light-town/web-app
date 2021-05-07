@@ -1,5 +1,5 @@
 <template>
-  <entry-card class="secondary-card">
+  <template-card class="secondary-card">
     <template #body>
       <ui-grid align-items="center">
         <ui-grid align-items="center" class="secondary-card__category">
@@ -31,12 +31,12 @@
         </ui-badge>
       </ui-grid>
     </template>
-  </entry-card>
+  </template-card>
 </template>
 
 <script>
 import UiGrid from '~/ui/grid/index.vue';
-import EntryCard from '~/components/cards/template/index.vue';
+import TemplateCard from '~/components/cards/template/index.vue';
 import UiBadge from '~/ui/badge/index.vue';
 import KeyIcon from '~/assets/key.svg?inline';
 
@@ -44,7 +44,7 @@ export default {
   name: 'SecondaryCard',
   components: {
     UiGrid,
-    EntryCard,
+    TemplateCard,
     UiBadge,
     KeyIcon,
   },

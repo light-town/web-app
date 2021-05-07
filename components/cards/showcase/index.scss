@@ -1,0 +1,76 @@
+.page[data-theme-mode='light'] {
+  --color-showcase-add-folder-button-text-color: var(--color-green-400);
+
+  --color-showcase-add-item-button-icon-fill: var(--color-white);
+  --color-showcase-add-item-button-text-color: var(--color-white);
+
+  --color-showcase-add-vault-button-icon-fill: var(--color-white);
+  --color-showcase-add-vault-button-text-color: var(--color-white);
+}
+
+.showcase-card {
+  cursor: default;
+
+  background-color: var(--color-green-50);
+
+  &__illustrate {
+    --size: 240px;
+
+    width: var(--size);
+    height: var(--size);
+  }
+
+  &:hover {
+    box-shadow: none;
+  }
+
+  &__footer {
+    & > * {
+      margin: 0 0.25rem;
+    }
+
+    &-button {
+      padding: 0.5rem 0.75rem;
+
+      &-icon {
+        --size: 20px;
+
+        width: var(--size);
+        height: var(--size);
+
+        margin-right: 0.75rem;
+      }
+
+      &__text {
+        font-size: 12px;
+        font-weight: 600;
+
+        text-transform: uppercase;
+      }
+    }
+  }
+}
+
+.add-folder-button {
+  &__text {
+    color: var(--color-showcase-add-folder-button-text-color);
+  }
+}
+
+.add-item-button {
+  &__icon {
+    fill: var(--color-showcase-add-item-button-icon-fill);
+  }
+  &__text {
+    color: var(--color-showcase-add-item-button-text-color);
+  }
+}
+
+.add-vault-button {
+  &__icon {
+    fill: var(--color-showcase-add-vault-button-icon-fill);
+  }
+  &__text {
+    color: var(--color-showcase-add-vault-button-text-color);
+  }
+}

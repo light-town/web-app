@@ -1,5 +1,5 @@
 <template>
-  <entry-card class="primary-card">
+  <template-card class="primary-card">
     <template #body>
       <slot name="icon">
         <ui-avatar :name="name" :size="120" class="primary-card__icon">
@@ -31,11 +31,11 @@
         </p>
       </ui-grid>
     </template>
-  </entry-card>
+  </template-card>
 </template>
 
 <script>
-import EntryCard from '~/components/cards/template/index.vue';
+import TemplateCard from '~/components/cards/template/index.vue';
 import UiGrid from '~/ui/grid/index.vue';
 import UiAvatar from '~/ui/avatar/index.vue';
 import UiBadge from '~/ui/badge/index.vue';
@@ -46,7 +46,7 @@ export default {
     UiGrid,
     UiAvatar,
     UiBadge,
-    EntryCard,
+    TemplateCard,
   },
   props: {
     name: {

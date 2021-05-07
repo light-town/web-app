@@ -43,6 +43,8 @@
   }
 
   &__row {
+    overflow: auto;
+    padding: 1rem 0;
     margin-bottom: 1.25rem;
 
     & > * {

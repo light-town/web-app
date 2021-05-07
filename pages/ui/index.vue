@@ -258,6 +258,7 @@
       <ui-grid direction="column" class="templates__section">
         <p class="templates__title">Cards</p>
         <ui-grid direction="row" class="templates__row">
+          <showcase-card> </showcase-card>
           <entry-card
             variant="vault"
             name="Personal"
@@ -279,6 +280,7 @@
           <skeleton-card variant="primary"></skeleton-card>
         </ui-grid>
         <ui-grid direction="row" class="templates__row">
+          <showcase-card variant="folder"> </showcase-card>
           <entry-card
             variant="folder"
             name="Folder"
@@ -337,6 +339,7 @@ import UiBreadcrumbs from '~/ui/breadcrumbs/index.vue';
 import SearchTeamsByTokens from '~/components/search-lines/vault-content/index.vue';
 import EntryCard from '~/components/cards/entry/index.vue';
 import SkeletonCard from '~/components/cards/skeleton/index.vue';
+import ShowcaseCard from '~/components/cards/showcase/index.vue';
 
 export default {
   name: 'IndexPage',
@@ -353,6 +356,7 @@ export default {
     SearchTeamsByTokens,
     EntryCard,
     SkeletonCard,
+    ShowcaseCard,
   },
   methods: {
     handleItemClick(vm) {
