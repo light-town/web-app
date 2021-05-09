@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import AuthForm from './form.vue';
+import AuthForm from './form/index.vue';
 import UiGrid from '~/ui/grid/index.vue';
 import UiSkeleton from '~/ui/skeleton/index.vue';
 

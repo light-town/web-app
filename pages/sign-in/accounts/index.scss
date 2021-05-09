@@ -1,37 +1,26 @@
-.page[data-theme-mode='light'] {
-  --color-account-hover-bg: var(--color-gray-50);
-  --color-account-active-bg: var(--color-gray-100);
+#app[data-theme-mode='light'] {
+  --color-accounts-page-hover-bg: var(--color-gray-50);
+  --color-accounts-page-active-bg: var(--color-gray-100);
 }
 
-.account {
-  margin-top: 8px;
-  user-select: none;
-
+.accounts {
   &__list {
+    max-height: 520px;
+
     overflow-y: auto;
-    max-height: calc(100vh - 500px);
   }
 
-  &:first-child {
-    margin-top: 0;
-  }
-}
+  &__account {
+    user-select: none;
 
-.auth-form {
-  &__input {
-    min-width: 400px;
-    margin: 16px 0;
-  }
-}
+    cursor: pointer;
 
-.account {
-  cursor: pointer;
+    &:hover {
+      background-color: var(--color-accounts-page-hover-bg);
+    }
 
-  &:hover {
-    background-color: var(--color-account-hover-bg);
-  }
-
-  &:active {
-    background-color: var(--color-account-active-bg);
+    &:active {
+      background-color: var(--color-accounts-page-active-bg);
+    }
   }
 }

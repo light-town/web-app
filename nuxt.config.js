@@ -1,13 +1,5 @@
 export default {
   ssr: true,
-  server: {
-    port: process.env.PORT,
-    host: process.env.HOST,
-  },
-
-  /* env: {
-    API_HTTP_URL: `http://${process.env.API_HOST}:${process.env.API_PORT}/v1/api`,
-  }, */
   head: {
     title: 'web-app',
     htmlAttrs: {
@@ -62,8 +54,5 @@ export default {
       cookieKey: 'i18n_locale',
       onlyOnRoot: true,
     },
-  },
-  axios: {
-    withCredentials: true,
   },
 };

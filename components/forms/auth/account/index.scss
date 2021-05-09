@@ -1,0 +1,38 @@
+#app[data-theme-mode='light'] {
+  --color-auth-form-account-border: var(--color-gray-150);
+  --color-auth-form-account-icon: var(--color-gray-450);
+  --color-auth-form-account-text: var(--color-gray-450);
+}
+
+.auth-form {
+  &__account {
+    margin: 0.25rem 0;
+    padding: 0.75em 1.75em;
+
+    border: 1px solid var(--color-auth-form-account-border);
+    border-radius: 4px;
+
+    &-icon {
+      --size: 40px;
+
+      width: var(--size);
+      height: var(--size);
+
+      fill: var(--color-auth-form-account-icon);
+
+      margin-right: 1.75rem;
+    }
+
+    &-username {
+      color: var(--color-auth-form-account-text);
+
+      margin-bottom: 0.25rem;
+    }
+
+    &-key {
+      font-size: 13px;
+
+      color: var(--color-auth-form-account-text);
+    }
+  }
+}

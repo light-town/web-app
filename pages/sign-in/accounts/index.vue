@@ -2,19 +2,20 @@
   <ui-grid>
     <client-only>
       <auth-form v-if="showAuthForm" :title="$t('Choose an account')">
-        <template #content>
+        <template #body>
           <ui-alert v-if="error" severity="error">
             {{ error.message }}
           </ui-alert>
-          <ui-grid direction="column" class="account__list">
-            <account
+          <ui-grid direction="column" class="accounts__list">
+            <auth-form-account
               v-for="account in accounts"
               :key="account.uuid"
               :version="getVersionAccountKey(account.key)"
               :uuid="getUuidAccountKey(account.key)"
               :name="account.name"
+              class="accounts__account"
               @click="handleChooseAccount(account.uuid)"
-            ></account>
+            />
           </ui-grid>
         </template>
         <template #footer>
@@ -29,12 +30,9 @@
           </ui-grid>
         </template>
       </auth-form>
-      <auth-form-skeleton
-        v-if="!showAuthForm"
-        :title="$t('Sign In')"
-      ></auth-form-skeleton>
+      <auth-form-skeleton v-else :title="$t('Sign In')" />
       <template slot="placeholder">
-        <auth-form-skeleton :title="$t('Sign In')"></auth-form-skeleton>
+        <auth-form-skeleton :title="$t('Sign In')" />
       </template>
     </client-only>
   </ui-grid>
@@ -45,8 +43,8 @@ import { mapState, mapActions } from 'vuex';
 import UiGrid from '~/ui/grid/index.vue';
 import UiButton from '~/ui/button/index.vue';
 import UiAlert from '~/ui/alert/index.vue';
-import AuthForm from '~/components/forms/auth/form.vue';
-import Account from '~/components/forms/auth/account.vue';
+import AuthForm from '~/components/forms/auth/form/index.vue';
+import AuthFormAccount from '~/components/forms/auth/account/index.vue';
 import AuthFormSkeleton from '~/components/forms/auth/skeleton.vue';
 import * as accountsActionTypes from '~/store/accounts/types';
 
@@ -57,7 +55,7 @@ export default {
     UiButton,
     UiAlert,
     AuthForm,
-    Account,
+    AuthFormAccount,
     AuthFormSkeleton,
   },
   layout: 'auth',

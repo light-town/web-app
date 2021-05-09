@@ -1,0 +1,18 @@
+#app[data-theme-mode='light'] {
+  --color-auth-form-link-text: var(--color-green-400);
+  --color-auth-form-link-hover-text: var(--color-green-500);
+}
+
+.auth-form {
+  &__link {
+    margin: 0.25rem 0;
+
+    font-size: 15px;
+
+    color: var(--color-auth-form-link-text);
+
+    &:hover {
+      color: var(--color-auth-form-link-hover-text);
+    }
+  }
+}

@@ -1,0 +1,47 @@
+#app[data-theme-mode='light'] {
+  --color-auth-form-bg: var(--color-white);
+  --color-auth-form-border: var(--color-gray-150);
+  --color-auth-form-title: var(--color-gray-700);
+  --color-auth-form-desc: var(--color-gray-700);
+}
+
+.auth-form {
+  min-width: 520px;
+
+  margin-bottom: 24px;
+  padding: 40px 48px;
+
+  border-radius: 4px;
+  border: 1px solid var(--color-auth-form-border);
+
+  background-color: var(--color-auth-form-bg);
+
+  &__header,
+  &__body,
+  &__footer {
+    margin-bottom: 40px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__title {
+    margin-bottom: 8px;
+
+    font-size: 24px;
+    font-weight: 500;
+
+    color: var(--color-auth-form-title);
+  }
+
+  &__desc {
+    font-size: 15px;
+
+    color: var(--color-auth-form-desc);
+  }
+
+  &__alert {
+    margin-bottom: 0.5rem;
+  }
+}

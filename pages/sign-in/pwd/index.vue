@@ -4,27 +4,22 @@
       <auth-form
         v-if="showAuthForm"
         :title="$t('Welcome')"
+        :error="error"
         @submit="handleSubmitForm"
       >
-        <template #content>
-          <ui-alert v-if="error" severity="error">
-            {{ error.message }}
-          </ui-alert>
-          <account
+        <template #body>
+          <auth-form-account
             :version="versionAccountKey"
             :uuid="uuidAccountKey"
             :name="currentAccount.name"
-          ></account>
-          <ui-input
+          />
+          <auth-form-input
             v-model="password"
             type="password"
             :placeholder="$t('Enter Master Password')"
-            class="auth-form__input"
             autocomplete="on"
-          ></ui-input>
-          <NuxtLink to="/" class="link">{{
-            $t('Forgot Master Password?')
-          }}</NuxtLink>
+          />
+          <auth-form-link to="/" :text="$t('Forgot Master Password?')" />
         </template>
         <template #footer>
           <ui-grid direction="row-reverse" justify="space-between">
@@ -41,10 +36,7 @@
           </ui-grid>
         </template>
       </auth-form>
-      <auth-form-skeleton
-        v-if="!showAuthForm"
-        :title="$t('Sign In')"
-      ></auth-form-skeleton>
+      <auth-form-skeleton v-else :title="$t('Sign In')"></auth-form-skeleton>
       <template slot="placeholder">
         <auth-form-skeleton :title="$t('Sign In')"></auth-form-skeleton>
       </template>
@@ -55,11 +47,11 @@
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex';
 import UiGrid from '~/ui/grid/index.vue';
-import UiInput from '~/ui/input/index.vue';
 import UiButton from '~/ui/button/index.vue';
-import UiAlert from '~/ui/alert/index.vue';
-import AuthForm from '~/components/forms/auth/form.vue';
-import Account from '~/components/forms/auth/account.vue';
+import AuthForm from '~/components/forms/auth/form/index.vue';
+import AuthFormLink from '~/components/forms/auth/link/index.vue';
+import AuthFormInput from '~/components/forms/auth/input/index.vue';
+import AuthFormAccount from '~/components/forms/auth/account/index.vue';
 import AuthFormSkeleton from '~/components/forms/auth/skeleton.vue';
 import * as authActionTypes from '~/store/auth/types';
 import * as keySetsActionTypes from '~/store/key-sets/types';
@@ -69,11 +61,11 @@ export default {
   name: 'VerifyPage',
   components: {
     UiGrid,
-    UiInput,
     UiButton,
-    UiAlert,
     AuthForm,
-    Account,
+    AuthFormLink,
+    AuthFormInput,
+    AuthFormAccount,
     AuthFormSkeleton,
   },
   layout: 'auth',

@@ -1,9 +1,13 @@
 <template>
-  <ui-grid align-items="center" class="account" @click="e => $emit('click', e)">
-    <user-icon class="account__icon"></user-icon>
+  <ui-grid
+    align-items="center"
+    class="auth-form__account"
+    @click="$emit('click', $event)"
+  >
+    <user-icon class="auth-form__account-icon" />
     <ui-grid direction="column">
-      <p class="account__username">{{ name }}</p>
-      <p class="account__key">
+      <p class="auth-form__account-username">{{ name }}</p>
+      <p class="auth-form__account-key">
         {{ version }}-{{ uuid }} •••••• ••••• ••••• ••••• •••••
       </p>
     </ui-grid>
@@ -37,4 +41,4 @@ export default {
 };
 </script>
 
-<style lang="scss" src="./account.scss"></style>
+<style lang="scss" src="./index.scss"></style>

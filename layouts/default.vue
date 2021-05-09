@@ -8,11 +8,17 @@
 <script>
 export default {
   name: 'DefaultLayout',
-  async created() {
-    const response = await this.$axios.get('/auth/csrf-token');
-     this.$axios.setHeader('X-CSRF-TOKEN', response.data.data['X-CSRF-TOKEN']);
+  created() {
+    this.$axios
+      .get('/auth/csrf-token')
+      .then(response =>
+        this.$axios.setHeader(
+          'X-CSRF-TOKEN',
+          response.data.data['X-CSRF-TOKEN']
+        )
+      );
   },
-  beforeMount() {
+  mounted() {
     document.addEventListener('contextmenu', this.preventContextMenu);
   },
   beforeDestroy() {

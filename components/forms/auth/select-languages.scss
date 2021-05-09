@@ -1,6 +1,6 @@
 @import './links.scss';
 
-.page[data-theme-mode='light'] {
+#app[data-theme-mode='light'] {
   --color-select-langs-items-bg: var(--color-white);
   --color-select-langs-items-border: var(--color-gray-150);
   --color-select-langs-item-text: var(--color-gray-700);

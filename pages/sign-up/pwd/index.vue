@@ -1,49 +1,43 @@
 <template>
-  <ui-grid>
-    <auth-form
-      v-if="showAuthForm"
-      :title="$t('Sign Up')"
-      :desc="$t('Choose your Master Password')"
-      @submit="handleSubmitForm"
-    >
-      <template #content>
-        <ui-alert v-if="error" severity="error">{{ error.message }}</ui-alert>
-        <ui-input
-          v-model="password"
-          type="password"
-          :placeholder="$t('Enter a password')"
-          class="auth-form__input"
-          autocomplete="off"
-        ></ui-input>
-        <ui-input
-          v-model="repeatPassword"
-          type="password"
-          :placeholder="$t('Confirm your password')"
-          class="auth-form__input"
-          autocomplete="off"
-        ></ui-input>
-        <ui-grid align-items="center" class="warning">
-          <padlock-icon class="warning__icon"></padlock-icon>
-          <p class="warning__title">
-            <span>{{ $t('Remember') }}:</span>
-            {{ $t('the logner and more random your password, the better!') }}
-          </p>
-        </ui-grid>
-      </template>
-      <template #footer>
-        <ui-button variant="outlined" @click="handleBackBtnClick">
-          {{ $t('Back') }}
-        </ui-button>
-        <ui-button variant="contained" type="submit"
-          >{{ $t('Next') }}
-        </ui-button>
-      </template>
-    </auth-form>
-    <auth-form-skeleton
-      v-if="!showAuthForm"
-      title="Sign Up"
-    ></auth-form-skeleton>
-  </ui-grid>
+  <auth-form
+    v-if="showAuthForm"
+    :title="$t('Sign Up')"
+    :desc="$t('Choose your Master Password')"
+    class="pwd-form"
+    @submit="handleSubmitForm"
+  >
+    <template #body>
+      <ui-alert v-if="error" severity="error">{{ error.message }}</ui-alert>
+      <ui-input
+        v-model="password"
+        type="password"
+        :placeholder="$t('Enter a password')"
+        class="pwd-form__input"
+        autocomplete="off"
+      ></ui-input>
+      <ui-input
+        v-model="repeatPassword"
+        type="password"
+        :placeholder="$t('Confirm your password')"
+        class="pwd-form__input"
+        autocomplete="off"
+      ></ui-input>
+      <ui-grid align-items="center" class="pwd-form__warning">
+        <padlock-icon class="pwd-form__warning-icon"></padlock-icon>
+        <p class="pwd-form__warning-title">
+          <span>{{ $t('Remember') }}:</span>
+          {{ $t('the logner and more random your password, the better!') }}
+        </p>
+      </ui-grid>
+    </template>
+    <template #footer>
+      <ui-button variant="outlined" @click="handleBackBtnClick">
+        {{ $t('Back') }}
+      </ui-button>
+      <ui-button variant="contained" type="submit">{{ $t('Next') }} </ui-button>
+    </template>
+  </auth-form>
+  <auth-form-skeleton v-else title="Sign Up"></auth-form-skeleton>
 </template>
 
 <script>
@@ -52,7 +46,7 @@ import UiGrid from '~/ui/grid/index.vue';
 import UiInput from '~/ui/input/index.vue';
 import UiButton from '~/ui/button/index.vue';
 import UiAlert from '~/ui/alert/index.vue';
-import AuthForm from '~/components/forms/auth/form.vue';
+import AuthForm from '~/components/forms/auth/form/index.vue';
 import AuthFormSkeleton from '~/components/forms/auth/skeleton.vue';
 import PadlockIcon from '~/assets/padlock.svg?inline';
 import * as authActionTypes from '~/store/auth/types';
@@ -133,4 +127,4 @@ export default {
 };
 </script>
 
-<style lang="scss" src="./index.scss"></style>
+<style lang="scss" src="./index.scss" scoped></style>

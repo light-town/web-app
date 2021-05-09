@@ -4,17 +4,16 @@
     :desc="$t('Use your LightTown Account')"
     @submit="handleFormSubmit"
   >
-    <template #content>
+    <template #body>
       <ui-alert v-if="error" severity="error">
         {{ error.message }}
       </ui-alert>
-      <ui-input
+      <auth-form-input
         v-model="accountKey"
         type="text"
         :placeholder="$t('Enter Account Key')"
-        class="auth-form__input"
-      ></ui-input>
-      <NuxtLink to="/" class="link">{{ $t('Forgot Account Key?') }}</NuxtLink>
+      />
+      <auth-form-link to="/" :text="$t('Forgot Account Key?')" />
     </template>
     <template #footer>
       <ui-button variant="outlined" @click="redirectToSignUpPage">
@@ -29,20 +28,22 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import UiInput from '~/ui/input/index.vue';
 import UiButton from '~/ui/button/index.vue';
 import UiAlert from '~/ui/alert/index.vue';
-import AuthForm from '~/components/forms/auth/form.vue';
+import AuthForm from '~/components/forms/auth/form/index.vue';
+import AuthFormInput from '~/components/forms/auth/input/index.vue';
+import AuthFormLink from '~/components/forms/auth/link/index.vue';
 import * as fetchStatuses from '~/store/fetch-statuses';
 import * as accountsActionTypes from '~/store/accounts/types';
 
 export default {
   name: 'IdentifierPage',
   components: {
-    UiInput,
     UiButton,
-    AuthForm,
     UiAlert,
+    AuthForm,
+    AuthFormInput,
+    AuthFormLink,
   },
   layout: 'auth',
   data() {

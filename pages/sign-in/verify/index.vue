@@ -1,68 +1,62 @@
 <template>
-  <ui-grid>
-    <client-only>
-      <auth-form
-        v-if="showAuthForm"
-        :title="$t('2-Step Verification')"
-        :desc="$t('This extra step shows it’s really you trying to sign in')"
-        @submit="handleSubmitForm"
-      >
-        <template #content>
-          <account
-            :version="versionAccountKey"
-            :uuid="uuidAccountKey"
-            :name="currentAccount.name"
-          ></account>
-          <auth-illustration class="illustration"></auth-illustration>
-          <p class="title">{{ $t('Check your phone') }}</p>
-          <i18n
-            path="LightTown sent a notification to your {model} and {os}. Finish fingerprint authorization to continue."
-            tag="p"
-            class="desc"
-          >
-            <template #model>
-              <span>{{ model }}</span>
-            </template>
-            <template #os>
-              <span>{{ os }}</span>
-            </template>
-          </i18n>
-          <ui-button variant="text" class="link-btn">{{
-            $t('Try another way?')
-          }}</ui-button>
-        </template>
-      </auth-form>
-      <auth-form-skeleton
-        v-if="!showAuthForm"
-        :title="$t('Sign In')"
-      ></auth-form-skeleton>
-      <template slot="placeholder">
-        <auth-form-skeleton :title="$t('Sign In')"></auth-form-skeleton>
+  <client-only>
+    <auth-form
+      v-if="showAuthForm"
+      :title="$t('2-Step Verification')"
+      :desc="$t('This extra step shows it’s really you trying to sign in')"
+      class="verify-page"
+      @submit="handleSubmitForm"
+    >
+      <template #body>
+        <auth-form-account
+          :version="versionAccountKey"
+          :uuid="uuidAccountKey"
+          :name="currentAccount.name"
+        />
+        <phone-access-illustration class="verify-page__illustration" />
+        <p class="verify-page__title">{{ $t('Check your phone') }}</p>
+        <i18n
+          path="LightTown sent a notification to your {model} and {os}. Finish fingerprint authorization to continue."
+          tag="p"
+          class="verify-page__desc"
+        >
+          <template #model>
+            <span>{{ model }}</span>
+          </template>
+          <template #os>
+            <span>{{ os }}</span>
+          </template>
+        </i18n>
+        <ui-button variant="text" class="verify-page__link-btn">{{
+          $t('Try another way?')
+        }}</ui-button>
       </template>
-    </client-only>
-  </ui-grid>
+    </auth-form>
+    <auth-form-skeleton v-else :title="$t('Sign In')"></auth-form-skeleton>
+    <template slot="placeholder">
+      <auth-form-skeleton :title="$t('Sign In')"></auth-form-skeleton>
+    </template>
+  </client-only>
 </template>
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
-import UiGrid from '~/ui/grid/index.vue';
 import UiButton from '~/ui/button/index.vue';
-import AuthForm from '~/components/forms/auth/form.vue';
-import Account from '~/components/forms/auth/account.vue';
-import AuthIllustration from '~/assets/illustrations/2fa.svg?inline';
+import AuthForm from '~/components/forms/auth/form/index.vue';
+import AuthFormAccount from '~/components/forms/auth/account/index.vue';
 import AuthFormSkeleton from '~/components/forms/auth/skeleton.vue';
+import PhoneAccessIllustration from '~/assets/illustrations/2fa.svg?inline';
 import { ChangedSessionVerificationStageEvent } from '~/services/subscriptions';
 import * as cacheActionTypes from '~/store/cache/types';
 
 export default {
   name: 'VerifyPage',
   components: {
-    UiGrid,
     UiButton,
     AuthForm,
-    Account,
-    AuthIllustration,
+    AuthFormAccount,
     AuthFormSkeleton,
+    PhoneAccessIllustration,
   },
   layout: 'auth',
   data() {
@@ -99,7 +93,7 @@ export default {
     }),
     ...mapGetters(['currentAccount']),
   },
-  mounted() {
+  created() {
     this.event = new ChangedSessionVerificationStageEvent({
       sessionUuid: this.sessionUuid,
       deviceUuid: this.deviceUuid,
