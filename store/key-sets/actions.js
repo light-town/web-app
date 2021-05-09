@@ -4,37 +4,38 @@ import * as mutationTypes from './mutation-types';
 import * as fetchStatuses from '~/store/fetch-statuses';
 
 export default {
-  async [actionTypes.INIT]({ commit, state, rootState }) {
+  async [actionTypes.LOAD_KEY_SETS]({ commit, state, rootState }) {
     try {
       commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.LOADING });
 
-      const response = await this.$api.keySets.getKeySets(
+      const { data: encKeySets } = await this.$api.keySets.getKeySets(
         rootState.accounts.currentAccountUuid
       );
 
       commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.SUCCESS });
 
-      /// [TODO] add support fot not primary key sets
+      const encPrimaryKeySet = encKeySets.find(k => k.isPrimary);
 
-      for (const encKeySet of response.data) {
-        if (encKeySet.isPrimary) {
-          const primaryKeySet = await core.helpers.keySets.decryptPrimaryKeySetHelper(
-            encKeySet,
-            state.masterUnlockKey
-          );
+      if (!encPrimaryKeySet)
+        throw new Error('The primary key set was not found');
 
-          commit(mutationTypes.SET_KEY_SET, {
-            keySet: {
-              uuid: encKeySet.uuid,
-              vaultUuid: encKeySet.vaultUuid,
-              ...primaryKeySet,
-              isPrimary: encKeySet.isPrimary,
-            },
-          });
-        }
-      }
+      const primaryKeySet = await core.helpers.keySets.decryptPrimaryKeySetHelper(
+        encPrimaryKeySet,
+        state.masterUnlockKey
+      );
 
-      commit(mutationTypes.SET_IS_INIT);
+      const encSecondaryKeySets = encKeySets.filter(k => !k.isPrimary);
+      const secondaryKeySets = await Promise.all(
+        encSecondaryKeySets.map(k =>
+          core.helpers.keySets.decryptKeySetHelper(k, primaryKeySet.privateKey)
+        )
+      );
+
+      [primaryKeySet, ...secondaryKeySets].forEach(keySet =>
+        commit(mutationTypes.SET_KEY_SET, {
+          keySet,
+        })
+      );
     } catch (e) {
       if (state.fetchStatus === fetchStatuses.LOADING)
         commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.ERROR });
@@ -66,8 +67,6 @@ export default {
       commit(mutationTypes.SET_MASTER_UNLOCK_KEY, {
         key: masterUnlockKey,
       });
-
-      commit(mutationTypes.SET_IS_INIT);
     } catch (e) {
       if (state.fetchStatus === fetchStatuses.LOADING)
         commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.ERROR });

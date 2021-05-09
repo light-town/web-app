@@ -1,14 +1,7 @@
 <template>
-  <ui-grid
-    :style="{ width: `${size}px`, height: `${size}px` }"
-    class="ui-avatar"
-  >
+  <ui-grid class="ui-avatar">
     <img v-if="src" class="ui-avatar__img" :src="src" :alt="alt" />
-    <div
-      v-else
-      class="ui-avatar__badge"
-      :style="{ 'font-size': `${size / 2.6}px` }"
-    >
+    <div v-else class="ui-avatar__badge">
       {{ firstNameSymbol }}
     </div>
   </ui-grid>

@@ -1,6 +1,6 @@
 <template>
   <app-page class="auth-page">
-    <ui-grid direction="column" align-items="center" class="auth-page__layout">
+    <ui-grid direction="column" justify="center" class="auth-page__layout">
       <project-logo></project-logo>
       <Nuxt />
       <links-form></links-form>
@@ -50,9 +50,11 @@ export default {
 }
 
 .auth-page {
-  justify-content: center !important;
-
   background-color: var(--color-auth-page-bg);
+
+  & > .app-page__layout {
+    justify-content: center !important;
+  }
 
   &__layout {
     width: auto !important;

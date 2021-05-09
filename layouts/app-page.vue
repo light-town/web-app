@@ -1,6 +1,8 @@
 <template>
   <ui-grid id="app" class="app-page" data-theme-mode="light">
-    <slot></slot>
+    <ui-grid id="app-page-content" class="app-page__layout">
+      <slot></slot>
+    </ui-grid>
     <portal-target name="modals-location" multiple> </portal-target>
   </ui-grid>
 </template>

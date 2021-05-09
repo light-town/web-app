@@ -108,7 +108,7 @@ export default {
 
       this.$emit('open');
 
-      const root = document.getElementsByClassName('page-layout')[0];
+      const root = document.getElementById('app-page-content');
       root.addEventListener('click', this.close, {
         once: true,
         capture: true,
@@ -117,6 +117,8 @@ export default {
         once: true,
         capture: true,
       });
+
+      window.addEventListener('blur', this.close, { once: true });
 
       this.$nextTick(() => {
         this.$nextTick(() => {

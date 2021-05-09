@@ -9,15 +9,13 @@
       <appbar> </appbar>
       <ui-grid class="vault-list" wrap="wrap">
         <template v-if="!loading || vaults.length > 0">
-          <vault
+          <vault-card
             v-for="vault in vaults"
             :key="vault.uuid"
-            :title="vault.overview.name"
+            :name="vault.overview.name"
             :desc="vault.overview.desc"
-            class="vault-list__vault"
-            @manage="manageVault(vault.uuid)"
-            @open-vault="openVault(vault.uuid)"
-          ></vault>
+            @click="openVault(vault)"
+          />
         </template>
         <template v-else>
           <vault-skeleton
@@ -37,9 +35,9 @@ import UiGrid from '~/ui/grid/index.vue';
 import Sidebar from '~/components/sibebar/index.vue';
 import Appbar from '~/components/appbar/index.vue';
 import Listbar from '~/components/listbar/index.vue';
-import Vault from '~/components/vault/index.vue';
 import VaultSkeleton from '~/components/vault/skeleton/index.vue';
 import NewVaultForm from '~/components/forms/new-vault/index.vue';
+import VaultCard from '~/components/cards/vault/index.vue';
 import * as vaultActionTypes from '~/store/vaults/types';
 
 export default {
@@ -48,11 +46,12 @@ export default {
     UiGrid,
     Sidebar,
     Appbar,
-    Vault,
     VaultSkeleton,
     Listbar,
     NewVaultForm,
+    VaultCard,
   },
+  layout: 'main',
   middleware: ['auth'],
   data() {
     return { loading: true };
@@ -61,28 +60,31 @@ export default {
     ...mapState({
       vaultServiceInit: state => state.vaults.isInit,
       vaults: state => Object.values(state.vaults.all),
+      keySets: state => Object.values(state['key-sets'].all),
     }),
   },
   watch: {
-    vaultServiceInit() {
-      if (this.vaultServiceInit)
-        this.getVaults().finally(() => (this.loading = false));
+    keySets() {
+      if (!this.keySets.length) return;
+
+      this.getVaults().finally(() => (this.loading = false));
     },
   },
   created() {
-    if (this.vaultServiceInit)
-      this.getVaults().finally(() => (this.loading = false));
+    if (!this.keySets.length) return;
+
+    this.getVaults().finally(() => (this.loading = false));
   },
   methods: {
     ...mapActions({
       getVaults: vaultActionTypes.GET_VAULTS,
       setCurrentVault: vaultActionTypes.SET_CURRENT_VAULT,
     }),
-    async openVault(uuid) {
-      await this.setCurrentVault({ uuid });
-      this.$router.push(`/vaults/${uuid}`);
+    async openVault(vault) {
+      await this.setCurrentVault({ uuid: vault.uuid });
+
+      this.$router.push(`/vaults/${vault.uuid}`);
     },
-    manageVault() {},
   },
 };
 </script>

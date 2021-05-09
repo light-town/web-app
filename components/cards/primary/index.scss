@@ -13,10 +13,7 @@
   }
 
   &__icon {
-    --size: 120px;
-
-    width: var(--size);
-    height: var(--size);
+    font-size: 2.75em;
 
     & > .ui-avatar__badge {
       background-color: transparent;
@@ -26,14 +23,14 @@
   }
 
   &__name {
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: 600;
 
     color: var(--color-primary-card-title-text-color);
   }
 
   &__desc {
-    font-size: 14px;
+    font-size: 0.875rem;
 
     color: var(--color-primary-card-desc-text-color);
   }
@@ -59,6 +56,6 @@
   }
 
   &__footer {
-    height: 24px;
+    height: 1.5rem;
   }
 }

@@ -1,22 +1,16 @@
 <template>
-  <div class="page" data-theme-mode="light">
-    <div class="page-layout"><Nuxt /></div>
-    <portal-target name="modals-location" multiple> </portal-target>
-  </div>
+  <app-page class="default-page">
+    <Nuxt />
+  </app-page>
 </template>
 
 <script>
+import AppPage from './app-page.vue';
+
 export default {
   name: 'DefaultLayout',
-  created() {
-    this.$axios
-      .get('/auth/csrf-token')
-      .then(response =>
-        this.$axios.setHeader(
-          'X-CSRF-TOKEN',
-          response.data.data['X-CSRF-TOKEN']
-        )
-      );
+  components: {
+    AppPage,
   },
   mounted() {
     document.addEventListener('contextmenu', this.preventContextMenu);
@@ -32,9 +26,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.page-layout {
-  width: 100%;
-  min-height: 100vh;
-}
-</style>
+<style lang="scss"></style>

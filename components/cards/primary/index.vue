@@ -1,5 +1,5 @@
 <template>
-  <template-card class="primary-card">
+  <template-card class="primary-card" @click.native="handleCardClick">
     <template #body>
       <slot name="icon">
         <ui-avatar :name="name" :size="120" class="primary-card__icon">
@@ -62,6 +62,11 @@ export default {
       type: Number,
       required: false,
       default: 0,
+    },
+  },
+  methods: {
+    handleCardClick(e) {
+      this.$emit('click', e);
     },
   },
 };

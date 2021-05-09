@@ -5,9 +5,6 @@ import * as fetchStatuses from '~/store/fetch-statuses';
 import * as vaultFolderActionTypes from '~/store/vault-folders/types';
 
 export default {
-  [actionTypes.INIT]({ commit }) {
-    commit(mutationTypes.SET_IS_INIT);
-  },
   async [actionTypes.CREATE_VAULT]({ commit, state, rootState }, payload) {
     try {
       const primaryKeySet = Object.values(rootState['key-sets'].all).find(
@@ -68,31 +65,34 @@ export default {
     try {
       commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.LOADING });
 
-      const response = await this.$api.vaults.getVaults(
+      const { data: encVaults } = await this.$api.vaults.getVaults(
         rootState.accounts.currentAccountUuid
       );
 
       commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.SUCCESS });
 
-      for (const encVault of response.data) {
-        const keySet = rootState['key-sets'].all[encVault.keySetUuid];
+      const vaults = await Promise.all(
+        encVaults.map(encVault => {
+          const keySet = rootState['key-sets'].all[encVault.keySetUuid];
 
-        /// [TODO] Add support other vault key set
+          if (keySet.isPrimary)
+            return core.helpers.vaults.decryptVaultByPrivateKeyHelper(
+              encVault,
+              keySet.privateKey
+            );
 
-        if (keySet.isPrimary) {
-          const vault = await core.helpers.vaults.decryptVaultByPrivateKeyHelper(
+          return core.helpers.vaults.decryptVaultBySecretKeyHelper(
             encVault,
-            keySet.privateKey
+            keySet.symmetricKey
           );
+        })
+      );
 
-          commit(mutationTypes.SET_VAULT, {
-            vault: {
-              uuid: encVault.uuid,
-              ...vault,
-            },
-          });
-        }
-      }
+      vaults.forEach(vault =>
+        commit(mutationTypes.SET_VAULT, {
+          vault,
+        })
+      );
     } catch (e) {
       if (state.fetchStatus === fetchStatuses.LOADING)
         commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.ERROR });

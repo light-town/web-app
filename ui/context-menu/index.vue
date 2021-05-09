@@ -41,32 +41,14 @@ export default {
   },
   mounted() {
     if (this.anchorRef) this.anchorRef.$on('contextmenu', this.open);
-
-    /*  window.addEventListener('blur', this.close); */
-
-    const root = document.getElementsByClassName('page-layout')[0];
-    root.addEventListener('click', this.close, {
-      capture: true,
-    });
-    root.addEventListener('contextmenu', this.close, {
-      capture: true,
-    });
   },
   beforeDestroy() {
     if (this.anchorRef) this.anchorRef.$off('contextmenu', this.open);
-
-    /*  window.removeEventListener('blur', this.close); */
-
-    const root = document.getElementsByClassName('page-layout')[0];
-    root.removeEventListener('click', this.close, {
-      capture: true,
-    });
-    root.removeEventListener('contextmenu', this.close, {
-      capture: true,
-    });
   },
   methods: {
     open(e) {
+      console.log('open');
+
       if (this.root) {
         this.close();
         this.$nextTick(() => {
@@ -82,8 +64,22 @@ export default {
       this.root = e.target;
 
       if (this.anchorRef) this.anchorRef._data.opened = true;
+
+      const root = document.getElementById('app-page-content');
+      root.addEventListener('click', this.close, {
+        once: true,
+        capture: true,
+      });
+      root.addEventListener('contextmenu', this.close, {
+        once: true,
+        capture: true,
+      });
+
+      /* window.addEventListener('blur', this.close, { once: true }); */
     },
     close(e) {
+      console.log('close');
+
       if (!this.$refs.menu) return;
 
       this.$refs.menu.close();

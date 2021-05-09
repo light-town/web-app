@@ -1,14 +1,14 @@
 <template>
   <auth-form :title="title">
-    <template #content>
+    <template #body>
       <ui-skeleton
-        width="400px"
+        width="100%"
         height="68px"
         radius="4px"
         class="skeleton__block"
       ></ui-skeleton>
       <ui-skeleton
-        width="400px"
+        width="100%"
         height="48px"
         radius="4px"
         class="skeleton__block"

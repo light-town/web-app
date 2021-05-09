@@ -1,3 +1,2 @@
-export const INIT = 'INIT';
-
+export const LOAD_KEY_SETS = 'LOAD_KEY_SETS';
 export const SET_MASTER_UNLOCK_KEY = 'SET_MASTER_UNLOCK_KEY';
