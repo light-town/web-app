@@ -12,7 +12,7 @@
     <ui-token-selector
       v-model="tokens"
       :dropdown-items="currentDropdownItems"
-      placeholder="Search or filter results..."
+      :placeholder="$t('Search or filter results...')"
       :hide-dropdown-with-no-items="false"
       :allow-user-defined-tokens="allowUserDefinedTokens"
       :loading="loading"

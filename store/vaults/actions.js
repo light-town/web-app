@@ -2,7 +2,6 @@ import core from '@light-town/core';
 import * as actionTypes from './action-types';
 import * as mutationTypes from './mutation-types';
 import * as fetchStatuses from '~/store/fetch-statuses';
-import * as vaultFolderActionTypes from '~/store/vault-folders/types';
 
 export default {
   async [actionTypes.CREATE_VAULT]({ commit, state, rootState }, payload) {
@@ -50,13 +49,7 @@ export default {
       commit(mutationTypes.SET_ERROR, { error: e?.response?.data?.error || e });
     }
   },
-  async [actionTypes.SET_CURRENT_VAULT]({ commit, dispatch }, payload) {
-    await dispatch(
-      vaultFolderActionTypes.CLEAR_VAULT_FOLDER_LIST,
-      {},
-      { root: true }
-    );
-
+  [actionTypes.SET_CURRENT_VAULT]({ commit }, payload) {
     commit(mutationTypes.SET_CURRENT_VAULT_UUID, {
       uuid: payload.uuid,
     });

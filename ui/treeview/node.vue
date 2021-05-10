@@ -15,6 +15,8 @@
       <ui-button
         variant="text"
         class="ui-tree-view__node__btn"
+        :class="{ 'ui-tree-view__node__btn_hidden': !expandable }"
+        :disabled="!expandable"
         @click.native.stop="$emit('expand', $event)"
       >
         <arrow-icon class="ui-tree-view__node__btn__icon"></arrow-icon>

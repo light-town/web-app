@@ -1,8 +1,8 @@
 <template>
   <ui-grid component="table" role="table" class="ui-table" direction="column">
-    <ui-grid component="thead" role="rowgroup">
+    <ui-grid component="thead" role="rowgroup" class="ui-table__header">
       <ui-grid
-        component="thead"
+        component="tr"
         role="row"
         :class="['ui-table__row', hrClass]"
         @click="$emit('header-row-click', $event)"
@@ -11,7 +11,7 @@
           v-for="field in fields"
           :key="field.key"
           component="th"
-          role="cell"
+          role="columnheader"
           align-items="center"
           :class="['ui-table__cell', 'ui-table__cell-header', field.thClass]"
           @click="$emit('header-cell-click', $event, field)"

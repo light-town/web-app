@@ -45,30 +45,7 @@
       </ui-grid>
     </template>
     <template #table-empty-template>
-      <ui-grid
-        direction="column"
-        align-items="center"
-        justify="center"
-        class="folder-content-table__plug"
-      >
-        <folder-empty-icon
-          class="folder-content-table__plug__illustrate"
-        ></folder-empty-icon>
-        <ui-grid
-          direction="column"
-          align-items="center"
-          class="folder-content-table__plug__text"
-        >
-          <p class="folder-content-table__plug__title">
-            {{ $t('Your folder is empty') }}
-          </p>
-          <p class="folder-content-table__plug__desc">
-            {{
-              $t('To create a folder or item, right-click on an empty space')
-            }}
-          </p>
-        </ui-grid>
-      </ui-grid>
+      <empty-folder-stub />
     </template>
   </ui-table>
 </template>
@@ -78,7 +55,7 @@ import UiGrid from '~/ui/grid/index.vue';
 import UiTable from '~/ui/table/index.vue';
 import FolderIcon from '~/assets/folder.svg?inline';
 import KeyIcon from '~/assets/key.svg?inline';
-import FolderEmptyIcon from '~/assets/folder-empty.svg?inline';
+import EmptyFolderStub from '~/components/stubs/empty-folder/index.vue';
 
 export default {
   name: 'EntityContentTable',
@@ -87,7 +64,7 @@ export default {
     UiTable,
     FolderIcon,
     KeyIcon,
-    FolderEmptyIcon,
+    EmptyFolderStub,
   },
   props: {
     show: {

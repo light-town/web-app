@@ -47,8 +47,6 @@ export default {
   },
   methods: {
     open(e) {
-      console.log('open');
-
       if (this.root) {
         this.close();
         this.$nextTick(() => {
@@ -75,11 +73,9 @@ export default {
         capture: true,
       });
 
-      /* window.addEventListener('blur', this.close, { once: true }); */
+      window.addEventListener('blur', this.close, { once: true });
     },
     close(e) {
-      console.log('close');
-
       if (!this.$refs.menu) return;
 
       this.$refs.menu.close();

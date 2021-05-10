@@ -98,5 +98,8 @@
   "Your folder is empty": "Ваша папка пуста",
   "To create a folder or item, right-click on an empty space": "Чтобы создать папку или элемент, щелкните правой кнопкой мыши по свободному месту",
   "Entries inside": "Записей внутри",
-  "No entries inside": "Никаких записей внутри"
+  "No entries inside": "Никаких записей внутри",
+  "Search results": "Результат поиска",
+  "Search or filter results...": "Поиск или фильтрация результатов...",
+  "The vault title must has more 8 symbols": "Название хранилища должно содержать более 8 символов"
 }

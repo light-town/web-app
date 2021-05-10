@@ -1,9 +1,12 @@
 <template>
-  <template-card class="primary-card" @click.native="handleCardClick">
+  <template-card
+    class="primary-card"
+    @click.native="handleCardClick"
+    @dblclick.native="handleCardDblClick"
+  >
     <template #body>
       <slot name="icon">
-        <ui-avatar :name="name" :size="120" class="primary-card__icon">
-        </ui-avatar>
+        <ui-avatar :name="name" :size="120" class="primary-card__icon" />
       </slot>
       <p class="primary-card__name" :title="name">{{ name }}</p>
       <p v-if="desc.length > 0" class="primary-card__desc" :title="desc">
@@ -67,6 +70,9 @@ export default {
   methods: {
     handleCardClick(e) {
       this.$emit('click', e);
+    },
+    handleCardDblClick(e) {
+      this.$emit('dblclick', e);
     },
   },
 };

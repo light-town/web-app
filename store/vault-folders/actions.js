@@ -34,8 +34,6 @@ export default {
     try {
       const vault = rootState.vaults.all[payload.vaultUuid];
 
-      debugger;
-
       const encVaultFolder = await core.helpers.vaultFolders.createVaultFolderHelper(
         {
           name: payload.folderName,
@@ -103,12 +101,12 @@ export default {
         this.getters.currentVault.uuid
       );
 
+      commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.SUCCESS });
+
       const vaultFolders = await core.helpers.vaultFolders.decryptVaultFoldersHelper(
         response.data,
         this.getters.currentVault.key
       );
-
-      commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.SUCCESS });
 
       vaultFolders.forEach(folder =>
         commit(mutationTypes.SET_VAULT_FOLDER, {
@@ -140,12 +138,12 @@ export default {
         payload.uuid
       );
 
+      commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.SUCCESS });
+
       const vaultFolder = await core.helpers.vaultFolders.decryptVaultFolderHelper(
         response.data,
         this.getters.currentVault.key
       );
-
-      commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.SUCCESS });
 
       commit(mutationTypes.SET_VAULT_FOLDER, {
         folder: vaultFolder,

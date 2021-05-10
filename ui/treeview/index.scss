@@ -75,6 +75,10 @@
         width: var(--size);
         height: var(--size);
       }
+
+      &_hidden {
+        visibility: hidden;
+      }
     }
 
     &__left {

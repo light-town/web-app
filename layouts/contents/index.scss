@@ -1,6 +1,8 @@
 #app[data-theme-mode='light'] {
   --color-controls-layout-border: var(--color-gray-150);
   --color-controls-layout-bg: var(--color-white);
+
+  --color-search-content-layout: var(--color-gray-450);
 }
 
 .main-layout {
@@ -10,7 +12,8 @@
 
 .container-layout {
   height: calc(100vh - 70px);
-  overflow-y: auto;
+
+  overflow: hidden;
 }
 
 .controls-layout {
@@ -27,8 +30,7 @@
 }
 
 .folder-content-layout {
-  height: 100%;
-  padding: 20px;
+  height: calc(100% - 48px);
 }
 
 .item-content-layout {
@@ -38,4 +40,46 @@
 .search-content-layout {
   height: 100%;
   padding: 20px;
+
+  &__title {
+    font-size: 1.125em;
+
+    color: var(--color-search-content-layout);
+
+    white-space: nowrap;
+  }
+}
+
+.table-tools {
+  &__btn {
+    --size: 2.5rem;
+
+    width: var(--size);
+    height: var(--size);
+
+    align-items: center;
+    justify-content: center;
+
+    margin-left: 0.5rem;
+    padding: 0;
+
+    border-radius: 50%;
+
+    &:hover {
+      background-color: var(--color-controls-tools-hover-bg) !important;
+    }
+
+    &:focus {
+      box-shadow: 0 0 0 0.25rem var(--color-controls-tools-focus-bs);
+    }
+
+    &-icon {
+      --size: 1.25rem;
+
+      width: var(--size);
+      height: var(--size);
+
+      fill: var(--color-controls-tools-btn-fill);
+    }
+  }
 }

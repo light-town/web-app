@@ -98,5 +98,8 @@
   "Your folder is empty": "Your folder is empty",
   "To create a folder or item, right-click on an empty space": "To create a folder or item, right-click on an empty space",
   "Entries inside": "Entries inside",
-  "No entries inside": "No entries inside"
+  "No entries inside": "No entries inside",
+  "Search results": "Search results",
+  "Search or filter results...": "Search or filter results...",
+  "The vault title must has more 8 symbols": "The vault title must has more 8 symbols"
 }

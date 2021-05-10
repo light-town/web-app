@@ -11,6 +11,9 @@
         <search-vault-content-by-tokens></search-vault-content-by-tokens>
       </appbar>
       <ui-grid direction="column" class="container-layout">
+        <tools-bar>
+          <p class="search-content-layout__title">{{ $t('Search results') }}</p>
+        </tools-bar>
         <ui-grid class="search-content-layout">
           <slot></slot>
         </ui-grid>
@@ -26,6 +29,7 @@ import Appbar from '~/components/appbar/index.vue';
 import Listbar from '~/components/listbar/index.vue';
 import FolderTreeView from '~/components/treeviews/folders/index.vue';
 import SearchVaultContentByTokens from '~/components/search-lines/vault-content/index.vue';
+import ToolsBar from '~/components/tools-bar/index.vue';
 
 export default {
   name: 'SearchContentLayout',
@@ -36,6 +40,7 @@ export default {
     Listbar,
     FolderTreeView,
     SearchVaultContentByTokens,
+    ToolsBar,
   },
 };
 </script>

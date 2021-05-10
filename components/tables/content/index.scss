@@ -6,14 +6,14 @@
   --color-folder-content-table-cell-active-icon-fill: var(--color-green-400);
 
   --color-folder-content-table-cell-icon-fill: var(--color-gray-450);
-
-  --color-folder-content-plug-title-text: var(--color-gray-650);
-  --color-folder-content-plug-desc-text: var(--color-gray-550);
-  --color-folder-content-plug-icon-fill: var(--color-gray-350);
 }
 
 .folder-content-table {
   height: 100%;
+
+  padding: 0 1.25rem;
+
+  overflow-y: auto;
 
   &__table {
     padding: 20px;
@@ -70,42 +70,6 @@
           fill: var(--color-folder-content-table-cell-icon-fill);
         }
       }
-    }
-  }
-
-  &__plug {
-    margin: 10% auto 0;
-
-    &__illustrate {
-      --size: 256px;
-
-      width: var(--size);
-      height: var(--size);
-
-      padding: 16px;
-
-      fill: var(--color-folder-content-plug-icon-fill);
-    }
-
-    &__text {
-      padding: 16px;
-    }
-
-    &__title {
-      font-size: 21px;
-      font-weight: 500;
-
-      margin-bottom: 12px;
-
-      color: var(--color-folder-content-plug-title-text);
-    }
-
-    &__desc {
-      font-size: 14px;
-
-      margin-bottom: 12px;
-
-      color: var(--color-folder-content-plug-desc-text);
     }
   }
 }

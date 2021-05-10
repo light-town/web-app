@@ -8,14 +8,15 @@
       @body-row-click="handleRowClick"
     ></content-table>
     <folder-context-menu
-      v-if="activeRowUuid"
+      v-if="activeRow"
       ref="folderContextMenu"
-      :folder-uuid="activeRowUuid"
+      :folder-uuid="activeRow.uuid"
+      :vault-uuid="activeRow.vaultUuid"
     >
     </folder-context-menu>
     <slot v-if="loading" name="loading-table">
       <ui-grid align-items="center" justify="center">
-        <ui-loading :size="24"></ui-loading>
+        <ui-loading :size="32"></ui-loading>
       </ui-grid>
     </slot>
   </ui-grid>
@@ -54,7 +55,7 @@ export default {
   data() {
     return {
       loading: false,
-      activeRowUuid: null,
+      activeRow: null,
       folders: [],
       items: [],
     };
@@ -76,7 +77,7 @@ export default {
         lastUpdatedAt: DateFormater.formatFromString(i.lastUpdatedAt),
         createdAt: DateFormater.formatFromString(i.createdAt),
         brClass:
-          this.activeRowUuid === i.uuid
+          this.activeRow?.uuid === i.uuid
             ? 'folder-content-table__table-body-row_active'
             : '',
       }));
@@ -250,10 +251,10 @@ export default {
       }
     },
     handleRowClick(_, item) {
-      this.activeRowUuid = item.uuid;
+      this.activeRow = item;
     },
     handleRowContextMenu(event, item) {
-      this.activeRowUuid = item.uuid;
+      this.activeRow = item;
 
       this.$nextTick(() => {
         this.$refs.folderContextMenu.open(event);

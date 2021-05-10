@@ -81,7 +81,7 @@ export default {
   },
   data() {
     return {
-      loading: false,
+      loading: true,
       vaultNodeExpanded: true,
       currentContextMenuNode: null,
     };
@@ -108,16 +108,14 @@ export default {
       return [vaultNode, ...folderNodes];
     },
   },
-  watch: {
+  /* watch: {
     currentVaultFolderUuid() {
       if (!this.currentVaultFolderUuid) return;
 
       this.leadWay();
     },
-  },
+  }, */
   async created() {
-    this.loading = true;
-
     if (!this.currentVaultFolderUuid) {
       await this.getRootVaultFolders();
       this.loading = false;

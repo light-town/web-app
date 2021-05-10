@@ -98,7 +98,9 @@ export default {
     },
     async handleFormSubmit() {
       if (this.name.trim().length < 8) {
-        this.localError = new Error('The vault title must has more 8 symbols');
+        this.localError = new Error(
+          this.$t('The vault title must has more 8 symbols')
+        );
         return;
       }
 

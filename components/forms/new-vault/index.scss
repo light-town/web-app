@@ -22,14 +22,14 @@
 
   width: auto;
 
-  border-radius: 4px;
+  border-radius: 0.25rem;
 
   background-color: var(--color-new-vault-form-bg);
 
   &__title {
     display: inline-flex;
 
-    font-size: 24px;
+    font-size: 1.5em;
     font-weight: 500;
 
     color: var(--color-new-vault-form-title);
@@ -39,7 +39,7 @@
     width: 100%;
     min-width: 324px;
 
-    margin-bottom: 16px;
+    margin-bottom: 1rem;
 
     &:last-child {
       margin-bottom: 0;
@@ -51,14 +51,19 @@
   }
 
   &__avatar {
-    margin-bottom: 24px;
+    margin-bottom: 1.5rem;
 
-    & > div {
-      font-size: 22px;
+    & > .ui-avatar__badge {
+      --size: 3.125rem;
+
+      min-width: var(--size);
+      min-height: var(--size);
+
+      font-size: 1.375em;
     }
   }
 
   &__alert {
-    margin-bottom: 16px;
+    margin-bottom: 1rem;
   }
 }

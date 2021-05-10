@@ -11,6 +11,7 @@
       v-if="activeRowUuid"
       ref="folderContextMenu"
       :folder-uuid="activeRowUuid"
+      :vault-uuid="vaultUuid"
     >
     </folder-context-menu>
     <slot v-if="loading" name="loading-table">
@@ -22,14 +23,11 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex';
 import ContentTable from './table';
 import UiGrid from '~/ui/grid/index.vue';
 import UiLoading from '~/ui/loading/index.vue';
 import FolderContextMenu from '~/components/context-menus/folder/index.vue';
 import DateFormater from '~/tools/date-formater';
-import * as vaultFolderActionTypes from '~/store/vault-folders/types';
-import * as vaultItemActionTypes from '~/store/vault-items/types';
 
 export default {
   name: 'FolderContentTable',
@@ -39,30 +37,30 @@ export default {
     FolderContextMenu,
     ContentTable,
   },
+  props: {
+    items: {
+      type: Array,
+      required: false,
+      default: () => [],
+    },
+    loading: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    vaultUuid: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
     return {
-      loading: false,
       activeRowUuid: null,
     };
   },
   computed: {
-    ...mapState({
-      folders: state => state['vault-folders'].all,
-      items: state => state['vault-items'].all,
-    }),
-    ...mapGetters(['currentVault']),
-    filteredFolders() {
-      return Object.values(this.folders)
-        .filter(f => !f.parentFolderUuid)
-        .map(f => ({ ...f, isFolder: true }));
-    },
-    filteredItems() {
-      return Object.values(this.items)
-        .filter(f => !f.folderUuid)
-        .map(f => ({ ...f, isItem: true }));
-    },
     rows() {
-      return [...this.filteredFolders, ...this.filteredItems].map(i => ({
+      return this.items.map(i => ({
         ...i,
         lastUpdatedAt: DateFormater.formatFromString(i.lastUpdatedAt),
         createdAt: DateFormater.formatFromString(i.createdAt),
@@ -76,43 +74,22 @@ export default {
       return !this.loading;
     },
   },
-  async created() {
-    this.loading = true;
-
-    await Promise.all([this.getRootVaultFolders(), this.getVaultItems()]);
-
-    this.loading = false;
-  },
   methods: {
-    ...mapActions({
-      getRootVaultFolders: vaultFolderActionTypes.GET_ROOT_VAULT_FOLDERS,
-      getVaultItems: vaultItemActionTypes.GET_VAULT_ITEMS,
-    }),
-    handleRowDblClick(_, item) {
-      if (item.isFolder) {
-        this.$router.push(
-          `/vaults/${this.currentVault.uuid}/folders/${item.uuid}`
-        );
-      } else if (item.isItem) {
-        if (item.folderUuid)
-          this.$router.push(
-            `/vaults/${this.currentVault.uuid}/folders/${item.folderUuid}/items/${item.uuid}`
-          );
-        else
-          this.$router.push(
-            `/vaults/${this.currentVault.uuid}/items/${item.uuid}`
-          );
-      }
+    handleRowDblClick(e, item) {
+      this.$emit('row-dbl-click', e, item);
     },
-    handleRowClick(_, item) {
+    handleRowClick(e, item) {
       this.activeRowUuid = item.uuid;
+
+      this.$emit('row-click', e, item);
     },
-    handleRowContextMenu(event, item) {
+    handleRowContextMenu(e, item) {
       this.activeRowUuid = item.uuid;
 
       this.$nextTick(() => {
-        this.$refs.folderContextMenu.open(event);
-        this.$emit('contextmenu', event);
+        this.$refs.folderContextMenu.open(e);
+
+        this.$emit('row-contextmenu', e, item);
       });
     },
   },

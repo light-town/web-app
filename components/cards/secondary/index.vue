@@ -1,5 +1,9 @@
 <template>
-  <template-card class="secondary-card">
+  <template-card
+    class="secondary-card"
+    @click.native="handleCardClick"
+    @dblclick.native="handleCardDblClick"
+  >
     <template #body>
       <ui-grid align-items="center">
         <ui-grid align-items="center" class="secondary-card__category">
@@ -69,6 +73,14 @@ export default {
       type: Array,
       required: false,
       default: () => [],
+    },
+  },
+  methods: {
+    handleCardClick(e) {
+      this.$emit('click', e);
+    },
+    handleCardDblClick(e) {
+      this.$emit('dblclick', e);
     },
   },
 };

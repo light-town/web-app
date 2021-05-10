@@ -15,7 +15,7 @@
             :name="vault.overview.name"
             :desc="vault.overview.desc"
             class="vault-list__vault"
-            @click="openVault(vault)"
+            @dblclick="openVault(vault)"
           />
         </template>
         <template v-else>
@@ -55,7 +55,7 @@ export default {
   layout: 'main',
   middleware: ['auth'],
   data() {
-    return { loading: true };
+    return { loading: false };
   },
   computed: {
     ...mapState({
@@ -68,11 +68,15 @@ export default {
     keySets() {
       if (!this.keySets.length) return;
 
+      this.loading = true;
+
       this.getVaults().finally(() => (this.loading = false));
     },
   },
   created() {
     if (!this.keySets.length) return;
+
+    this.loading = true;
 
     this.getVaults().finally(() => (this.loading = false));
   },

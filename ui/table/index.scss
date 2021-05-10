@@ -1,15 +1,20 @@
 #app[data-theme-mode='light'] {
   --color-ui-table-cell-text: var(--color-gray-450);
   --color-ui-table-row-border: var(--color-gray-150);
+
+  --color-ui-table-header-bg: var(--color-white);
 }
 
 .ui-table {
   user-select: none;
 
-  &__head {
-    font-weight: 600;
+  &__header {
+    top: 0;
+    left: 0;
 
-    text-align: inherit;
+    position: sticky;
+
+    background-color: var(--color-ui-table-header-bg);
   }
 
   &__cell {
