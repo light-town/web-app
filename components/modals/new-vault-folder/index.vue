@@ -51,6 +51,11 @@ export default {
     },
     folderUuid: {
       type: String,
+      required: false,
+      default: null,
+    },
+    vaultUuid: {
+      type: String,
       required: true,
     },
   },
@@ -72,6 +77,7 @@ export default {
         folderName: this.title.trim(),
         folderDesc: this.desc.trim(),
         parentFolderUuid: this.folderUuid,
+        vaultUuid: this.vaultUuid,
       });
       this.handleCloseModal(e);
     },

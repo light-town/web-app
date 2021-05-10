@@ -34,14 +34,13 @@
           <template #text> {{ $t('Rename') }} </template>
         </ui-menu-item>
         <ui-menu-separator></ui-menu-separator>
-        <ui-menu-item id="detele-folder">
+        <ui-menu-item id="detele-vault">
           <template #text> {{ $t('Delete') }} </template>
         </ui-menu-item>
       </template>
     </ui-context-menu>
     <new-vault-folder-modal
       :open="showNewVaultFolderModal"
-      :folder-uuid="folderUuid"
       :vault-uuid="vaultUuid"
       @close="showNewVaultFolderModal = false"
     ></new-vault-folder-modal>
@@ -68,11 +67,6 @@ export default {
     NewVaultFolderModal,
   },
   props: {
-    folderUuid: {
-      type: String,
-      required: false,
-      default: null,
-    },
     vaultUuid: {
       type: String,
       required: true,
@@ -84,8 +78,8 @@ export default {
     };
   },
   computed: {
-    /// getting THE vault categories
     ...mapState({
+      // load THE vault categories
       vaultCategories: state => Object.values(state['vault-categories'].all),
     }),
   },
@@ -96,9 +90,10 @@ export default {
         return;
       }
 
-      if (this.vaultCategories.find(c => c.uuid === id)) {
+      const vailtCategoryExists = this.vaultCategories.find(c => c.uuid === id);
+      if (!vailtCategoryExists) {
         this.$router.push(
-          `/vaults/${this.currentVault.uuid}/folders/${this.folderUuid}/new-item?category-uuid=${id}`
+          `/vaults/${this.vaultUuid}/new-item?category-uuid=${id}`
         );
       }
     },

@@ -20,4 +20,5 @@ export const getters = {
 
     return folders;
   },
+  vault: state => vaultUuid => state.vaults.all[vaultUuid],
 };

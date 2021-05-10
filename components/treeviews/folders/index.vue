@@ -13,7 +13,11 @@
         :expandable="node.containedFoldersCount > 0"
         :class="[
           'folders-treeview__node',
-          { 'folders-treeview__node_active': nodeContextMenu === node.uuid },
+          {
+            'folders-treeview__node_active':
+              currentContextMenuNode &&
+              currentContextMenuNode.uuid === node.uuid,
+          },
         ]"
         @expand="expandFolderNode(node)"
         @click="activeFolderNode(node)"
@@ -41,21 +45,27 @@
         </template>
       </ui-tree-view-node>
       <folder-context-menu
-        v-if="nodeContextMenu"
+        v-if="currentContextMenuNode && currentContextMenuNode.isFolder"
         ref="folderContextMenu"
-        :folder-uuid="nodeContextMenu"
-      >
-      </folder-context-menu>
+        :folder-uuid="currentContextMenuNode.uuid"
+        :vault-uuid="currentContextMenuNode.vaultUuid"
+      />
+      <vault-context-menu
+        v-else-if="currentContextMenuNode && currentContextMenuNode.isVault"
+        ref="vaultContextMenu"
+        :vault-uuid="currentContextMenuNode.uuid"
+      />
     </template>
   </ui-tree-view>
 </template>
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
-import FolderContextMenu from '~/components/context-menus/folder/index.vue';
 import UiTreeView from '~/ui/treeview/index.vue';
 import UiTreeViewNode from '~/ui/treeview/node.vue';
 import UiAvatar from '~/ui/avatar/index.vue';
+import FolderContextMenu from '~/components/context-menus/folder/index.vue';
+import VaultContextMenu from '~/components/context-menus/vault/index.vue';
 import FolderIcon from '~/assets/folder.svg?inline';
 import * as vaultFolderActionTypes from '~/store/vault-folders/types';
 
@@ -67,12 +77,13 @@ export default {
     UiAvatar,
     FolderIcon,
     FolderContextMenu,
+    VaultContextMenu,
   },
   data() {
     return {
       loading: false,
       vaultNodeExpanded: true,
-      nodeContextMenu: null,
+      currentContextMenuNode: null,
     };
   },
   computed: {
@@ -186,9 +197,15 @@ export default {
       );
     },
     openContextMenu(e, node) {
-      if (node.isVault) return;
+      this.currentContextMenuNode = node;
 
-      this.nodeContextMenu = node.uuid;
+      if (node.isVault) {
+        this.$nextTick(() => {
+          this.$refs.vaultContextMenu.open(e);
+        });
+        return;
+      }
+
       this.$nextTick(() => {
         this.$refs.folderContextMenu.open(e);
       });

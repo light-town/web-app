@@ -30,34 +30,39 @@ export default {
       commit(mutationTypes.SET_ERROR, { error: e });
     }
   },
-  async [actionTypes.CREATE_VAULT_FOLDER]({ commit }, payload) {
+  async [actionTypes.CREATE_VAULT_FOLDER]({ commit, rootState }, payload) {
     try {
-      commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.LOADING });
+      const vault = rootState.vaults.all[payload.vaultUuid];
+
+      debugger;
 
       const encVaultFolder = await core.helpers.vaultFolders.createVaultFolderHelper(
         {
           name: payload.folderName,
           desc: payload.folderDesc,
         },
-        this.getters.currentVault.key
+        vault.key
       );
 
+      commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.LOADING });
+
       const response = await this.$api.vaultFolders.createVaultFolder(
-        this.getters.currentVault.uuid,
+        vault.uuid,
         encVaultFolder,
         payload.parentFolderUuid
       );
 
+      commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.SUCCESS });
+
       const vaultFolder = await core.helpers.vaultFolders.decryptVaultFolderHelper(
         response.data,
-        this.getters.currentVault.key
+        vault.key
       );
-
-      commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.SUCCESS });
 
       commit(mutationTypes.SET_VAULT_FOLDER, {
         folder: vaultFolder,
       });
+
       commit(mutationTypes.INCREASE_CONTAINED_VAULT_FOLDER_COUNT, {
         uuid: payload.parentFolderUuid,
       });

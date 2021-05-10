@@ -14,15 +14,16 @@
             :key="vault.uuid"
             :name="vault.overview.name"
             :desc="vault.overview.desc"
+            class="vault-list__vault"
             @click="openVault(vault)"
           />
         </template>
         <template v-else>
-          <vault-skeleton
+          <vault-card-skeleton
             v-for="i in 6"
             :key="i"
             class="vault-list__vault"
-          ></vault-skeleton>
+          />
         </template>
       </ui-grid>
     </ui-grid>
@@ -35,9 +36,9 @@ import UiGrid from '~/ui/grid/index.vue';
 import Sidebar from '~/components/sibebar/index.vue';
 import Appbar from '~/components/appbar/index.vue';
 import Listbar from '~/components/listbar/index.vue';
-import VaultSkeleton from '~/components/vault/skeleton/index.vue';
 import NewVaultForm from '~/components/forms/new-vault/index.vue';
 import VaultCard from '~/components/cards/vault/index.vue';
+import VaultCardSkeleton from '~/components/cards/skeleton/index.vue';
 import * as vaultActionTypes from '~/store/vaults/types';
 
 export default {
@@ -46,10 +47,10 @@ export default {
     UiGrid,
     Sidebar,
     Appbar,
-    VaultSkeleton,
     Listbar,
     NewVaultForm,
     VaultCard,
+    VaultCardSkeleton,
   },
   layout: 'main',
   middleware: ['auth'],
