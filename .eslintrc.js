@@ -27,5 +27,11 @@ module.exports = {
         endOfLine: 'crlf',
       },
     ],
+    'vue/valid-v-slot': [
+      'error',
+      {
+        allowModifiers: true,
+      },
+    ],
   },
 };

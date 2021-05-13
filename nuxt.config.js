@@ -27,6 +27,7 @@ export default {
     '@nuxtjs/eslint-module',
     '@nuxtjs/style-resources',
     '@nuxtjs/svg',
+    '@nuxtjs/tailwindcss',
   ],
   modules: [
     '@nuxtjs/axios',

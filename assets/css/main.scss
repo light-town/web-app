@@ -18,3 +18,9 @@ a {
 table {
   border-collapse: collapse;
 }
+
+button {
+  &:focus {
+    outline-style: none;
+  }
+}
