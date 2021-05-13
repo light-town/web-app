@@ -5,34 +5,13 @@
     </slot>
     <ui-portal v-if="Boolean(root)" :anchor="{ root }" position="left-bottom">
       <ui-menu ref="menu">
-        <template v-if="items.length">
-          <template v-for="item in items">
-            <slot
-              name="dropdown-item-template"
-              :item="item"
-              :click="handleMenuItemClick.bind(this, item)"
-            >
-              <ui-menu-item :id="item.name" @click="handleMenuItemClick(item)">
-                <template #text>
-                  {{ item.name }}
-                </template>
-              </ui-menu-item>
-            </slot>
-          </template>
-        </template>
-        <template v-else-if="loading">
+        <template v-if="loading">
           <slot name="loading">
             <ui-menu-loading></ui-menu-loading>
           </slot>
         </template>
         <template v-else>
-          <slot name="empty">
-            <ui-menu-item id="empty-menu-item">
-              <template #text>
-                {{ $t('Empty') }}
-              </template>
-            </ui-menu-item>
-          </slot>
+          <slot name="dropdown-items" :close="close"> </slot>
         </template>
       </ui-menu>
     </ui-portal>
@@ -44,7 +23,6 @@ import UiGrid from '~/ui/grid/index.vue';
 import UiPortal from '~/ui/portal/index.vue';
 import UiButton from '~/ui/button/index.vue';
 import UiMenu from '~/ui/menu/index.vue';
-import UiMenuItem from '~/ui/menu/item.vue';
 import UiMenuLoading from '~/ui/menu/loading.vue';
 
 export default {
@@ -54,14 +32,9 @@ export default {
     UiPortal,
     UiButton,
     UiMenu,
-    UiMenuItem,
     UiMenuLoading,
   },
   props: {
-    items: {
-      type: Array,
-      required: true,
-    },
     title: {
       type: String,
       required: false,
@@ -74,16 +47,9 @@ export default {
     },
   },
   data() {
-    return { root: null, request: false };
+    return { root: null };
   },
   methods: {
-    handlePopupClose() {
-      this.close();
-    },
-    handleMenuItemClick(item, event) {
-      this.$emit('dropdown-item-click', item, event);
-      this.close();
-    },
     open(e) {
       if (this.root) {
         this.close();
@@ -99,7 +65,7 @@ export default {
 
       this.$emit('open');
 
-      const root = document.getElementById('app-page-content');
+      const root = document.getElementById('app-page-layout');
       root.addEventListener('click', this.close, {
         once: true,
         capture: true,

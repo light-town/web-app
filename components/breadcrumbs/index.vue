@@ -1,5 +1,5 @@
 <template>
-  <ui-breadcrumbs :items="items" @item-click="handleItemClick">
+  <ui-breadcrumbs :items="items" class="h-9" @item-click="handleItemClick">
     <template #item-tempalte="{ item, click }">
       <ui-button
         variant="text"
@@ -10,7 +10,7 @@
       </ui-button>
     </template>
     <template #dropdown-item-template="{ click, item }">
-      <ui-menu-item @click="click">
+      <ui-menu-item :id="item.uuid" @click="click">
         <template #icon>
           <folder-icon
             class="ui-breadcrumbs__dropdown-item__icon"
@@ -52,10 +52,8 @@ export default {
   },
   methods: {
     handleItemClick(item) {
-      if (item.isVault) {
-        this.$router.push(`/vaults/${this.currentVault.uuid}/`);
-        return;
-      }
+      if (item.isVault)
+        return this.$router.push(`/vaults/${this.currentVault.uuid}/`);
 
       this.$router.push(
         `/vaults/${this.currentVault.uuid}/folders/${item.uuid}`

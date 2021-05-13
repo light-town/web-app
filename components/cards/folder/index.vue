@@ -1,13 +1,9 @@
 <template>
   <primary-card v-bind="$attrs" v-on="$listeners">
     <template #icon>
-      <ui-grid
-        align-items="flex-end"
-        justify="center"
-        class="primary-card__icon"
-      >
-        <opened-empty-folder-icon v-if="isFolderEmpty" />
-        <contained-folder-icon v-else />
+      <ui-grid align-items="flex-end" justify="center">
+        <opened-empty-folder-icon v-if="isFolderEmpty" class="w-32 mb-3.5" />
+        <contained-folder-icon v-else class="w-32 mb-3.5" />
       </ui-grid>
     </template>
   </primary-card>

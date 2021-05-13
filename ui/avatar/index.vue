@@ -1,5 +1,5 @@
 <template>
-  <ui-grid class="ui-avatar">
+  <ui-grid class="ui-avatar" :class="`ui-avatar-s${size}`">
     <img v-if="src" class="ui-avatar__img" :src="src" :alt="alt" />
     <div v-else class="ui-avatar__badge">
       {{ firstNameSymbol }}
@@ -35,6 +35,9 @@ export default {
       type: Number,
       reqired: false,
       default: 64,
+      validator(val) {
+        return [16, 24, 32, 44, 48, 56, 64, 96, 128].includes(val);
+      },
     },
   },
   computed: {

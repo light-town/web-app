@@ -1,16 +1,16 @@
 <template>
-  <app-page class="auth-page">
+  <default-page-template class="auth-page">
     <ui-grid direction="column" justify="center" class="auth-page__layout">
       <project-logo></project-logo>
       <Nuxt />
       <links-form></links-form>
     </ui-grid>
-  </app-page>
+  </default-page-template>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
-import AppPage from './app-page.vue';
+import DefaultPageTemplate from './default-page-template.vue';
 import UiGrid from '~/ui/grid/index.vue';
 import ProjectLogo from '~/components/forms/auth/logo.vue';
 import LinksForm from '~/components/forms/auth/links.vue';
@@ -23,7 +23,7 @@ export default {
   name: 'AuthLayout',
   components: {
     UiGrid,
-    AppPage,
+    DefaultPageTemplate,
     ProjectLogo,
     LinksForm,
   },

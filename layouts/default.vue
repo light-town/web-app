@@ -1,17 +1,17 @@
 <template>
-  <app-page class="default-page">
-    <Nuxt />
-  </app-page>
+  <!-- <default-page-template class="default-page"> -->
+  <Nuxt />
+  <!--   </default-page-template> -->
 </template>
 
 <script>
-import AppPage from './app-page.vue';
+/* import DefaultPageTemplate from './default-page-template.vue'; */
 
 export default {
   name: 'DefaultLayout',
-  components: {
-    AppPage,
-  },
+  /* components: {
+    DefaultPageTemplate,
+  }, */
   mounted() {
     document.addEventListener('contextmenu', this.preventContextMenu);
   },

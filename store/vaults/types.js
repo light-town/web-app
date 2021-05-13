@@ -5,3 +5,4 @@ export const namespace = 'vaults';
 export const GET_VAULTS = `${namespace}/${actionTypes.GET_VAULTS}`;
 export const CREATE_VAULT = `${namespace}/${actionTypes.CREATE_VAULT}`;
 export const SET_CURRENT_VAULT = `${namespace}/${actionTypes.SET_CURRENT_VAULT}`;
+export const GET_VAULT = `${namespace}/${actionTypes.GET_VAULT}`;

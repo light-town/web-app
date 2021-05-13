@@ -1,88 +1,70 @@
 <template>
-  <ui-tree-view
-    :nodes="nodes"
-    unique-node-key="uuid"
-    nested-node-key="parentFolderUuid"
-    class="folders-treeview"
-  >
-    <template #default="{ node }">
-      <ui-tree-view-node
-        :node="node"
-        :active="isNodeActive(node)"
-        :expanded="node.expanded"
-        :expandable="node.containedFoldersCount > 0"
-        :class="[
-          'folders-treeview__node',
-          {
-            'folders-treeview__node_active':
-              currentContextMenuNode &&
-              currentContextMenuNode.uuid === node.uuid,
-          },
-        ]"
-        @expand="expandFolderNode(node)"
-        @click="activeFolderNode(node)"
-        @contextmenu="e => openContextMenu(e, node)"
-      >
-        <template #icon>
-          <ui-avatar
-            v-if="node.isVault"
-            :name="node.overview.name"
-            :size="24"
-            class="folders-treeview__node__vault-icon"
-          ></ui-avatar>
-          <folder-icon
-            v-else
-            class="folders-treeview__node__folder-icon"
-          ></folder-icon>
-        </template>
-        <template #text>
-          <p v-if="node.isVault" class="folders-treeview__node__vault-text">
-            {{ node.overview.name }}
-          </p>
-          <p v-else class="folders-treeview__node__folder-text">
-            {{ node.overview.name }}
-          </p>
-        </template>
-      </ui-tree-view-node>
-      <folder-context-menu
-        v-if="currentContextMenuNode && currentContextMenuNode.isFolder"
-        ref="folderContextMenu"
-        :folder-uuid="currentContextMenuNode.uuid"
-        :vault-uuid="currentContextMenuNode.vaultUuid"
-      />
-      <vault-context-menu
-        v-else-if="currentContextMenuNode && currentContextMenuNode.isVault"
-        ref="vaultContextMenu"
-        :vault-uuid="currentContextMenuNode.uuid"
-      />
-    </template>
-  </ui-tree-view>
+  <ui-grid>
+    <ui-tree-view
+      :nodes="nodes"
+      unique-node-key="uuid"
+      nested-node-key="parentFolderUuid"
+      class="folders-treeview"
+    >
+      <template #default="{ node }">
+        <ui-tree-view-node
+          :node="node"
+          :active="isNodeActive(node)"
+          :expanded="node.expanded"
+          :expandable="node.containedFoldersCount > 0"
+          :class="[
+            'folders-treeview__node',
+            {
+              'folders-treeview__node_active':
+                currentContextMenuNode &&
+                currentContextMenuNode.uuid === node.uuid,
+            },
+          ]"
+          @expand="expandFolderNode(node)"
+          @click="activeFolderNode(node)"
+          @contextmenu="e => openContextMenu(e, node)"
+        >
+          <template #icon>
+            <folder-icon class="folders-treeview__node__folder-icon" />
+          </template>
+          <template #text>
+            <p class="folders-treeview__node__folder-text">
+              {{ node.overview.name }}
+            </p>
+          </template>
+        </ui-tree-view-node>
+        <folder-context-menu
+          v-if="currentContextMenuNode"
+          ref="folderContextMenu"
+          :folder-uuid="currentContextMenuNode.uuid"
+          :vault-uuid="currentContextMenuNode.vaultUuid"
+        />
+      </template>
+    </ui-tree-view>
+  </ui-grid>
 </template>
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
+import UiGrid from '~/ui/grid/index.vue';
 import UiTreeView from '~/ui/treeview/index.vue';
 import UiTreeViewNode from '~/ui/treeview/node.vue';
-import UiAvatar from '~/ui/avatar/index.vue';
 import FolderContextMenu from '~/components/context-menus/folder/index.vue';
-import VaultContextMenu from '~/components/context-menus/vault/index.vue';
 import FolderIcon from '~/assets/folder.svg?inline';
 import * as vaultFolderActionTypes from '~/store/vault-folders/types';
 
 export default {
   name: 'FoldersTreeView',
   components: {
+    UiGrid,
     UiTreeView,
     UiTreeViewNode,
-    UiAvatar,
-    FolderIcon,
     FolderContextMenu,
-    VaultContextMenu,
+    FolderIcon,
   },
   data() {
     return {
       loading: true,
-      vaultNodeExpanded: true,
       currentContextMenuNode: null,
     };
   },
@@ -94,56 +76,25 @@ export default {
     }),
     ...mapGetters(['currentVault', 'pathToFolder']),
     nodes() {
-      const vaultNode = {
-        ...this.currentVault,
-        expanded: this.vaultNodeExpanded,
-        isVault: true,
-      };
-      const folderNodes = Object.values(this.folders).map(folder => ({
-        ...folder,
-        parentFolderUuid: folder.parentFolderUuid ?? vaultNode.uuid,
-        isFolder: true,
-      }));
-
-      return [vaultNode, ...folderNodes];
+      return Object.values(this.folders);
     },
   },
-  /* watch: {
-    currentVaultFolderUuid() {
-      if (!this.currentVaultFolderUuid) return;
-
-      this.leadWay();
-    },
-  }, */
-  async created() {
+  created() {
     if (!this.currentVaultFolderUuid) {
-      await this.getRootVaultFolders();
-      this.loading = false;
+      this.getRootVaultFolders().finally(() => (this.loading = false));
       return;
     }
 
-    await this.leadWay();
-
-    this.loading = false;
+    this.leadWay().finally(() => (this.loading = false));
   },
   methods: {
     ...mapActions({
       getRootVaultFolders: vaultFolderActionTypes.GET_ROOT_VAULT_FOLDERS,
       getNestedVaultFolders: vaultFolderActionTypes.GET_NESTED_VAULT_FOLDERS,
-      setCurrentVaultFolder: vaultFolderActionTypes.SET_CURRENT_VAULT_FOLDER,
       setExpandedVaultFolder: vaultFolderActionTypes.SET_EXPANDED_VAULT_FOLDER,
       getVaultFolder: vaultFolderActionTypes.GET_VAULT_FOLDER,
     }),
-    async activeFolderNode(node) {
-      if (node.isVault) {
-        await this.setCurrentVaultFolder({ uuid: null });
-
-        this.$router.push(`/vaults/${node.uuid}/`);
-        return;
-      }
-
-      await this.setCurrentVaultFolder({ uuid: node.uuid });
-
+    activeFolderNode(node) {
       this.$router.push(
         `/vaults/${this.currentVault.uuid}/folders/${node.uuid}`
       );
@@ -151,21 +102,14 @@ export default {
     async expandFolderNode(node) {
       const currentExpandState = !node.expanded;
 
-      if (node.isVault) this.vaultNodeExpanded = currentExpandState;
-      else
-        await this.setExpandedVaultFolder({
-          uuid: node.uuid,
-          expanded: currentExpandState,
-        });
+      await this.setExpandedVaultFolder({
+        uuid: node.uuid,
+        expanded: currentExpandState,
+      });
 
       if (!currentExpandState) return;
 
-      if (node.isVault) {
-        this.getRootVaultFolders();
-        return;
-      }
-
-      this.getNestedVaultFolders({
+      await this.getNestedVaultFolders({
         parentFolderUuid: node.uuid,
       });
     },
@@ -189,20 +133,10 @@ export default {
       }
     },
     isNodeActive(node) {
-      return (
-        (!this.currentVaultFolderUuid && node.isVault) ||
-        node.uuid === this.currentVaultFolderUuid
-      );
+      return node.uuid === this.currentVaultFolderUuid;
     },
     openContextMenu(e, node) {
       this.currentContextMenuNode = node;
-
-      if (node.isVault) {
-        this.$nextTick(() => {
-          this.$refs.vaultContextMenu.open(e);
-        });
-        return;
-      }
 
       this.$nextTick(() => {
         this.$refs.folderContextMenu.open(e);

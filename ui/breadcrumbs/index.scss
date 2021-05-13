@@ -20,7 +20,7 @@
 
 .ui-breadcrumbs {
   &__item {
-    --space: 14px;
+    --space: 0.5rem;
 
     display: inline-flex;
     width: auto;
@@ -40,7 +40,6 @@
     }
 
     &__btn {
-      font-size: 16px;
       font-weight: 500;
 
       color: var(--color-ui-breadcrumbs-dropdown-item-text);

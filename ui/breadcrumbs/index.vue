@@ -11,17 +11,17 @@
         <slot
           name="item-tempalte"
           :item="item"
-          :click="e => handleItemClick(item, () => {}, e)"
+          :click="e => handleItemClick(e, item, () => {})"
         >
           <slot
             :name="`item-tempalte(${item[uniqueKey]})`"
             :item="item"
-            :click="e => handleItemClick(item, () => {}, e)"
+            :click="e => handleItemClick(e, item, () => {})"
           >
             <ui-button
               variant="text"
               class="ui-breadcrumbs__item__btn"
-              @click="handleItemClick(item, () => {}, $event)"
+              @click="handleItemClick($event, item, () => {})"
             >
               {{ item[labelKey] }}
             </ui-button>
@@ -29,7 +29,7 @@
         </slot>
       </template>
       <template v-else>
-        <ui-dropdown :items="hiddenItems">
+        <ui-dropdown>
           <template #anchor="{ open, opened }">
             <ui-button
               variant="text"
@@ -42,23 +42,25 @@
               <more-icon class="ui-breadcrumbs__dotted-btn__icon"></more-icon>
             </ui-button>
           </template>
-          <template #dropdown-item-template="{ item: dropdownItem, click }">
-            <slot
-              name="dropdown-item-template"
-              :click="e => handleItemClick(dropdownItem, click, e)"
-              :item="dropdownItem"
-            >
-              <ui-menu-item
-                :id="dropdownItem[uniqueKey]"
-                @click="e => handleItemClick(dropdownItem, click, e)"
+          <template #dropdown-items="{ close }">
+            <template v-for="dropdownItem in hiddenItems">
+              <slot
+                name="dropdown-item-template"
+                :click="e => handleItemClick(e, dropdownItem, close)"
+                :item="dropdownItem"
               >
-                <template #text>
-                  <p class="ui-breadcrumbs__dropdown-item__text">
-                    {{ dropdownItem[labelKey] }}
-                  </p>
-                </template>
-              </ui-menu-item>
-            </slot>
+                <ui-menu-item
+                  :id="dropdownItem[uniqueKey]"
+                  @click="e => handleItemClick(e, dropdownItem, close)"
+                >
+                  <template #text>
+                    <p class="ui-breadcrumbs__dropdown-item__text">
+                      {{ dropdownItem[labelKey] }}
+                    </p>
+                  </template>
+                </ui-menu-item>
+              </slot>
+            </template>
           </template>
         </ui-dropdown>
       </template>
@@ -132,7 +134,7 @@ export default {
     },
   },
   methods: {
-    handleItemClick(item, click, e) {
+    handleItemClick(e, item, click) {
       if (item.isDropdown) return;
 
       click(e);

@@ -1,6 +1,6 @@
 <template>
   <ui-grid wrap="wrap" class="grid-content">
-    <template v-if="items.length > 0 && !loading">
+    <template v-if="!loading && items.length > 0">
       <template v-for="item in items">
         <folder-card
           v-if="item.isFolder"
@@ -29,7 +29,7 @@
         justify="center"
         class="grid-content__loading"
       >
-        <ui-loading :size="32" />
+        <ui-loading :size="24" />
       </ui-grid>
     </template>
     <template v-else>
@@ -80,18 +80,16 @@ export default {
 
 <style lang="scss">
 .grid-content {
-  padding: 0.625rem;
-
   height: 100%;
 
   overflow-x: auto;
 
   &__card {
-    margin: 0.625rem;
+    margin: 0.5rem;
   }
 
   &__loading {
-    margin-top: 4rem;
+    margin-top: 2rem;
   }
 }
 </style>

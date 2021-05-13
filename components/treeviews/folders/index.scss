@@ -6,7 +6,14 @@
 }
 
 .folders-treeview {
+  & .ui-tree-view__nested-nodes {
+    padding-left: 2rem;
+  }
+
   &__node {
+    padding-left: 0;
+    padding-right: 0;
+
     &__folder {
       &-icon {
         display: flex;
@@ -39,43 +46,12 @@
       }
     }
 
-    &__vault {
-      &-text {
-        max-width: 128px;
-
-        font-size: 14px;
-        line-height: 16px;
-
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-
-        color: var(--color-folders-treeview-vault-text);
-      }
-
-      &-icon {
-        margin-right: 1.5rem;
-
-        & > .ui-avatar__badge {
-          font-size: 0.625rem;
-
-          background-color: transparent !important;
-          border-color: var(--color-ui-tree-view-node-text);
-        }
-      }
-    }
-
     &_active {
       background-color: var(--color-folders-treeview-active-bg) !important;
     }
   }
 
   & .ui-tree-view__node_active {
-    .folders-treeview__node__vault-icon > .ui-avatar__badge {
-      color: var(--color-ui-tree-view-node-active-text);
-      border-color: var(--color-ui-tree-view-node-active-text);
-    }
-
     .folders-treeview__node__vault-text {
       color: var(--color-ui-tree-view-node-active-text);
     }

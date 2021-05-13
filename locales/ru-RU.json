@@ -101,5 +101,10 @@
   "No entries inside": "Никаких записей внутри",
   "Search results": "Результат поиска",
   "Search or filter results...": "Поиск или фильтрация результатов...",
-  "The vault title must has more 8 symbols": "Название хранилища должно содержать более 8 символов"
+  "The vault title must has more 8 symbols": "Название хранилища должно содержать более 8 символов",
+  "My Vaults": "Мои хранилища",
+  "Recent": "Недавние",
+  "Starred": "Помеченные",
+  "Bin": "Корзина",
+  "New": "Создать"
 }

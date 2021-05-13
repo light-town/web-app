@@ -1,0 +1,25 @@
+#app[data-theme-mode='light'] {
+  --color-app-logo-title-text: var(--color-gray-650);
+}
+
+.app-logo {
+  display: inline-flex;
+
+  width: auto;
+
+  &__icon {
+    --size: 40px;
+
+    width: var(--size);
+    height: var(--size);
+
+    margin-right: 1rem;
+  }
+
+  &__title {
+    font-size: 1.125em;
+    font-weight: 500;
+
+    color: var(--color-app-logo-title-text);
+  }
+}

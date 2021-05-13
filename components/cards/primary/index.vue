@@ -6,7 +6,7 @@
   >
     <template #body>
       <slot name="icon">
-        <ui-avatar :name="name" :size="120" class="primary-card__icon" />
+        <ui-avatar :name="name" :size="128" class="primary-card__icon" />
       </slot>
       <p class="primary-card__name" :title="name">{{ name }}</p>
       <p v-if="desc.length > 0" class="primary-card__desc" :title="desc">

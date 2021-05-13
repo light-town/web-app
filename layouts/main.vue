@@ -1,49 +1,49 @@
 <template>
-  <app-page class="main-page">
-    <Nuxt />
-  </app-page>
+  <app-page-layout :title="title">
+    <template #breadcrumbs>
+      <slot name="breadcrumbs"></slot>
+    </template>
+    <template #nav>
+      <account-navbar
+        :vaults-number="vaultsNumber"
+        :teams-number="teamsNumber"
+      />
+    </template>
+    <template #main>
+      <slot name="main"></slot>
+      <slot></slot>
+    </template>
+  </app-page-layout>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-import AppPage from './app-page.vue';
-import * as authActionTypes from '~/store/auth/types';
-import * as devicesActionTypes from '~/store/devices/types';
-import * as accountsActionTypes from '~/store/accounts/types';
-import * as cacheActionTypes from '~/store/cache/types';
-import * as keySetsActionTypes from '~/store/key-sets/types';
+import { mapState } from 'vuex';
+import AppPageLayout from './app-page.vue';
+import AccountNavbar from '~/components/navbars/account/index.vue';
 
 export default {
-  name: 'DefaultLayout',
+  name: 'VaultsPageLayout',
   components: {
-    AppPage,
+    AppPageLayout,
+    AccountNavbar,
   },
-  async created() {
-    await this.initCacheService();
-    await this.initAuthService();
-    await this.initDevicesService();
-    await this.initAccountsService();
-    await this.loadKeySets();
+  props: {
+    title: {
+      type: String,
+      required: false,
+      default: '',
+    },
   },
-  beforeMount() {
-    document.addEventListener('contextmenu', this.preventContextMenu);
-  },
-  beforeDestroy() {
-    document.removeEventListener('contextmenu', this.preventContextMenu);
-  },
-  methods: {
-    ...mapActions({
-      initCacheService: cacheActionTypes.INIT,
-      initAuthService: authActionTypes.INIT,
-      initDevicesService: devicesActionTypes.INIT,
-      initAccountsService: accountsActionTypes.INIT,
-      loadKeySets: keySetsActionTypes.LOAD_KEY_SETS,
+  computed: {
+    ...mapState({
+      vaults: state => Object.values(state.vaults.all),
     }),
-    preventContextMenu(e) {
-      e.preventDefault();
+    vaultsNumber() {
+      return this.vaults.length;
+    },
+    teamsNumber() {
+      return 0;
     },
   },
 };
 </script>
-
-<style lang="scss"></style>

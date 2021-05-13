@@ -93,4 +93,36 @@ export default {
       commit(mutationTypes.SET_ERROR, { error: e?.response?.data?.error || e });
     }
   },
+  async [actionTypes.GET_VAULT]({ commit, state, rootState }, payload) {
+    try {
+      commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.LOADING });
+
+      const { data: encVault } = await this.$api.vaults.getVault(payload.uuid);
+
+      commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.SUCCESS });
+
+      const keySet = rootState['key-sets'].all[encVault.keySetUuid];
+      let vault;
+
+      if (keySet.isPrimary)
+        vault = await core.helpers.vaults.decryptVaultByPrivateKeyHelper(
+          encVault,
+          keySet.privateKey
+        );
+      else
+        vault = await core.helpers.vaults.decryptVaultBySecretKeyHelper(
+          encVault,
+          keySet.symmetricKey
+        );
+
+      commit(mutationTypes.SET_VAULT, {
+        vault,
+      });
+    } catch (e) {
+      if (state.fetchStatus === fetchStatuses.LOADING)
+        commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.ERROR });
+
+      commit(mutationTypes.SET_ERROR, { error: e?.response?.data?.error || e });
+    }
+  },
 };

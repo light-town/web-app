@@ -206,7 +206,7 @@ export default {
 
       this.root = this.$refs.input;
 
-      const root = document.getElementById('app-page-content');
+      const root = document.getElementById('app-page-layout');
       root.addEventListener('click', this.closeDropdown, {
         once: true,
         capture: true,

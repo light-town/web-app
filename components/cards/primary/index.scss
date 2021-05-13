@@ -13,21 +13,8 @@
   }
 
   &__icon {
-    --size: 7.5rem;
-
-    width: var(--size);
-    height: var(--size);
-
-    font-size: 2.75em;
-
-    & > .ui-avatar__badge {
-      background-color: transparent;
-    }
-
+    background-color: transparent;
     margin-bottom: 0.875rem;
-  }
-
-  &__illustration {
   }
 
   &__name {

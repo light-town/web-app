@@ -15,8 +15,8 @@
     >
     </folder-context-menu>
     <slot v-if="loading" name="loading-table">
-      <ui-grid align-items="center" justify="center">
-        <ui-loading :size="32"></ui-loading>
+      <ui-grid align-items="center" justify="center" class="mt-8">
+        <ui-loading :size="24"></ui-loading>
       </ui-grid>
     </slot>
   </ui-grid>

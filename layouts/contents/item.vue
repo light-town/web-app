@@ -39,9 +39,6 @@ export default {
     SearchVaultContentByTokens,
   },
   created() {
-    this.setCurrentVaultFolder({
-      uuid: this.$route.params.vaultFolderUuid ?? null,
-    });
     this.getVaultFolder({
       uuid: this.$route.params.vaultFolderUuid ?? null,
     });
@@ -49,7 +46,6 @@ export default {
   },
   methods: {
     ...mapActions({
-      setCurrentVaultFolder: vaultFolderActionTypes.SET_CURRENT_VAULT_FOLDER,
       getVaultFolder: vaultFolderActionTypes.GET_VAULT_FOLDER,
       getVaultCategories: vaultCategoryActionTypes.GET_VAULT_CATEGORIES,
     }),

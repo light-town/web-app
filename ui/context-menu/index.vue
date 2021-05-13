@@ -63,7 +63,7 @@ export default {
 
       if (this.anchorRef) this.anchorRef._data.opened = true;
 
-      const root = document.getElementById('app-page-content');
+      const root = document.getElementById('app-page-layout');
       root.addEventListener('click', this.close, {
         once: true,
         capture: true,
