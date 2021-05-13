@@ -97,7 +97,6 @@ export default {
   }
 
   &__title-layout {
-    padding-top: 0.5rem;
     padding-bottom: 1.25rem;
   }
 
