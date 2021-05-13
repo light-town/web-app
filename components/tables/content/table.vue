@@ -83,22 +83,26 @@ export default {
         {
           key: 'name',
           label: this.$t('Name'),
-          thClass: 'folder-content-table__table-body-cell-name',
+          bcClass: 'folder-content-table__table-body-cell-name',
+          hcClass: 'folder-content-table__table-body-cell-name',
         },
         {
           key: 'desc',
           label: this.$t('Description'),
-          thClass: 'folder-content-table__table-body-cell-desc',
+          bcClass: 'folder-content-table__table-body-cell-desc',
+          hcClass: 'folder-content-table__table-body-cell-desc',
         },
         {
           key: 'lastUpdatedAt',
           label: this.$t('Last Updated'),
-          thClass: 'folder-content-table__table-body-cell-updated-at',
+          bcClass: 'folder-content-table__table-body-cell-updated-at',
+          hcClass: 'folder-content-table__table-body-cell-updated-at',
         },
         {
           key: 'createdAt',
           label: this.$t('Created'),
-          thClass: 'folder-content-table__table-body-cell-created-at',
+          bcClass: 'folder-content-table__table-body-cell-created-at',
+          hcClass: 'folder-content-table__table-body-cell-created-at',
         },
       ],
     };

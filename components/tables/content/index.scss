@@ -11,8 +11,6 @@
 .folder-content-table {
   height: 100%;
 
-  padding: 0 1.25rem;
-
   overflow-y: auto;
 
   &__table {
@@ -38,27 +36,36 @@
       &-cell {
         &-name {
           flex: 1 1 auto;
+
+          padding: 0 1.3125rem !important;
         }
+
         &-desc {
           flex: 0 0 320px;
         }
+
         &-location-folder {
           flex: 0 0 200px;
         }
+
         &-vault {
           flex: 0 0 200px;
         }
+
         &-updated-at {
           flex: 0 0 200px;
         }
+
         &-created-at {
           flex: 0 0 200px;
         }
+
         &__title {
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
+
         &__icon {
           margin-right: 16px;
 
