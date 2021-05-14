@@ -1,7 +1,7 @@
 <template>
   <main-page-layout :title="currentVaultFolderName">
     <template #breadcrumbs>
-      <breadcrumbs class="-ml-2 mt-5" />
+      <breadcrumbs class="-ml-2" />
     </template>
     <template #main>
       <ui-grid class="h-full overflow-auto">

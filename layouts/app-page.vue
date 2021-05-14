@@ -2,13 +2,15 @@
   <default-page-template>
     <ui-grid direction="column" class="h-full">
       <appbar class="app-page__appbar" />
-      <ui-grid class="app-page__breadcrumbs-layout">
-        <slot name="breadcrumbs"></slot>
-      </ui-grid>
-      <ui-grid class="app-page__title-layout">
-        <slot name="title">
-          <p v-if="title.length > 0" class="app-page__title">{{ title }}</p>
-        </slot>
+      <ui-grid class="app-page__header-layout" direction="column">
+        <ui-grid class="app-page__breadcrumbs-layout">
+          <slot name="breadcrumbs"></slot>
+        </ui-grid>
+        <ui-grid class="app-page__title-layout">
+          <slot name="title">
+            <p v-if="title.length > 0" class="app-page__title">{{ title }}</p>
+          </slot>
+        </ui-grid>
       </ui-grid>
       <ui-grid class="app-page__nav-layout">
         <slot name="nav"></slot>
@@ -80,8 +82,7 @@ export default {
 
 .app-page {
   &__appbar,
-  &__breadcrumbs-layout,
-  &__title-layout,
+  &__header-layout,
   &__nav-layout,
   &__main-layout {
     padding: 0 2.5rem;
@@ -97,8 +98,9 @@ export default {
     height: 100%;
   }
 
-  &__title-layout {
-    padding-bottom: 1.25rem;
+  &__header-layout {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 
   &__title {

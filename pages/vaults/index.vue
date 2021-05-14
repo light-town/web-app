@@ -1,5 +1,5 @@
 <template>
-  <main-page-layout :title="$t('Vaults')">
+  <main-page-layout :title="$t('My Vaults')">
     <ui-grid class="vault-list" wrap="wrap">
       <template v-if="showVaults">
         <vault-card
