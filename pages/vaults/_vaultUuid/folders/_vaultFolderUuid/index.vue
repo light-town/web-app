@@ -1,19 +1,23 @@
 <template>
   <folder-page-layout>
-    <folder-content-table
-      v-if="isTableContentViewWay"
-      :items="items"
-      :loading="loading"
-      :vault-uuid="currentVaultUuid"
-      :folder-uuid="currentVaultFolderUuid"
-      @row-dbl-click="openItem"
-    />
-    <folder-content-grid
-      v-else-if="isGridContentViewWay"
-      :items="items"
-      :loading="loading"
-      @item-dbl-click="openItem"
-    />
+    <content-viewer>
+      <template #table>
+        <folder-content-table
+          :items="items"
+          :loading="loading"
+          :vault-uuid="currentVaultUuid"
+          :folder-uuid="currentVaultFolderUuid"
+          @row-dbl-click="openItem"
+        />
+      </template>
+      <template #grid>
+        <folder-content-grid
+          :items="items"
+          :loading="loading"
+          @item-dbl-click="openItem"
+        />
+      </template>
+    </content-viewer>
   </folder-page-layout>
 </template>
 
@@ -22,7 +26,7 @@ import { mapState, mapActions } from 'vuex';
 import FolderPageLayout from '~/layouts/folder.vue';
 import FolderContentTable from '~/components/tables/content/folder.vue';
 import FolderContentGrid from '~/components/grids/content/folders.vue';
-import * as ContentViewWays from '~/store/config/content-view-ways';
+import ContentViewer from '~/components/content-viewer/index.vue';
 import * as vaultFolderActionTypes from '~/store/vault-folders/types';
 import * as vaultItemActionTypes from '~/store/vault-items/types';
 
@@ -32,6 +36,7 @@ export default {
     FolderPageLayout,
     FolderContentTable,
     FolderContentGrid,
+    ContentViewer,
   },
   middleware: ['auth', 'url-params'],
   data() {
@@ -44,7 +49,6 @@ export default {
     ...mapState({
       vaultFolders: state => state['vault-folders'].all,
       vaultItems: state => state['vault-items'].all,
-      currentContentViewWay: state => state.config.contentViewWay,
       currentVaultUuid: state => state.vaults.currentVaultUuid,
       currentVaultFolderUuid: state =>
         state['vault-folders'].currentVaultFolderUuid,
@@ -66,12 +70,6 @@ export default {
             i.folderUuid === this.currentVaultFolderUuid
         )
         .map(i => ({ ...i, isItem: true }));
-    },
-    isTableContentViewWay() {
-      return this.currentContentViewWay === ContentViewWays.TABLE;
-    },
-    isGridContentViewWay() {
-      return this.currentContentViewWay === ContentViewWays.GRID;
     },
   },
   watch: {

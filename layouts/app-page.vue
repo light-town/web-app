@@ -94,6 +94,7 @@ export default {
 
   &__main-layout {
     overflow: auto;
+    height: 100%;
   }
 
   &__title-layout {

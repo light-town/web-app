@@ -1,18 +1,22 @@
 <template>
   <vault-page-layout>
-    <vault-content-table
-      v-if="isTableContentViewWay"
-      :items="items"
-      :loading="loading"
-      :vault-uuid="currentVaultUuid"
-      @row-dbl-click="openItem"
-    />
-    <vault-content-grid
-      v-else-if="isGridContentViewWay"
-      :items="items"
-      :loading="loading"
-      @item-dbl-click="openItem"
-    />
+    <content-viewer>
+      <template #table>
+        <vault-content-table
+          :items="items"
+          :loading="loading"
+          :vault-uuid="currentVaultUuid"
+          @row-dbl-click="openItem"
+        />
+      </template>
+      <template #grid>
+        <vault-content-grid
+          :items="items"
+          :loading="loading"
+          @item-dbl-click="openItem"
+        />
+      </template>
+    </content-viewer>
   </vault-page-layout>
 </template>
 
@@ -21,7 +25,7 @@ import { mapState, mapActions } from 'vuex';
 import VaultPageLayout from '~/layouts/vault.vue';
 import VaultContentTable from '~/components/tables/content/vault.vue';
 import VaultContentGrid from '~/components/grids/content/folders.vue';
-import * as ContentViewWays from '~/store/config/content-view-ways';
+import ContentViewer from '~/components/content-viewer/index.vue';
 import * as vaultFolderActionTypes from '~/store/vault-folders/types';
 import * as vaultItemActionTypes from '~/store/vault-items/types';
 
@@ -31,6 +35,7 @@ export default {
     VaultPageLayout,
     VaultContentTable,
     VaultContentGrid,
+    ContentViewer,
   },
   middleware: ['auth', 'url-params'],
   data() {
@@ -43,7 +48,6 @@ export default {
     ...mapState({
       vaultFolders: state => state['vault-folders'].all,
       vaultItems: state => state['vault-items'].all,
-      currentContentViewWay: state => state.config.contentViewWay,
       currentVaultUuid: state => state.vaults.currentVaultUuid,
     }),
     formatedVaultFolders() {
@@ -57,12 +61,6 @@ export default {
       return Object.values(this.vaultItems)
         .filter(i => i.vaultUuid === this.currentVaultUuid && !i.folderUuid)
         .map(i => ({ ...i, isItem: true }));
-    },
-    isTableContentViewWay() {
-      return this.currentContentViewWay === ContentViewWays.TABLE;
-    },
-    isGridContentViewWay() {
-      return this.currentContentViewWay === ContentViewWays.GRID;
     },
   },
   watch: {

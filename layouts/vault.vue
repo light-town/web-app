@@ -47,6 +47,8 @@ export default {
   &__sidebar {
     flex: 0 0 300px;
 
+    overflow: auto;
+
     height: 100%;
 
     padding: 0.625rem 0;

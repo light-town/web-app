@@ -1,12 +1,12 @@
 <template>
   <ui-grid direction="column" class="folder-content-table">
-    <content-table
+    <default-content-table
       v-if="showTable"
       :rows="rows"
       @body-row-context-menu="handleRowContextMenu"
       @body-row-dbl-click="handleRowDblClick"
       @body-row-click="handleRowClick"
-    ></content-table>
+    />
     <folder-context-menu
       v-if="activeRowUuid"
       ref="folderContextMenu"
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import ContentTable from './table';
+import DefaultContentTable from './default-table';
 import UiGrid from '~/ui/grid/index.vue';
 import UiLoading from '~/ui/loading/index.vue';
 import FolderContextMenu from '~/components/context-menus/folder/index.vue';
@@ -35,7 +35,7 @@ export default {
     UiGrid,
     UiLoading,
     FolderContextMenu,
-    ContentTable,
+    DefaultContentTable,
   },
   props: {
     items: {

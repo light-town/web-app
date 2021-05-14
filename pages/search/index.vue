@@ -1,18 +1,27 @@
 <template>
-  <search-content-layout>
-    <global-content-table :query="query"></global-content-table>
-  </search-content-layout>
+  <main-page-layout :title="$t('Search results')">
+    <content-viewer class="h-full overflow-auto">
+      <template #table>
+        <search-content-table :query="query" />
+      </template>
+      <template #grid>
+        <search-content-grid :query="query" />
+      </template>
+    </content-viewer>
+  </main-page-layout>
 </template>
 
 <script>
-import SearchContentLayout from '~/layouts/contents/search.vue';
-import GlobalContentTable from '~/components/tables/content/global.vue';
+import MainPageLayout from '~/layouts/main.vue';
+import SearchContentTable from '~/components/tables/content/search.vue';
+import SearchContentGrid from '~/components/grids/content/search.vue';
 
 export default {
   name: 'SearchPage',
   components: {
-    SearchContentLayout,
-    GlobalContentTable,
+    MainPageLayout,
+    SearchContentTable,
+    SearchContentGrid,
   },
   middleware: ['auth'],
   computed: {
