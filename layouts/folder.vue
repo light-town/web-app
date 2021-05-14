@@ -3,6 +3,9 @@
     <template #breadcrumbs>
       <breadcrumbs class="-ml-2" />
     </template>
+    <template #nav>
+      <account-navbar :show-tool-btns="true" />
+    </template>
     <template #main>
       <ui-grid class="h-full overflow-auto">
         <ui-grid direction="column" class="app-page__sidebar">
@@ -22,6 +25,7 @@ import MainPageLayout from './main.vue';
 import UiGrid from '~/ui/grid/index.vue';
 import FolderTreeView from '~/components/treeviews/folders/index.vue';
 import Breadcrumbs from '~/components/breadcrumbs/index.vue';
+import AccountNavbar from '~/components/navbars/account/index.vue';
 import * as vaultFolderActionTypes from '~/store/vault-folders/types';
 import * as vaultActionTypes from '~/store/vaults/types';
 
@@ -32,6 +36,7 @@ export default {
     Breadcrumbs,
     FolderTreeView,
     MainPageLayout,
+    AccountNavbar,
   },
   computed: {
     ...mapGetters(['currentVaultFolder']),

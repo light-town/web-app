@@ -1,6 +1,6 @@
 <template>
   <ui-grid>
-    <ui-dropdown>
+    <ui-dropdown :loading="loading">
       <template #anchor="{ open }">
         <ui-button variant="outlined" class="new-element-button" @click="open">
           <add-icon class="new-element-button__icon" />
@@ -10,27 +10,38 @@
       <template #dropdown-items="{ close }">
         <ui-menu-item
           id="folder"
-          @click="handleDropdownItemClick($event, 'folder', close)"
+          @click="handleDropdownItemClick($event, { type: 'folder' }, close)"
         >
           <template #text>
             {{ $t('Folder') }}
           </template>
         </ui-menu-item>
-        <ui-menu-separator />
-        <ui-menu-title :text="$t('Categories')" />
+        <ui-menu-separator v-if="categories.length" />
+        <ui-menu-title v-if="categories.length" :text="$t('Categories')" />
+        <template v-for="category in categories">
+          <ui-menu-item
+            :id="category.uuid"
+            :key="category.uuid"
+            @click="handleDropdownItemClick($event, category, close)"
+          >
+            <template #text>
+              {{ $t(category.overview.name) }}
+            </template>
+          </ui-menu-item>
+        </template>
       </template>
     </ui-dropdown>
     <new-vault-folder-modal
-      v-if="vaultUuid"
+      v-if="currentVaultUuid"
       :open="showNewVaultFolderModal"
-      :folder-uuid="vaultFolderUuid"
-      :vault-uuid="vaultUuid"
+      :folder-uuid="currentVaultFolderUuid"
+      :vault-uuid="currentVaultUuid"
       @close="showNewVaultFolderModal = false"
     />
   </ui-grid>
 </template>
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import UiGrid from '~/ui/grid/index.vue';
 import UiButton from '~/ui/button/index.vue';
 import UiDropdown from '~/ui/dropdown/index.vue';
@@ -39,6 +50,7 @@ import UiMenuTitle from '~/ui/menu/title.vue';
 import UiMenuSeparator from '~/ui/menu/separator.vue';
 import AddIcon from '~/assets/add.svg?inline';
 import NewVaultFolderModal from '~/components/modals/new-vault-folder/index.vue';
+import * as vaultCategoryActionTypes from '~/store/vault-categories/types';
 
 export default {
   name: 'NewElementButton',
@@ -55,19 +67,53 @@ export default {
   data() {
     return {
       showNewVaultFolderModal: false,
+      loading: false,
     };
   },
   computed: {
     ...mapState({
-      vaultUuid: state => state.vaults.currentVaultUuid,
-      vaultFolderUuid: state => state['vault-folders'].currentVaultFolderUuid,
+      currentVaultUuid: state => state.vaults.currentVaultUuid,
+      currentVaultFolderUuid: state =>
+        state['vault-folders'].currentVaultFolderUuid,
+      vaultCategories: state => state['vault-categories'].all,
     }),
+    categories() {
+      return Object.values(this.vaultCategories).map(c => ({
+        ...c,
+        type: 'category',
+      }));
+    },
+  },
+  created() {
+    this.loading = true;
+
+    this.loadVaultCategories().finally(() => {
+      this.loading = false;
+    });
   },
   methods: {
+    ...mapActions({
+      loadVaultCategories: vaultCategoryActionTypes.GET_VAULT_CATEGORIES,
+    }),
     handleDropdownItemClick(e, item, close) {
-      if (item === 'folder') {
+      if (item.type === 'folder') {
         this.showNewVaultFolderModal = true;
         close(e);
+        return;
+      }
+
+      if (
+        item.type === 'category' &&
+        this.categories.find(c => c.uuid === item.uuid)
+      ) {
+        if (this.currentVaultFolderUuid)
+          this.$router.push(
+            `/vaults/${this.currentVaultUuid}/folders/${this.currentVaultFolderUuid}/new-item?category-uuid=${item.uuid}`
+          );
+        else
+          this.$router.push(
+            `/vaults/${this.currentVaultUuid}/new-item?category-uuid=${item.uuid}`
+          );
       }
     },
   },

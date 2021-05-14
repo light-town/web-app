@@ -1,6 +1,11 @@
 <template>
   <ui-grid component="table" role="table" class="ui-table" direction="column">
-    <ui-grid component="thead" role="rowgroup" class="ui-table__header">
+    <ui-grid
+      v-if="items.length"
+      component="thead"
+      role="rowgroup"
+      class="ui-table__header"
+    >
       <ui-grid
         component="tr"
         role="row"

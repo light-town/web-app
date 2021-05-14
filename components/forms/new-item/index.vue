@@ -1,16 +1,11 @@
 <template>
-  <ui-grid direction="column" align-items="center" class="new-item-form">
-    <ui-grid component="form" direction="column" class="new-item-form__form">
-      <avatar-item-field
-        v-model="avatar"
-        :name="name"
-        :mode="mode"
-      ></avatar-item-field>
+  <ui-grid direction="column" align-items="center" class="item-model">
+    <ui-grid direction="column" class="item-model__model">
       <template v-for="field in fields">
         <component
           :is="field.component"
           :key="field.position"
-          v-model="itemFields[field.index].value"
+          v-model="itemFields.find(f => f.id === field.id).value"
           :title="field.name"
           :value="field.value"
           :mode="mode"
@@ -20,30 +15,13 @@
           <template
             #control-btn-template(options)="{ btn, activate, deactivate }"
           >
-            <ui-dropdown
+            <field-options-dropdown-button
               :title="btn.name"
               :items="btn.items"
               @close="deactivate"
+              @dropdown-anchor-click="activate()"
               @dropdown-item-click="item => handleOptionsItemClick(item, field)"
-            >
-              <template #anchor="{ open, opened }">
-                <ui-button
-                  variant="outlined"
-                  :class="[
-                    'item-field__control-btn',
-                    { 'item-field__control-btn_active': opened },
-                  ]"
-                  @click="
-                    e => {
-                      activate();
-                      open(e);
-                    }
-                  "
-                >
-                  {{ btn.name }}
-                </ui-button>
-              </template>
-            </ui-dropdown>
+            />
           </template>
         </component>
       </template>
@@ -51,12 +29,12 @@
         v-if="mode === 'viewing'"
         :title="$t('Last modified')"
         :value="lastModified"
-      ></text-item-field>
+      />
       <text-item-field
         v-if="mode === 'viewing'"
         :title="$t('Created')"
         :value="created"
-      ></text-item-field>
+      />
       <button-item-field
         v-if="mode === 'editing'"
         :title="$t('Add field')"
@@ -64,9 +42,9 @@
       >
         <template #button-template>
           <add-field-dropdown-button
-            :items="schemaFields"
+            :items="avalableCreationFields"
             @dropdown-item-click="item => addNewField(item.key)"
-          ></add-field-dropdown-button>
+          />
         </template>
       </button-item-field>
     </ui-grid>
@@ -74,29 +52,28 @@
 </template>
 
 <script>
+import core from '@light-town/core';
 import TextItemField from './fields/text/index.vue';
 import PasswordItemField from './fields/password/index.vue';
 import LinkItemField from './fields/link/index.vue';
 import AvatarItemField from './fields/avatar/index.vue';
 import ButtonItemField from './fields/button/index.vue';
 import AddFieldDropdownButton from './add-field-dropdown-button.vue';
+import FieldOptionsDropdownButton from './field-options-dropdown-button.vue';
 import UiGrid from '~/ui/grid/index.vue';
-import UiDropdown from '~/ui/dropdown/index.vue';
-import UiButton from '~/ui/button/index.vue';
 import DateFormater from '~/tools/date-formater';
 
 export default {
-  name: 'NewItemForm',
+  name: 'ItemModel',
   components: {
     UiGrid,
-    UiDropdown,
-    UiButton,
     TextItemField,
     PasswordItemField,
     LinkItemField,
     AvatarItemField,
     ButtonItemField,
     AddFieldDropdownButton,
+    FieldOptionsDropdownButton,
   },
   props: {
     schema: {
@@ -116,14 +93,10 @@ export default {
   },
   data() {
     return {
-      avatar: {},
       itemFields: [],
     };
   },
   computed: {
-    name() {
-      return this.item?.overview.name ?? '';
-    },
     lastModified() {
       return DateFormater.formatFromString(this.item.lastUpdatedAt);
     },
@@ -135,7 +108,7 @@ export default {
         .filter(t => t.pinned)
         .map(t => t.position - 1);
     },
-    schemaFields() {
+    avalableCreationFields() {
       return Object.values(this.schema.fields)
         .filter(f => this.isPossibleCreateField(f.name))
         .map(f => ({
@@ -144,28 +117,17 @@ export default {
         }));
     },
     fields() {
-      let index = 0;
       return this.itemFields
         .map(field => {
-          const schemasField = this.schema.fields[field.fieldName];
-          const options =
-            this.mode === 'viewing'
-              ? []
-              : this.getAvailableFieldOptions(schemasField, field);
+          const fieldStructure = this.schema.fields[field.fieldName];
+          const component = this.getViewComponent(fieldStructure);
+          const options = this.getAvailableFieldOptions(fieldStructure, field);
+          const controlBtns = this.getControlBtns(options);
+
           return {
             ...field,
-            component: `${schemasField.editor.element}-item-field`,
-            controlBtns: options.length
-              ? [
-                  {
-                    key: 'options',
-                    name: this.$t('Options'),
-                    items: options,
-                    click: () => {},
-                  },
-                ]
-              : [],
-            index: index++,
+            component,
+            controlBtns,
           };
         })
         .sort((a, b) => {
@@ -177,20 +139,32 @@ export default {
   },
   watch: {
     itemFields() {
+      if (!this.itemFields.length) return;
+
+      const name = this.itemFields.find(f => f.fieldName === 'Avatar')?.value;
+
       this.$emit('input', {
         overview: {
-          name: this.avatar.name,
-          desc: this.avatar.desc,
+          name,
+          fields: this.itemFields.filter(
+            field => this.schema.fields[field.fieldName].useInOverview
+          ),
         },
         details: {
-          fields: this.itemFields,
+          fields: this.itemFields.filter(
+            field => !this.schema.fields[field.fieldName].useInOverview
+          ),
         },
       });
     },
   },
   created() {
-    if (this.item?.details) {
-      this.itemFields = this.item.details.fields;
+    if (this.item) {
+      this.itemFields = [
+        ...this.item?.overview?.fields,
+        ...this.item?.details?.fields,
+      ];
+      console.log(this.item?.overview);
       return;
     }
 
@@ -252,34 +226,35 @@ export default {
     },
     addNewField(fieldName) {
       const countExistsFields = this.countExistsFields(fieldName);
+      const name =
+        countExistsFields > 0
+          ? `${fieldName} ${countExistsFields + 1}`
+          : fieldName;
 
       this.itemFields.push({
+        id: core.encryption.common.generateCryptoRandomString(16),
         fieldName,
-        name:
-          countExistsFields > 0
-            ? `${fieldName} ${countExistsFields + 1}`
-            : fieldName,
+        name,
         position: this.itemFields.length + 1,
       });
     },
     isPossibleCreateField(fieldName) {
       const countExistsFields = this.countExistsFields(fieldName);
       const schemasField = this.schema.fields[fieldName];
+
       return (
         !schemasField.count?.max ||
         schemasField.count.max >= countExistsFields + 1
       );
     },
     countExistsFields(fieldName) {
-      let count = 0;
-      this.itemFields.forEach(f => (f.fieldName === fieldName ? count++ : {}));
-      return count;
+      return this.itemFields.filter(f => f.fieldName === fieldName).length;
     },
     getAvailableFieldOptions(schemasField, itemField) {
       const options = [];
       const currentPosition = itemField.position - 1;
 
-      if (schemasField.pinned) return options;
+      if (schemasField.pinned || this.mode === 'viewing') return options;
 
       if (
         currentPosition - 1 >= 0 &&
@@ -297,7 +272,91 @@ export default {
 
       return options;
     },
+    getViewComponent(fieldStructure) {
+      const el =
+        this.mode === 'viewing'
+          ? fieldStructure.view.element
+          : fieldStructure.editor.element;
+      return `${el}-item-field`;
+    },
+    getControlBtns(options) {
+      if (!options.length) return [];
+      return [
+        {
+          key: 'options',
+          name: this.$t('Options'),
+          items: options,
+          click: () => {},
+        },
+      ];
+    },
   },
+
+  /* category: {
+        details: {
+          schema: {
+            fields: {
+              Password: {
+                name: 'Password',
+                view: {
+                  element: 'password',
+                },
+                editor: {
+                  element: 'password',
+                },
+                position: 2,
+                count: {
+                  max: 1,
+                  min: 1,
+                },
+                required: true,
+                pinned: true,
+                useInOverview: false,
+              },
+              Username: {
+                name: 'Username',
+                view: {
+                  element: 'text',
+                },
+                editor: {
+                  element: 'text',
+                },
+                position: 1,
+                count: {
+                  max: 1,
+                  min: 1,
+                },
+                required: true,
+                pinned: true,
+                useInOverview: true,
+              },
+              'Website URL': {
+                name: 'Website URL',
+                view: {
+                  element: 'link',
+                },
+                editor: {
+                  element: 'link',
+                },
+                required: false,
+                pinned: false,
+                useInOverview: true
+              },
+            },
+          },
+        },
+      }, */
+
+  /**
+   *      overview: {
+   *        name: '...',
+   *        desc: '...',
+   *        fields: [{...}, {...}, {...}]
+   *      },
+   *      details: {
+   *        fields: []
+   *      }
+   */
 };
 </script>
 

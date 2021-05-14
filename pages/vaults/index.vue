@@ -1,24 +1,26 @@
 <template>
   <main-page-layout :title="$t('My Vaults')">
-    <ui-grid class="vault-list" wrap="wrap">
-      <template v-if="showVaults">
-        <vault-card
-          v-for="vault in vaults"
-          :key="vault.uuid"
-          :name="vault.overview.name"
-          :desc="vault.overview.desc"
-          class="vault-list__vault"
-          @dblclick="openVault(vault)"
-        />
-      </template>
-      <template v-else>
-        <vault-card-skeleton
-          v-for="i in 6"
-          :key="i"
-          class="vault-list__vault"
-        />
-      </template>
-    </ui-grid>
+    <template #main>
+      <ui-grid class="vault-list" wrap="wrap">
+        <template v-if="showVaults">
+          <vault-card
+            v-for="vault in vaults"
+            :key="vault.uuid"
+            :name="vault.overview.name"
+            :desc="vault.overview.desc"
+            class="vault-list__vault"
+            @dblclick="openVault(vault)"
+          />
+        </template>
+        <template v-else>
+          <vault-card-skeleton
+            v-for="i in 6"
+            :key="i"
+            class="vault-list__vault"
+          />
+        </template>
+      </ui-grid>
+    </template>
   </main-page-layout>
 </template>
 

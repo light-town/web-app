@@ -22,7 +22,7 @@
         :placeholder="placeholder"
         :value="value"
         type="url"
-        class="link-item-field__text_editing"
+        class="link-item-field__text link-item-field__text_editing"
       ></ui-input>
     </template>
     <template #control-btn-template="{ btn, activate, deactivate }">

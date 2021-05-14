@@ -5,8 +5,10 @@
 
 .button-item-field {
   &__btn {
-    padding: 6px 22px;
-
     width: 324px;
+
+    flex-shrink: 0;
+
+    padding: 6px 22px;
   }
 }

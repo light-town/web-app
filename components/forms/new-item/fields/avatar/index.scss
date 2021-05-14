@@ -30,6 +30,11 @@
     color: var(--color-avatar-item-field-text);
 
     &_editing {
+      width: 324px;
+
+      flex-shrink: 0;
+      flex-shrink: 0;
+
       padding: 6px 22px;
     }
   }

@@ -16,7 +16,7 @@
         v-model="data"
         :placeholder="placeholder"
         :value="value"
-        class="text-item-field__text_editing"
+        class="text-item-field__text text-item-field__text_editing"
       ></ui-input>
     </template>
     <template #control-btn-template="{ btn, activate, deactivate }">

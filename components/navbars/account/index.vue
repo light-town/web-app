@@ -13,6 +13,7 @@
       </template>
     </app-page-nav>
     <ui-grid
+      v-if="showToolBtns"
       align-items="center"
       justify="flex-end"
       class="app-page-nav__tool-btns"
@@ -82,21 +83,23 @@ export default {
     ListIcon,
   },
   props: {
-    vaultsNumber: {
-      type: Number,
+    showToolBtns: {
+      type: Boolean,
       required: false,
-      default: 0,
-    },
-    teamsNumber: {
-      type: Number,
-      required: false,
-      default: 0,
+      default: false,
     },
   },
   computed: {
     ...mapState({
       contentViewWay: state => state.config.contentViewWay,
+      vaults: state => Object.values(state.vaults.all),
     }),
+    vaultsNumber() {
+      return this.vaults.length;
+    },
+    teamsNumber() {
+      return 0;
+    },
     isTableContentViewWay() {
       return this.contentViewWay === ContentViewWays.TABLE;
     },

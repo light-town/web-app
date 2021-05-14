@@ -5,7 +5,7 @@
     @dblclick.native="handleCardDblClick"
   >
     <template #body>
-      <ui-grid align-items="center">
+      <ui-grid align-items="center" class="mb-4">
         <ui-grid align-items="center" class="secondary-card__category">
           <key-icon class="secondary-card__category-icon"> </key-icon>
           <p class="secondary-card__category-name" :title="categoryName">

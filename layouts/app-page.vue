@@ -54,12 +54,6 @@ export default {
     await this.initAccountsService();
     await this.loadKeySets();
   },
-  beforeMount() {
-    document.addEventListener('contextmenu', this.preventContextMenu);
-  },
-  beforeDestroy() {
-    document.removeEventListener('contextmenu', this.preventContextMenu);
-  },
   methods: {
     ...mapActions({
       initCacheService: cacheActionTypes.INIT,
@@ -68,9 +62,6 @@ export default {
       initAccountsService: accountsActionTypes.INIT,
       loadKeySets: keySetsActionTypes.LOAD_KEY_SETS,
     }),
-    preventContextMenu(e) {
-      e.preventDefault();
-    },
   },
 };
 </script>

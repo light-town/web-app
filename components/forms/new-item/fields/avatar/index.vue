@@ -20,9 +20,9 @@
       <ui-input
         v-model="data"
         :placeholder="placeholder"
-        :value="name"
+        :value="value"
         :type="'text'"
-        class="avatar-item-field__text_editing"
+        class="avatar-item-field__text avatar-item-field__text_editing"
       ></ui-input>
     </template>
   </default-item-field>
@@ -34,14 +34,14 @@ import UiInput from '~/ui/input/index.vue';
 import UiGrid from '~/ui/grid/index.vue';
 
 export default {
-  name: 'PasswordItemField',
+  name: 'AvatarItemField',
   components: {
     DefaultItemField,
     UiInput,
     UiGrid,
   },
   props: {
-    name: {
+    value: {
       type: String,
       required: false,
       default: '',
@@ -69,17 +69,14 @@ export default {
   },
   watch: {
     data() {
-      this.$emit('input', {
-        name: this.data,
-        desc: '',
-      });
+      this.$emit('input', this.data);
     },
     name() {
-      this.data = this.name;
+      this.data = this.value;
     },
   },
   created() {
-    this.data = this.name;
+    this.data = this.value;
   },
   methods: {
     copy() {

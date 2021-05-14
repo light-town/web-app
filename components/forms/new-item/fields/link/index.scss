@@ -19,6 +19,10 @@
     color: var(--color-link-item-field-text);
 
     &_editing {
+      width: 324px;
+
+      flex-shrink: 0;
+
       padding: 6px 22px;
     }
   }

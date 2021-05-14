@@ -19,7 +19,7 @@
         :placeholder="placeholder"
         :value="value"
         :type="isRevealed ? 'text' : 'password'"
-        class="password-item-field__text_editing"
+        class="password-item-field__text password-item-field__text_editing"
       ></ui-input>
     </template>
     <template #control-btn-template="{ btn, activate, deactivate }">

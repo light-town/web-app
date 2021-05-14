@@ -1,13 +1,15 @@
 <template>
   <main-page-layout :title="$t('Search results')">
-    <content-viewer class="h-full overflow-auto">
-      <template #table>
-        <search-content-table :query="query" />
-      </template>
-      <template #grid>
-        <search-content-grid :query="query" />
-      </template>
-    </content-viewer>
+    <template #main>
+      <content-viewer class="h-full overflow-auto">
+        <template #table>
+          <search-content-table :query="query" />
+        </template>
+        <template #grid>
+          <search-content-grid :query="query" />
+        </template>
+      </content-viewer>
+    </template>
   </main-page-layout>
 </template>
 
