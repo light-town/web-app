@@ -164,7 +164,6 @@ export default {
         ...this.item?.overview?.fields,
         ...this.item?.details?.fields,
       ];
-      console.log(this.item?.overview);
       return;
     }
 

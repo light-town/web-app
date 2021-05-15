@@ -1,5 +1,5 @@
 <template>
-  <main-page-layout :title="currentVaultFolderName">
+  <main-page-layout :title="currentVaultFolderName" :loading="loading">
     <template #breadcrumbs>
       <breadcrumbs class="-ml-2" />
     </template>
@@ -38,19 +38,24 @@ export default {
     MainPageLayout,
     AccountNavbar,
   },
+  data() {
+    return { currentVaultFolderName: '', loading: false };
+  },
   computed: {
     ...mapGetters(['currentVaultFolder']),
-    currentVaultFolderName() {
-      return this.currentVaultFolder?.overview.name ?? '';
-    },
   },
   created() {
+    this.loading = true;
+
     Promise.all([
       this.getVault({ uuid: this.$route.params.vaultUuid }),
       this.getVaultFolder({
         uuid: this.$route.params.vaultFolderUuid,
       }),
-    ]);
+    ]).finally(() => {
+      this.currentVaultFolderName = this.currentVaultFolder.overview.name;
+      this.loading = false;
+    });
   },
   methods: {
     ...mapActions({

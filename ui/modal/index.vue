@@ -5,7 +5,11 @@
         class="ui-modal__background"
         @click="handleBackgroundClick"
       ></ui-grid>
-      <ui-grid class="ui-modal__content" direction="column">
+      <ui-grid
+        class="ui-modal__content"
+        :class="contentClass"
+        direction="column"
+      >
         <ui-grid class="ui-modal__header">
           <slot name="header">
             <p class="ui-modal__header-title">{{ title }}</p>
@@ -45,6 +49,11 @@ export default {
       required: true,
     },
     title: {
+      type: String,
+      required: false,
+      default: '',
+    },
+    contentClass: {
       type: String,
       required: false,
       default: '',

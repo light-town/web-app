@@ -7,8 +7,11 @@
           <slot name="breadcrumbs"></slot>
         </ui-grid>
         <ui-grid class="app-page__title-layout">
-          <slot name="title">
-            <p v-if="title.length > 0" class="app-page__title">{{ title }}</p>
+          <slot v-if="!loading" name="title">
+            <p class="app-page__title">{{ title }}</p>
+          </slot>
+          <slot v-else name="title-loading">
+            <ui-skeleton width="150px" height="31px" class="my-2.5" />
           </slot>
         </ui-grid>
       </ui-grid>
@@ -26,6 +29,7 @@
 import { mapActions } from 'vuex';
 import DefaultPageTemplate from './default-page-template.vue';
 import UiGrid from '~/ui/grid/index.vue';
+import UiSkeleton from '~/ui/skeleton/index.vue';
 import Appbar from '~/components/appbar/index.vue';
 import * as authActionTypes from '~/store/auth/types';
 import * as devicesActionTypes from '~/store/devices/types';
@@ -37,6 +41,7 @@ export default {
   name: 'AppPage',
   components: {
     UiGrid,
+    UiSkeleton,
     Appbar,
     DefaultPageTemplate,
   },
@@ -45,6 +50,11 @@ export default {
       type: String,
       required: false,
       default: '',
+    },
+    loading: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   async created() {
@@ -95,7 +105,7 @@ export default {
   }
 
   &__title {
-    font-size: 2em;
+    font-size: 2.125em;
     font-weight: 700;
 
     color: var(--color-app-page-title-text);

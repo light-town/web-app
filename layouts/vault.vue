@@ -1,5 +1,8 @@
 <template>
-  <main-page-layout :title="currentVaultName">
+  <main-page-layout :title="currentVaultName" :loading="loading">
+    <template #breadcrumbs>
+      <p class="management-title">{{ $t('Vault') }}</p>
+    </template>
     <template #nav>
       <account-navbar :show-tool-btns="true" />
     </template>
@@ -32,14 +35,21 @@ export default {
     AccountNavbar,
     FolderTreeView,
   },
+  data() {
+    return { currentVaultName: '', loading: false };
+  },
   computed: {
     ...mapGetters(['currentVault']),
-    currentVaultName() {
-      return this.currentVault?.overview.name ?? '';
-    },
   },
   created() {
-    Promise.all([this.getVault({ uuid: this.$route.params.vaultUuid })]);
+    this.loading = true;
+
+    Promise.all([
+      this.getVault({ uuid: this.$route.params.vaultUuid }),
+    ]).finally(() => {
+      this.currentVaultName = this.currentVault.overview.name;
+      this.loading = false;
+    });
   },
   methods: {
     ...mapActions({

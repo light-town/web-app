@@ -6,7 +6,11 @@
       @body-row-context-menu="handleRowContextMenu"
       @body-row-dbl-click="handleRowDblClick"
       @body-row-click="handleRowClick"
-    />
+    >
+      <template #table-empty-template>
+        <empty-vault-stub />
+      </template>
+    </default-content-table>
     <folder-context-menu
       v-if="activeRowUuid"
       ref="folderContextMenu"
@@ -27,6 +31,7 @@ import DefaultContentTable from './default-table';
 import UiGrid from '~/ui/grid/index.vue';
 import UiLoading from '~/ui/loading/index.vue';
 import FolderContextMenu from '~/components/context-menus/folder/index.vue';
+import EmptyVaultStub from '~/components/stubs/empty-vault/index.vue';
 import DateFormater from '~/tools/date-formater';
 
 export default {
@@ -36,6 +41,7 @@ export default {
     UiLoading,
     FolderContextMenu,
     DefaultContentTable,
+    EmptyVaultStub,
   },
   props: {
     items: {

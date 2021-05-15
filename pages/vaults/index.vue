@@ -1,5 +1,15 @@
 <template>
   <main-page-layout :title="$t('My Vaults')">
+    <template #breadcrumbs>
+      <p class="management-title">{{ $t('Account Management') }}</p>
+    </template>
+    <template #nav>
+      <account-navbar>
+        <template #creation-button>
+          <creation-vaults-button />
+        </template>
+      </account-navbar>
+    </template>
     <template #main>
       <ui-grid class="vault-list" wrap="wrap">
         <template v-if="showVaults">
@@ -29,7 +39,9 @@ import { mapActions, mapState } from 'vuex';
 import UiGrid from '~/ui/grid/index.vue';
 import MainPageLayout from '~/layouts/main.vue';
 import VaultCard from '~/components/cards/vault/index.vue';
+import AccountNavbar from '~/components/navbars/account/index.vue';
 import VaultCardSkeleton from '~/components/cards/skeleton/index.vue';
+import CreationVaultsButton from '~/components/navbars/creation-vaults-button/index.vue';
 import * as vaultActionTypes from '~/store/vaults/types';
 
 export default {
@@ -39,6 +51,8 @@ export default {
     MainPageLayout,
     VaultCard,
     VaultCardSkeleton,
+    AccountNavbar,
+    CreationVaultsButton,
   },
   middleware: ['auth'],
   data() {

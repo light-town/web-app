@@ -1,10 +1,14 @@
 <template>
-  <ui-modal :open="open" :title="$t('Create Folder')" @close="handleCloseModal">
+  <ui-modal
+    :open="open"
+    :title="$t('Create Folder')"
+    content-class="w-96"
+    @close="handleCloseModal"
+  >
     <ui-grid
       component="form"
       direction="column"
       class="new-vault-folder-modal__form"
-      @submit.native.prevent=""
     >
       <ui-input
         v-model="title"
@@ -18,12 +22,12 @@
       ></ui-input>
     </ui-grid>
     <template #footer>
-      <ui-button variant="text" @click="handleCloseModal">{{
-        $t('Cancel')
-      }}</ui-button>
-      <ui-button variant="contained" @click="handleClickCreateBtn">{{
-        $t('Create')
-      }}</ui-button>
+      <ui-button variant="text" @click="handleCloseModal">
+        {{ $t('Cancel') }}
+      </ui-button>
+      <ui-button variant="contained" @click="handleClickCreateBtn">
+        {{ $t('Create') }}
+      </ui-button>
     </template>
   </ui-modal>
 </template>
@@ -47,7 +51,8 @@ export default {
   props: {
     open: {
       type: Boolean,
-      required: true,
+      required: false,
+      default: false,
     },
     folderUuid: {
       type: String,
@@ -79,6 +84,7 @@ export default {
         parentFolderUuid: this.folderUuid,
         vaultUuid: this.vaultUuid,
       });
+
       this.handleCloseModal(e);
     },
   },

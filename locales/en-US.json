@@ -109,5 +109,9 @@
   "Bin": "Bin",
   "New": "New",
   "New Item": "New Item",
-  "Avatar": "Avatar"
+  "Avatar": "Avatar",
+  "Team Management": "Team Management",
+  "Account Management": "Account Management",
+  "Your vault is empty": "Your vault is empty",
+  "To create a vault, right-click on an empty space": "To create a vault, right-click on an empty space"
 }

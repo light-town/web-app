@@ -109,5 +109,9 @@
   "Bin": "Корзина",
   "New": "Создать",
   "New Item": "Новый Элемент",
-  "Avatar": "Аватар"
+  "Avatar": "Аватар",
+  "Team Management": "Управление командой",
+  "Account Management": "Управление аккаунтом",
+  "Your vault is empty": "Ваше хранилище пусто",
+  "To create a vault, right-click on an empty space": "Чтобы создать хранилище, щелкните правой кнопкой мыши по пустому месту"
 }

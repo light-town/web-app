@@ -1,0 +1,41 @@
+#app[data-theme-mode='light'] {
+  --color-empty-vault-stub-title-text: var(--color-gray-650);
+  --color-empty-vault-stub-desc-text: var(--color-gray-550);
+  --color-empty-vault-stub-icon-fill: var(--color-gray-350);
+}
+
+.empty-vault-stub {
+  margin: 5% auto 0;
+
+  &__illustrate {
+    --size: 256px;
+
+    width: var(--size);
+    height: var(--size);
+
+    padding: 16px;
+
+    fill: var(--color-empty-vault-stub-icon-fill);
+  }
+
+  &__text {
+    padding: 16px;
+  }
+
+  &__title {
+    font-size: 21px;
+    font-weight: 500;
+
+    margin-bottom: 12px;
+
+    color: var(--color-empty-vault-stub-title-text);
+  }
+
+  &__desc {
+    font-size: 14px;
+
+    margin-bottom: 12px;
+
+    color: var(--color-empty-vault-stub-desc-text);
+  }
+}

@@ -1,5 +1,5 @@
 <template>
-  <app-page-layout :title="title">
+  <app-page-layout :title="title" :loading="loading">
     <template #nav>
       <account-navbar />
     </template>
@@ -24,6 +24,11 @@ export default {
       type: String,
       required: false,
       default: '',
+    },
+    loading: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
 };

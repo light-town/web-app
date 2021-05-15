@@ -61,9 +61,10 @@ export default {
         folder: vaultFolder,
       });
 
-      commit(mutationTypes.INCREASE_CONTAINED_VAULT_FOLDER_COUNT, {
-        uuid: payload.parentFolderUuid,
-      });
+      if (payload.parentFolderUuid)
+        commit(mutationTypes.INCREASE_CONTAINED_VAULT_FOLDER_COUNT, {
+          uuid: payload.parentFolderUuid,
+        });
     } catch (e) {
       commit(mutationTypes.SET_ERROR, { error: e });
     }

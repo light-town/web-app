@@ -45,7 +45,9 @@
       </ui-grid>
     </template>
     <template #table-empty-template>
-      <empty-folder-stub />
+      <slot name="table-empty-template">
+        <empty-folder-stub />
+      </slot>
     </template>
   </ui-table>
 </template>

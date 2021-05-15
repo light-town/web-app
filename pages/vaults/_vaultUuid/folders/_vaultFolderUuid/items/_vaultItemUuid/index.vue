@@ -1,9 +1,13 @@
 <template>
   <item-page-layout>
-    <ui-grid v-if="!loading" direction="column" class="h-full mb-5 p-1">
+    <ui-grid
+      v-if="!loading && schema"
+      direction="column"
+      class="h-full mb-5 p-1"
+    >
       <new-item-form
         v-model="item"
-        :schema="currentVaultCategory.details.schema"
+        :schema="schema"
         :item="currentVaultItem"
         mode="viewing"
       />
@@ -63,6 +67,9 @@ export default {
         ];
       },
     }),
+    schema() {
+      return this.currentVaultCategory?.details.schema;
+    },
   },
   async created() {
     this.loading = true;

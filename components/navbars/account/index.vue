@@ -1,7 +1,9 @@
 <template>
   <ui-grid align-items="center" class="app-page-navbar">
     <ui-grid align-items="center" class="app-page-nav__new-element-btn">
-      <new-element-button />
+      <slot name="creation-button">
+        <creation-container-elements-button />
+      </slot>
     </ui-grid>
     <app-page-nav :items="items">
       <template v-for="item in items" #[`item-icon-template(${item.name})`]>
@@ -42,7 +44,7 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import AppPageNav from '../nav/index.vue';
-import NewElementButton from '../new-element-button/index.vue';
+import CreationContainerElementsButton from '../creation-container-elements-button/index.vue';
 import UiGrid from '~/ui/grid/index.vue';
 import UiButton from '~/ui/button/index.vue';
 import UiBadge from '~/ui/badge/index.vue';
@@ -77,7 +79,7 @@ export default {
     StarIcon,
     TrashIcon,
     AppPageNav,
-    NewElementButton,
+    CreationContainerElementsButton,
     InfoIcon,
     MenuIcon,
     ListIcon,

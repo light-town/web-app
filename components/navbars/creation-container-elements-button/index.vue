@@ -53,7 +53,7 @@ import NewVaultFolderModal from '~/components/modals/new-vault-folder/index.vue'
 import * as vaultCategoryActionTypes from '~/store/vault-categories/types';
 
 export default {
-  name: 'NewElementButton',
+  name: 'CreationContainerElementsButton',
   components: {
     UiGrid,
     UiButton,

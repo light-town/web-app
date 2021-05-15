@@ -1,0 +1,27 @@
+#app[data-theme-mode='light'] {
+  --color-new-element-button-icon-fill: var(--color-green-400);
+  --color-new-element-button-text: var(--color-green-400);
+}
+
+.new-element-button {
+  padding: 0.75em 1.5em;
+
+  border-radius: 1.5em;
+
+  &__icon {
+    --size: 1.25em;
+
+    width: var(--size);
+    height: var(--size);
+
+    fill: var(--color-new-element-button-icon-fill);
+
+    margin-right: 1em;
+  }
+
+  &__text {
+    font-size: 1em;
+
+    color: var(--color-new-element-button-text);
+  }
+}

@@ -1,12 +1,12 @@
 <template>
-  <main-page-layout :title="itemName">
+  <main-page-layout :title="currentVaultItemName" :loading="loading">
     <template #breadcrumbs>
-      <breadcrumbs v-if="false" class="-ml-2" />
+      <breadcrumbs class="-ml-2" />
     </template>
     <template #main>
       <ui-grid class="h-full overflow-auto">
         <ui-grid direction="column" class="app-page__sidebar">
-          <folder-tree-view v-if="false" />
+          <folder-tree-view />
         </ui-grid>
         <ui-grid direction="column" class="h-full overflow-auto">
           <slot></slot>
@@ -23,6 +23,7 @@ import UiGrid from '~/ui/grid/index.vue';
 import FolderTreeView from '~/components/treeviews/folders/index.vue';
 import Breadcrumbs from '~/components/breadcrumbs/index.vue';
 import * as vaultFolderActionTypes from '~/store/vault-folders/types';
+import * as vaultItemActionTypes from '~/store/vault-items/types';
 import * as vaultActionTypes from '~/store/vaults/types';
 
 export default {
@@ -40,26 +41,33 @@ export default {
       default: '',
     },
   },
+  data() {
+    return { currentVaultItemName: '', loading: false };
+  },
   computed: {
     ...mapGetters(['currentVaultItem']),
-    currentVaultItemName() {
-      return this.currentVaultItem?.overview.name ?? '';
-    },
-    itemName() {
-      return this.currentVaultItemName || this.title;
-    },
   },
   created() {
+    this.loading = true;
+
     Promise.all([
       this.getVault({ uuid: this.$route.params.vaultUuid }),
       this.getVaultFolder({
         uuid: this.$route.params.vaultFolderUuid,
       }),
-    ]);
+      this.getVaultItem({
+        uuid: this.$route.params.vaultItemUuid,
+        folderUuid: this.$route.params.vaultFolderUuid,
+      }),
+    ]).then(() => {
+      this.currentVaultItemName = this.currentVaultItem.overview.name;
+      this.loading = false;
+    });
   },
   methods: {
     ...mapActions({
       getVaultFolder: vaultFolderActionTypes.GET_VAULT_FOLDER,
+      getVaultItem: vaultItemActionTypes.GET_VAULT_ITEM,
       getVault: vaultActionTypes.GET_VAULT,
     }),
   },
