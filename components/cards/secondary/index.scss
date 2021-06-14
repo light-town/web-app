@@ -1,12 +1,12 @@
-#app[data-theme-mode='light'] {
-  --color-secondary-card-name-text-color: var(--color-gray-650);
-  --color-secondary-card-desc-text-color: var(--color-gray-450);
-  --color-secondary-card-datetime-text-color: var(--color-gray-450);
+.ui-theme_light {
+  --color-secondary-card-name-text-color: #{$gray-650};
+  --color-secondary-card-desc-text-color: #{$gray-450};
+  --color-secondary-card-datetime-text-color: #{$gray-450};
 
-  --color-secondary-card-badge-desc-text-color: var(--color-gray-400);
+  --color-secondary-card-badge-desc-text-color: #{$gray-400};
 
-  --color-secondary-card-category-text-color: var(--color-gray-650);
-  --color-secondary-card-category-icon-fill: var(--color-gray-650);
+  --color-secondary-card-category-text-color: #{$gray-650};
+  --color-secondary-card-category-icon-fill: #{$gray-650};
 }
 
 .secondary-card {
@@ -26,12 +26,8 @@
     }
 
     &-icon {
-      --size: 20px;
-
-      min-width: var(--size);
-      max-width: var(--size);
-      min-height: var(--size);
-      max-height: var(--size);
+      @include ui-size(1.25rem);
+      @include ui-flex-fixed;
 
       fill: var(--color-secondary-card-category-icon-fill);
 

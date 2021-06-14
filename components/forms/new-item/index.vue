@@ -53,6 +53,7 @@
 
 <script>
 import core from '@light-town/core';
+import { UiGrid } from '@light-town/ui';
 import TextItemField from './fields/text/index.vue';
 import PasswordItemField from './fields/password/index.vue';
 import LinkItemField from './fields/link/index.vue';
@@ -60,7 +61,6 @@ import AvatarItemField from './fields/avatar/index.vue';
 import ButtonItemField from './fields/button/index.vue';
 import AddFieldDropdownButton from './add-field-dropdown-button.vue';
 import FieldOptionsDropdownButton from './field-options-dropdown-button.vue';
-import UiGrid from '~/ui/grid/index.vue';
 import DateFormater from '~/tools/date-formater';
 
 export default {

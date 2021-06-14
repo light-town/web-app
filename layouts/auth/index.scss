@@ -1,0 +1,16 @@
+.ui-theme_light {
+  --color-auth-page-layout-bg: #{$gray-50};
+}
+
+.auth-page-layout {
+  @include ui-w-full;
+  @include ui-h-full;
+  @include ui-overflow-auto;
+
+  background-color: var(--color-auth-page-layout-bg);
+
+  &__layout {
+    @include ui-w-auto;
+    @include ui-h-auto;
+  }
+}

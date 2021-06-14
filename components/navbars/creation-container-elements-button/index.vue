@@ -42,12 +42,14 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex';
-import UiGrid from '~/ui/grid/index.vue';
-import UiButton from '~/ui/button/index.vue';
-import UiDropdown from '~/ui/dropdown/index.vue';
-import UiMenuItem from '~/ui/menu/item.vue';
-import UiMenuTitle from '~/ui/menu/title.vue';
-import UiMenuSeparator from '~/ui/menu/separator.vue';
+import {
+  UiGrid,
+  UiButton,
+  UiDropdown,
+  UiMenuItem,
+  UiMenuTitle,
+  UiMenuSeparator,
+} from '@light-town/ui';
 import AddIcon from '~/assets/add.svg?inline';
 import NewVaultFolderModal from '~/components/modals/new-vault-folder/index.vue';
 import * as vaultCategoryActionTypes from '~/store/vault-categories/types';

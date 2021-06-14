@@ -46,9 +46,7 @@
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
-import UiGrid from '~/ui/grid/index.vue';
-import UiTreeView from '~/ui/treeview/index.vue';
-import UiTreeViewNode from '~/ui/treeview/node.vue';
+import { UiGrid, UiTreeView, UiTreeViewNode } from '@light-town/ui';
 import FolderContextMenu from '~/components/context-menus/folder/index.vue';
 import FolderIcon from '~/assets/folder.svg?inline';
 import * as vaultFolderActionTypes from '~/store/vault-folders/types';

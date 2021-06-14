@@ -15,39 +15,41 @@ export default {
       { rel: 'preconnect', href: 'https://fonts.gstatic.com' },
       {
         rel: 'stylesheet',
-        href:
-          'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
+        href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
       },
     ],
   },
-  css: ['~/assets/css/main.scss'],
+  css: ['@/assets/css/main.css', '@/assets/scss/main.scss'],
+  styleResources: {
+    scss: [
+      'node_modules/@light-town/ui/src/scss/variables.scss',
+      'node_modules/@light-town/ui/src/scss/functions.scss',
+      'node_modules/@light-town/ui/src/scss/mixins.scss',
+      'node_modules/@light-town/ui/src/scss/utilities.scss',
+    ],
+  },
   plugins: ['~/plugins/axios', '~/plugins/api'],
   components: true,
   buildModules: [
-    '@nuxtjs/eslint-module',
+    '@nuxt/typescript-build',
     '@nuxtjs/style-resources',
     '@nuxtjs/svg',
-    '@nuxtjs/tailwindcss',
   ],
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/proxy',
     'cookie-universal-nuxt',
     'portal-vue/nuxt',
     'nuxt-i18n',
   ],
-  build: {
-    babel: {
-      plugins: [['@babel/plugin-proposal-private-methods', { loose: true }]],
-    },
-  },
+  axios: {},
+  build: {},
   i18n: {
     locales: [
       { code: 'en', name: 'English (US)', iso: 'en-US', file: 'en-US.json' },
       { code: 'ru', name: 'Русский', iso: 'ru-RU', file: 'ru-RU.json' },
     ],
     lazy: true,
-    langDir: '~/locales/',
+    langDir: '@/locales/',
     defaultLocale: 'en',
     strategy: 'no_prefix',
     detectBrowserLanguage: {

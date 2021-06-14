@@ -1,0 +1,46 @@
+.ui-theme_light {
+  --color-app-page-title-text: #{$gray-650};
+  --color-app-page-desc-text: #{$gray-550};
+}
+
+.app-page {
+  &__appbar,
+  &__header-layout,
+  &__nav-layout,
+  &__main-layout {
+    padding: 0 2.5rem;
+  }
+
+  &__nav-layout {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+
+  &__main-layout {
+    overflow: auto;
+    height: 100%;
+  }
+
+  &__header-layout {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  &__title {
+    font-size: 2.125em;
+    font-weight: 700;
+
+    color: var(--color-app-page-title-text);
+  }
+
+  &__desc {
+    font-size: 15px;
+    font-weight: 500;
+
+    line-height: 2.25rem;
+
+    color: var(--color-app-page-desc-text);
+
+    text-align: center;
+  }
+}

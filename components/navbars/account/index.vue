@@ -43,11 +43,9 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import { UiGrid, UiButton, UiBadge } from '@light-town/ui';
 import AppPageNav from '../nav/index.vue';
 import CreationContainerElementsButton from '../creation-container-elements-button/index.vue';
-import UiGrid from '~/ui/grid/index.vue';
-import UiButton from '~/ui/button/index.vue';
-import UiBadge from '~/ui/badge/index.vue';
 import CubeOfNotesStackIcon from '~/assets/cube-of-notes-stack.svg?inline';
 import TeamsIcon from '~/assets/share.svg?inline';
 import ClockIcon from '~/assets/clock.svg?inline';
@@ -94,13 +92,17 @@ export default {
   computed: {
     ...mapState({
       contentViewWay: state => state.config.contentViewWay,
-      vaults: state => Object.values(state.vaults.all),
+      vaults: state =>
+        Object.values(state.vaults.all).filter(
+          v => v.ownerAccountUuid === state.accounts.currentAccountUuid
+        ),
+      teams: state => Object.values(state.teams.all),
     }),
     vaultsNumber() {
       return this.vaults.length;
     },
     teamsNumber() {
-      return 0;
+      return this.teams.length;
     },
     isTableContentViewWay() {
       return this.contentViewWay === ContentViewWays.TABLE;

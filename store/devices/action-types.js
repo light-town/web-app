@@ -1,2 +1,2 @@
-export const INIT = 'INIT';
+export const LOAD_DEVICE = 'LOAD_DEVICE';
 export const REGIESTER_DEVICE = 'REGIESTER_DEVICE';

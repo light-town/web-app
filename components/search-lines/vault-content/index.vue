@@ -56,10 +56,7 @@ import _ from 'lodash';
 import { mapGetters, mapState } from 'vuex';
 import core from '@light-town/core';
 import * as uuid from 'uuid';
-import UiGrid from '~/ui/grid/index.vue';
-import UiButton from '~/ui/button/index.vue';
-import UiToken from '~/ui/token/index.vue';
-import UiTokenSelector from '~/ui/token-selector/index.vue';
+import { UiGrid, UiButton, UiToken, UiTokenSelector } from '@light-town/ui';
 import LoupeIcon from '~/assets/loupe.svg?inline';
 
 export default {

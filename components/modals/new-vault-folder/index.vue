@@ -34,10 +34,7 @@
 
 <script>
 import { mapActions } from 'vuex';
-import UiGrid from '~/ui/grid/index.vue';
-import UiButton from '~/ui/button/index.vue';
-import UiModal from '~/ui/modal/index.vue';
-import UiInput from '~/ui/input/index.vue';
+import { UiGrid, UiButton, UiModal, UiInput } from '@light-town/ui';
 import * as vaultFolderActionTypes from '~/store/vault-folders/types';
 
 export default {

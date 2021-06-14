@@ -53,8 +53,7 @@
 </template>
 
 <script>
-import UiGrid from '~/ui/grid/index.vue';
-import UiTable from '~/ui/table/index.vue';
+import { UiGrid, UiTable } from '@light-town/ui';
 import FolderIcon from '~/assets/folder.svg?inline';
 import KeyIcon from '~/assets/key.svg?inline';
 import EmptyFolderStub from '~/components/stubs/empty-folder/index.vue';

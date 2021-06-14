@@ -1,8 +1,15 @@
-#app[data-theme-mode='light'] {
-  --color-primary-card-title-text-color: var(--color-gray-650);
-  --color-primary-card-desc-text-color: var(--color-gray-450);
+.ui-theme_light {
+  --color-primary-card-title-text: #{$gray-650};
+  --color-primary-card-desc-text: #{$gray-450};
 
-  --color-primary-card-badge-desc-text-color: var(--color-gray-400);
+  --color-primary-card-badge-desc-text: #{$gray-400};
+
+  --color-primary-card-active-bg: #{$green-50};
+
+  --color-primary-card-active-title-text: #{$green-400};
+  --color-primary-card-active-desc-text: #{$green-400};
+
+  --color-primary-card-active-badge-desc-text: #{$green-400};
 }
 
 .primary-card {
@@ -10,6 +17,8 @@
   &__name,
   &__desc {
     margin: 0.125rem 0;
+
+    transition: all 0.3s;
   }
 
   &__icon {
@@ -21,13 +30,13 @@
     font-size: 1.5rem;
     font-weight: 600;
 
-    color: var(--color-primary-card-title-text-color);
+    color: var(--color-primary-card-title-text);
   }
 
   &__desc {
     font-size: 0.875rem;
 
-    color: var(--color-primary-card-desc-text-color);
+    color: var(--color-primary-card-desc-text);
   }
 
   &__name,
@@ -46,11 +55,29 @@
       font-size: 13px;
       font-weight: 500;
 
-      color: var(--color-primary-card-badge-desc-text-color);
+      color: var(--color-primary-card-badge-desc-text);
     }
   }
 
   &__footer {
     height: 1.5rem;
+  }
+
+  &_active {
+    background-color: var(--color-primary-card-active-bg);
+
+    .primary-card__name {
+      color: var(--color-primary-card-active-title-text);
+    }
+
+    .primary-card__desc {
+      color: var(--color-primary-card-active-desc-text);
+    }
+
+    .primary-card__badge {
+      &-desc {
+        color: var(--color-primary-card-active-badge-desc-text);
+      }
+    }
   }
 }

@@ -11,8 +11,8 @@
 </template>
 
 <script>
+import { UiButton } from '@light-town/ui';
 import DefaultItemField from '../default/index.vue';
-import UiButton from '~/ui/button/index.vue';
 
 export default {
   name: 'TextItemField',

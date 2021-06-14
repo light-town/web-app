@@ -26,9 +26,8 @@
 </template>
 
 <script>
+import { UiGrid, UiLoading } from '@light-town/ui';
 import SearchContentTable from './search-table';
-import UiGrid from '~/ui/grid/index.vue';
-import UiLoading from '~/ui/loading/index.vue';
 import FolderContextMenu from '~/components/context-menus/folder/index.vue';
 import SearchParamsParser from '~/components/search-params-parser/index.vue';
 

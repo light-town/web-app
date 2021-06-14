@@ -1,8 +1,5 @@
 <template>
-  <main-page-layout :title="$t('My Vaults')">
-    <template #breadcrumbs>
-      <p class="management-title">{{ $t('Account Management') }}</p>
-    </template>
+  <main-page-layout :title="$t('My Vaults')" :desc="$t('Account Management')">
     <template #nav>
       <account-navbar>
         <template #creation-button>
@@ -36,13 +33,15 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import UiGrid from '~/ui/grid/index.vue';
-import MainPageLayout from '~/layouts/main.vue';
+import { UiGrid } from '@light-town/ui';
+import MainPageLayout from '~/layouts/main/index.vue';
 import VaultCard from '~/components/cards/vault/index.vue';
 import AccountNavbar from '~/components/navbars/account/index.vue';
 import VaultCardSkeleton from '~/components/cards/skeleton/index.vue';
 import CreationVaultsButton from '~/components/navbars/creation-vaults-button/index.vue';
 import * as vaultActionTypes from '~/store/vaults/types';
+import * as keySetsActionTypes from '~/store/key-sets/types';
+import * as teamsActionTypes from '~/store/teams/types';
 
 export default {
   name: 'VaultsPage',
@@ -60,36 +59,35 @@ export default {
   },
   computed: {
     ...mapState({
-      vaults: state => Object.values(state.vaults.all),
-      keySets: state => Object.values(state['key-sets'].all),
+      vaults: state =>
+        Object.values(state.vaults.all).filter(
+          v => v.ownerAccountUuid === state.accounts.currentAccountUuid
+        ),
     }),
     showVaults() {
-      return !this.loading || this.vaults.length > 0;
+      return !this.loading && this.vaults.length > 0;
     },
   },
-  watch: {
-    keySets() {
-      if (!this.keySets.length) return;
-
-      this.loading = true;
-
-      this.getVaults().finally(() => (this.loading = false));
-    },
-  },
-  created() {
-    if (!this.keySets.length) return;
-
+  async created() {
     this.loading = true;
 
-    this.getVaults().finally(() => (this.loading = false));
+    await this.getKeySets();
+    await this.getVaults();
+    await this.getTeams();
+
+    this.loading = false;
   },
   methods: {
     ...mapActions({
-      getVaults: vaultActionTypes.GET_VAULTS,
+      getKeySets: keySetsActionTypes.GET_ACCOUNT_KEY_SETS,
+      getVaults: vaultActionTypes.GET_ACCOUNT_VAULTS,
       setCurrentVault: vaultActionTypes.SET_CURRENT_VAULT,
+      getVault: vaultActionTypes.GET_ACCOUNT_VAULT,
+      getTeams: teamsActionTypes.GET_TEAMS,
     }),
     async openVault(vault) {
       await this.setCurrentVault({ uuid: vault.uuid });
+      await this.getVault({ uuid: vault.uuid });
 
       this.$router.push(`/vaults/${vault.uuid}`);
     },

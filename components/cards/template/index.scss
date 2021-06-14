@@ -1,8 +1,8 @@
-#app[data-theme-mode='light'] {
-  --color-template-card-edit-btn-icon-fill: var(--color-gray-450);
-  --color-template-card-edit-btn-text-color: var(--color-gray-450);
+.ui-theme_light {
+  --color-template-card-edit-btn-icon-fill: #{$gray-450};
+  --color-template-card-edit-btn-text-color: #{$gray-450};
 
-  --color-template-card-hover-box-shadow: var(--color-green-50);
+  --color-template-card-hover-box-shadow: #{$green-50};
 }
 
 .template-card {

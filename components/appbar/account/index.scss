@@ -1,6 +1,6 @@
-#app[data-theme-mode='light'] {
-  --color-appbar-account-text: var(--color-gray-550);
-  --color-appbar-account-btn-fill: var(--color-gray-550);
+.ui-theme_light {
+  --color-appbar-account-text: #{$gray-550};
+  --color-appbar-account-btn-fill: #{$gray-550};
 }
 
 .appbar {
@@ -23,10 +23,7 @@
     }
 
     &-btn {
-      --size: 14px;
-
-      width: var(--size);
-      height: var(--size);
+      @include ui-size(14px);
 
       transform: rotate(90deg);
 

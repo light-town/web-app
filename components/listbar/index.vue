@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import UiGrid from '~/ui/grid/index.vue';
+import { UiGrid } from '@light-town/ui';
 
 export default {
   name: 'Listbar',

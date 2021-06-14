@@ -29,9 +29,8 @@
 </template>
 
 <script>
+import { UiInput, UiGrid } from '@light-town/ui';
 import DefaultItemField from '../default/index.vue';
-import UiInput from '~/ui/input/index.vue';
-import UiGrid from '~/ui/grid/index.vue';
 
 export default {
   name: 'AvatarItemField',

@@ -13,10 +13,10 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { UiGrid } from '@light-town/ui';
 import Logo from './logo/index.vue';
 import Account from './account/index.vue';
 import AccountSkeleton from './account/skeleton.vue';
-import UiGrid from '~/ui/grid/index.vue';
 import GlobalSearcher from '~/components/search-lines/vault-content/index.vue';
 
 export default {

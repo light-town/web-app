@@ -1,11 +1,16 @@
 <template>
-  <div></div>
+  <ui-grid></ui-grid>
 </template>
 
 <script>
+import { UiGrid } from '@light-town/ui';
+
 export default {
-  name: 'IndexPage',
+  components: {
+    UiGrid,
+  },
+  mounted() {
+    this.$router.push('/sign-in/identifier');
+  },
 };
 </script>
-
-<style></style>

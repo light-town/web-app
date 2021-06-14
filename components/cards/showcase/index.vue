@@ -29,11 +29,11 @@
 </template>
 
 <script>
+import { UiGrid } from '@light-town/ui';
 import AddFolderButton from './add-folder-button.vue';
 import AddItemButton from './add-item-button.vue';
 import AddVaultButton from './add-vault-button.vue';
 import TemplateCard from '~/components/cards/template/index.vue';
-import UiGrid from '~/ui/grid/index.vue';
 import ShowcaseIllustration from '~/assets/illustrations/showcase.svg?inline';
 
 export default {

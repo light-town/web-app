@@ -1,14 +1,14 @@
-#app[data-theme-mode='light'] {
-  --color-sign-up-page-verify-form-account-key-text: var(--color-gray-450);
-  --color-sign-up-page-verify-form-field-border: var(--color-gray-150);
-  --color-sign-up-page-verify-form-copy-btn-fill: var(--color-gray-450);
-  --color-sign-up-page-verify-form-copy-btn-hover-bg: var(--color-gray-100);
-  --color-sign-up-page-verify-form-copy-btn-active-bg: var(--color-gray-150);
+.ui-theme_light {
+  --color-sign-up-page-verify-form-account-key-text: #{$gray-450};
+  --color-sign-up-page-verify-form-field-border: #{$gray-150};
+  --color-sign-up-page-verify-form-copy-btn-fill: #{$gray-450};
+  --color-sign-up-page-verify-form-copy-btn-hover-bg: #{$gray-100};
+  --color-sign-up-page-verify-form-copy-btn-active-bg: #{$gray-150};
 }
 
 .verify-form {
   &__warning {
-    max-width: 420px;
+    max-width: 480px;
     margin-top: 16px;
 
     &-title {
@@ -34,10 +34,7 @@
   }
 
   &__copy-btn {
-    --size: 44px;
-
-    width: var(--size);
-    height: var(--size);
+    @include ui-size(44px);
 
     padding: 10px;
 

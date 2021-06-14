@@ -10,7 +10,7 @@
         :schema="schema"
         :item="item"
         mode="editing"
-        class="h-full overflow-auto"
+        class="ui-h-full ui-overflow-auto"
       />
       <ui-grid align-items="center" justify="space-between">
         <ui-button variant="outlined">{{ $t('Cancel') }}</ui-button>
@@ -27,9 +27,7 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex';
-import UiGrid from '~/ui/grid/index.vue';
-import UiButton from '~/ui/button/index.vue';
-import UiLoading from '~/ui/loading/index.vue';
+import { UiGrid, UiButton, UiLoading } from '@light-town/ui';
 import ItemPageLayout from '~/layouts/item.vue';
 import ItemModel from '~/components/forms/new-item/index.vue';
 import * as vaultCategoryActionTypes from '~/store/vault-categories/types';
@@ -79,7 +77,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      getVault: vaultActionTypes.GET_VAULT,
+      getVault: vaultActionTypes.GET_ACCOUNT_VAULT,
       getVaultCategory: vaultCategoryActionTypes.GET_VAULT_CATEGORY,
       createVaultItem: vaultItemActionTypes.CREATE_VAULT_ITEM,
     }),

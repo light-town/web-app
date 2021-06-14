@@ -1,15 +1,15 @@
-#app[data-theme-mode='light'] {
-  --color-vault-content-search-line-bg: var(--color-gray-75);
+.ui-theme_light {
+  --color-vault-content-search-line-bg: #{$gray-75};
 
-  --color-vault-content-search-line-token-bg: var(--color-gray-150);
+  --color-vault-content-search-line-token-bg: #{$gray-150};
 
-  --color-vault-content-search-line-dropdown-item-desc: var(--color-gray-400);
+  --color-vault-content-search-line-dropdown-item-desc: #{$gray-400};
 
-  --color-vault-content-search-line-btn-hover-bg: var(--color-gray-150);
-  --color-vault-content-search-line-btn-focus-bg: var(--color-gray-200);
-  --color-vault-content-search-line-btn: var(--color-gray-100);
+  --color-vault-content-search-line-btn-hover-bg: #{$gray-150};
+  --color-vault-content-search-line-btn-focus-bg: #{$gray-200};
+  --color-vault-content-search-line-btn: #{$gray-100};
 
-  --color-vault-content-search-line-scroll-btn: var(--color-gray-150);
+  --color-vault-content-search-line-scroll-btn: #{$gray-150};
 }
 
 .vault-content-search-line {

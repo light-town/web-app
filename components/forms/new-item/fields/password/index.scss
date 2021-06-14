@@ -1,6 +1,6 @@
-#app[data-theme-mode='light'] {
-  --color-password-item-field-title: var(--color-gray-650);
-  --color-password-item-field-text: var(--color-gray-300);
+.ui-theme_light {
+  --color-password-item-field-title: #{$gray-650};
+  --color-password-item-field-text: #{$gray-300};
 }
 
 .password-item-field {

@@ -39,8 +39,7 @@
 </template>
 
 <script>
-import UiGrid from '~/ui/grid/index.vue';
-import UiLoading from '~/ui/loading/index.vue';
+import { UiGrid, UiLoading } from '@light-town/ui';
 import FolderCard from '~/components/cards/folder/index.vue';
 import ItemCard from '~/components/cards/item/index.vue';
 import DateFormater from '~/tools/date-formater';

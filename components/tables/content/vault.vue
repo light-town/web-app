@@ -27,9 +27,8 @@
 </template>
 
 <script>
+import { UiGrid, UiLoading } from '@light-town/ui';
 import DefaultContentTable from './default-table';
-import UiGrid from '~/ui/grid/index.vue';
-import UiLoading from '~/ui/loading/index.vue';
 import FolderContextMenu from '~/components/context-menus/folder/index.vue';
 import EmptyVaultStub from '~/components/stubs/empty-vault/index.vue';
 import DateFormater from '~/tools/date-formater';

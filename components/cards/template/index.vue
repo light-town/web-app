@@ -37,9 +37,7 @@
 </template>
 
 <script>
-import UiGrid from '~/ui/grid/index.vue';
-import UiCard from '~/ui/card/index.vue';
-import UiButton from '~/ui/button/index.vue';
+import { UiGrid, UiCard, UiButton } from '@light-town/ui';
 import MoreIcon from '~/assets/more.svg?inline';
 
 export default {

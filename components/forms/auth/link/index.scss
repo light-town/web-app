@@ -1,6 +1,6 @@
-#app[data-theme-mode='light'] {
-  --color-auth-form-link-text: var(--color-green-400);
-  --color-auth-form-link-hover-text: var(--color-green-500);
+.ui-theme_light {
+  --color-auth-form-link-text: #{$green-400};
+  --color-auth-form-link-hover-text: #{$green-500};
 }
 
 .auth-form {

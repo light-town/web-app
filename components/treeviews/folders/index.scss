@@ -1,8 +1,8 @@
-#app[data-theme-mode='light'] {
-  --color-folders-treeview-vault-text: var(--color-gray-650);
-  --color-folders-treeview-folder-text: var(--color-gray-650);
+.ui-theme_light {
+  --color-folders-treeview-vault-text: #{$gray-650};
+  --color-folders-treeview-folder-text: #{$gray-650};
 
-  --color-folders-treeview-active-bg: var(--color-green-50);
+  --color-folders-treeview-active-bg: #{$green-50};
 }
 
 .folders-treeview {

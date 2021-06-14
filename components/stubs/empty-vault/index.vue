@@ -15,14 +15,14 @@
         {{ $t('Your vault is empty') }}
       </p>
       <p class="empty-vault-stub__desc">
-        {{ $t('To create a vault, right-click on an empty space') }}
+        {{ $t('To create a folder or item, right-click on an empty space') }}
       </p>
     </ui-grid>
   </ui-grid>
 </template>
 
 <script>
-import UiGrid from '~/ui/grid/index.vue';
+import { UiGrid } from '@light-town/ui';
 import EmptyVaultIcon from '~/assets/empty-folder.svg?inline';
 
 export default {

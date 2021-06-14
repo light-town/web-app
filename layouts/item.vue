@@ -1,14 +1,14 @@
 <template>
   <main-page-layout :title="currentVaultItemName" :loading="loading">
     <template #breadcrumbs>
-      <breadcrumbs class="-ml-2" />
+      <breadcrumbs />
     </template>
     <template #main>
-      <ui-grid class="h-full overflow-auto">
+      <ui-grid class="ui-h-full ui-overflow-auto">
         <ui-grid direction="column" class="app-page__sidebar">
           <folder-tree-view />
         </ui-grid>
-        <ui-grid direction="column" class="h-full overflow-auto">
+        <ui-grid direction="column" class="ui-h-full ui-overflow-auto">
           <slot></slot>
         </ui-grid>
       </ui-grid>
@@ -18,8 +18,8 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import MainPageLayout from './main.vue';
-import UiGrid from '~/ui/grid/index.vue';
+import { UiGrid } from '@light-town/ui';
+import MainPageLayout from './main/index.vue';
 import FolderTreeView from '~/components/treeviews/folders/index.vue';
 import Breadcrumbs from '~/components/breadcrumbs/index.vue';
 import * as vaultFolderActionTypes from '~/store/vault-folders/types';
@@ -68,7 +68,7 @@ export default {
     ...mapActions({
       getVaultFolder: vaultFolderActionTypes.GET_VAULT_FOLDER,
       getVaultItem: vaultItemActionTypes.GET_VAULT_ITEM,
-      getVault: vaultActionTypes.GET_VAULT,
+      getVault: vaultActionTypes.GET_ACCOUNT_VAULT,
     }),
   },
 };

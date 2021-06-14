@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import UiGrid from '~/ui/grid/index.vue';
+import { UiGrid } from '@light-town/ui';
 import EmptyFolderIcon from '~/assets/empty-folder.svg?inline';
 
 export default {

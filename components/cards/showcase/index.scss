@@ -1,11 +1,11 @@
-#app[data-theme-mode='light'] {
-  --color-showcase-add-folder-button-text-color: var(--color-green-400);
+.ui-theme_light {
+  --color-showcase-add-folder-button-text-color: #{$green-400};
 
-  --color-showcase-add-item-button-icon-fill: var(--color-white);
-  --color-showcase-add-item-button-text-color: var(--color-white);
+  --color-showcase-add-item-button-icon-fill: #{$white};
+  --color-showcase-add-item-button-text-color: #{$white};
 
-  --color-showcase-add-vault-button-icon-fill: var(--color-white);
-  --color-showcase-add-vault-button-text-color: var(--color-white);
+  --color-showcase-add-vault-button-icon-fill: #{$white};
+  --color-showcase-add-vault-button-text-color: #{$white};
 }
 
 .showcase-card {

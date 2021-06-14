@@ -40,9 +40,8 @@
 </template>
 
 <script>
+import { UiGrid } from '@light-town/ui';
 import DefaultControlsItemField from './controls/index.vue';
-
-import UiGrid from '~/ui/grid/index.vue';
 
 export default {
   name: 'DefaultItemField',

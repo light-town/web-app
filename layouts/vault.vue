@@ -1,5 +1,5 @@
 <template>
-  <main-page-layout :title="currentVaultName" :loading="loading">
+  <main-page-layout :title="currentVaultName">
     <template #breadcrumbs>
       <p class="management-title">{{ $t('Vault') }}</p>
     </template>
@@ -7,11 +7,11 @@
       <account-navbar :show-tool-btns="true" />
     </template>
     <template #main>
-      <ui-grid class="h-full overflow-auto">
+      <ui-grid class="ui-h-full ui-overflow-auto">
         <ui-grid direction="column" class="app-page__sidebar">
           <folder-tree-view />
         </ui-grid>
-        <ui-grid direction="column" class="h-full overflow-auto">
+        <ui-grid direction="column" class="ui-h-full ui-overflow-auto">
           <slot></slot>
         </ui-grid>
       </ui-grid>
@@ -21,8 +21,8 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import MainPageLayout from './main.vue';
-import UiGrid from '~/ui/grid/index.vue';
+import { UiGrid } from '@light-town/ui';
+import MainPageLayout from './main/index.vue';
 import FolderTreeView from '~/components/treeviews/folders/index.vue';
 import AccountNavbar from '~/components/navbars/account/index.vue';
 import * as vaultActionTypes from '~/store/vaults/types';
@@ -42,18 +42,19 @@ export default {
     ...mapGetters(['currentVault']),
   },
   created() {
-    this.loading = true;
+    this.currentVaultName = this.currentVault?.overview?.name ?? '';
+
+    if (this.currentVaultName.length) return;
 
     Promise.all([
       this.getVault({ uuid: this.$route.params.vaultUuid }),
     ]).finally(() => {
       this.currentVaultName = this.currentVault.overview.name;
-      this.loading = false;
     });
   },
   methods: {
     ...mapActions({
-      getVault: vaultActionTypes.GET_VAULT,
+      getVault: vaultActionTypes.GET_ACCOUNT_VAULT,
     }),
   },
 };

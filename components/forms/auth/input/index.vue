@@ -1,13 +1,9 @@
 <template>
-  <ui-input
-    v-bind="$attrs"
-    class="auth-form__input"
-    v-on="$listeners"
-  ></ui-input>
+  <ui-input v-bind="$attrs" class="auth-form__input" v-on="$listeners" />
 </template>
 
 <script>
-import UiInput from '~/ui/input/index.vue';
+import { UiInput } from '@light-town/ui';
 
 export default {
   name: 'AuthFormInput',

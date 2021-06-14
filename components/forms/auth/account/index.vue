@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import UiGrid from '~/ui/grid/index.vue';
+import { UiGrid } from '@light-town/ui';
 import UserIcon from '~/assets/user.svg?inline';
 
 export default {

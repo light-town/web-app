@@ -1,6 +1,6 @@
-#app[data-theme-mode='light'] {
-  --color-accounts-page-hover-bg: var(--color-gray-50);
-  --color-accounts-page-active-bg: var(--color-gray-100);
+.ui-theme_light {
+  --color-accounts-page-hover-bg: #{gray-50};
+  --color-accounts-page-active-bg: #{gray-100};
 }
 
 .accounts {

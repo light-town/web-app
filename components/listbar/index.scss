@@ -1,7 +1,7 @@
-#app[data-theme-mode='light'] {
-  --color-listbar-border: var(--color-gray-150);
-  --color-listbar-title: var(--color-gray-650);
-  --color-listbar-separator: var(--color-gray-150);
+.ui-theme_light {
+  --color-listbar-border: #{$gray-150};
+  --color-listbar-title: #{$gray-650};
+  --color-listbar-separator: #{$gray-150};
 }
 
 .listbar {

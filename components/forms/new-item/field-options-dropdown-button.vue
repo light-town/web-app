@@ -24,9 +24,7 @@
 </template>
 
 <script>
-import UiDropdown from '~/ui/dropdown/index.vue';
-import UiButton from '~/ui/button/index.vue';
-import UiMenuItem from '~/ui/menu/item.vue';
+import { UiDropdown, UiButton, UiMenuItem } from '@light-town/ui';
 
 export default {
   name: 'FieldOptionsDropdownButton',

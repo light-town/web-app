@@ -1,72 +1,52 @@
 import * as actionTypes from './action-types';
 import * as mutationTypes from './mutation-types';
 import identifyDevice from '~/services/devices/identify-device';
-import * as fetchStatuses from '~/store/fetch-statuses';
 
 export default {
-  async [actionTypes.INIT]({ commit, dispatch }) {
+  async [actionTypes.LOAD_DEVICE]({ commit, dispatch }) {
     try {
       const deviceUuid =
         (await this.$api.storage.getItem('deviceUuid')) || null;
 
       if (!deviceUuid) {
         await dispatch(actionTypes.REGIESTER_DEVICE);
-        commit(mutationTypes.SET_IS_INIT);
         return;
       }
 
       const response = await this.$api.devices.getOne({ uuid: deviceUuid });
 
       commit(mutationTypes.SET_DEVICE_UUID, { uuid: response.data.id });
-      commit(mutationTypes.SET_IS_INIT);
     } catch (e) {
       if (e?.response && e.response?.data?.error) {
         if (e.response.data.error.message === 'The device was not found') {
           await this.$api.storage.removeItem('deviceUuid');
           await dispatch(actionTypes.REGIESTER_DEVICE);
 
-          commit(mutationTypes.SET_IS_INIT);
           return;
         }
 
-        commit(mutationTypes.SET_ERROR, { error: e.response.data.error });
-        return;
+        throw e;
       }
 
-      commit(mutationTypes.SET_ERROR, { error: e });
+      throw e;
     }
   },
-  async [actionTypes.REGIESTER_DEVICE]({ commit, state }) {
+  async [actionTypes.REGIESTER_DEVICE]({ commit }) {
     const device = identifyDevice.init();
-    try {
-      const existsDeviceUuid = await this.$api.storage.getItem('deviceUuid');
 
-      if (existsDeviceUuid) {
-        commit(mutationTypes.SET_DEVICE_UUID, { uuid: existsDeviceUuid });
-        return;
-      }
+    const existsDeviceUuid = await this.$api.storage.getItem('deviceUuid');
 
-      commit(mutationTypes.SET_FETCH_STATUS, {
-        status: fetchStatuses.LOADING,
-      });
-
-      const response = await this.$api.devices.registerDevice({
-        os: device.os.name,
-      });
-
-      commit(mutationTypes.SET_DEVICE_UUID, { uuid: response.data.deviceUuid });
-
-      await this.$api.storage.setItem('deviceUuid', response.data.deviceUuid);
-
-      commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.SUCCESS });
-    } catch (e) {
-      if (state.fetchStatus === fetchStatuses.LOADING) {
-        commit(mutationTypes.SET_FETCH_STATUS, { status: fetchStatuses.ERROR });
-      }
-
-      commit(mutationTypes.SET_ERROR, {
-        error: e,
-      });
+    if (existsDeviceUuid) {
+      commit(mutationTypes.SET_DEVICE_UUID, { uuid: existsDeviceUuid });
+      return;
     }
+
+    const response = await this.$api.devices.registerDevice({
+      os: device.os.name,
+    });
+
+    commit(mutationTypes.SET_DEVICE_UUID, { uuid: response.data.deviceUuid });
+
+    await this.$api.storage.setItem('deviceUuid', response.data.deviceUuid);
   },
 };

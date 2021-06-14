@@ -25,15 +25,12 @@
   </ui-grid>
 </template>
 <script>
-import UiGrid from '~/ui/grid/index.vue';
-import UiButton from '~/ui/button/index.vue';
-import UiDropdown from '~/ui/dropdown/index.vue';
-import UiMenuItem from '~/ui/menu/item.vue';
+import { UiGrid, UiButton, UiDropdown, UiMenuItem } from '@light-town/ui';
 import AddIcon from '~/assets/add.svg?inline';
 import NewVaultModal from '~/components/modals/new-vault/index.vue';
 
 export default {
-  name: 'CreationContainerElementsButton',
+  name: 'CreationVaultsButton',
   components: {
     UiGrid,
     UiButton,

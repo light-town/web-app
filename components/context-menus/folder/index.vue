@@ -50,11 +50,13 @@
 
 <script>
 import { mapState } from 'vuex';
-import UiGrid from '~/ui/grid/index.vue';
-import UiContextMenu from '~/ui/context-menu/index.vue';
-import UiMenuItem from '~/ui/menu/item.vue';
-import UiMenuSeparator from '~/ui/menu/separator.vue';
-import UiMenuTitle from '~/ui/menu/title.vue';
+import {
+  UiGrid,
+  UiContextMenu,
+  UiMenuItem,
+  UiMenuSeparator,
+  UiMenuTitle,
+} from '@light-town/ui';
 import NewVaultFolderModal from '~/components/modals/new-vault-folder/index.vue';
 
 export default {

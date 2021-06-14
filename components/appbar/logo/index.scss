@@ -1,5 +1,5 @@
-#app[data-theme-mode='light'] {
-  --color-app-logo-title-text: var(--color-gray-650);
+.ui-theme_light {
+  --color-app-logo-title-text: #{$gray-650};
 }
 
 .app-logo {
@@ -7,11 +7,10 @@
 
   width: auto;
 
-  &__icon {
-    --size: 40px;
+  cursor: pointer;
 
-    width: var(--size);
-    height: var(--size);
+  &__icon {
+    @include ui-size(40px);
 
     margin-right: 1rem;
   }

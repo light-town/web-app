@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import UiButton from '~/ui/button/index.vue';
+import { UiButton } from '@light-town/ui';
 import OpenedEmptyFolderIcon from '~/assets/opened-empty-folder.svg?inline';
 
 export default {

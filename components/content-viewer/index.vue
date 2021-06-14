@@ -1,5 +1,5 @@
 <template>
-  <ui-grid>
+  <ui-grid class="ui-w-full ui-h-full">
     <slot v-if="isTableContentViewWay" name="table"></slot>
     <slot v-if="isGridContentViewWay" name="grid"></slot>
   </ui-grid>
@@ -7,7 +7,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import UiGrid from '~/ui/grid/index.vue';
+import { UiGrid } from '@light-town/ui';
 import * as ContentViewWays from '~/store/config/content-view-ways';
 
 export default {

@@ -113,5 +113,16 @@
   "Team Management": "Управление командой",
   "Account Management": "Управление аккаунтом",
   "Your vault is empty": "Ваше хранилище пусто",
-  "To create a vault, right-click on an empty space": "Чтобы создать хранилище, щелкните правой кнопкой мыши по пустому месту"
+  "To create a vault, right-click on an empty space": "Чтобы создать хранилище, щелкните правой кнопкой мыши по пустому месту",
+  "My Teams": "Мои команды",
+  "You haven't joined any teams yet": "Вы не присоединились ни к одной команде",
+  "To create a team, right-click on an empty space": "Чтобы создать команду, щелкните правой кнопкой мыши по пустому месту",
+  "New Team": "Новая команда",
+  "Team": "Команда",
+  "Dashboard": "Панел",
+  "Members": "Участники",
+  "Invitations": "Приглашения",
+  "Activity Logs": "Журнал Активности",
+  "Security": "Безопасность",
+  "New Team Vault": "Новое Хранилище Команды"
 }

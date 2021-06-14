@@ -1,12 +1,18 @@
 <template>
   <template-card
     class="primary-card"
+    :class="{ 'primary-card_active': active }"
     @click.native="handleCardClick"
     @dblclick.native="handleCardDblClick"
   >
     <template #body>
       <slot name="icon">
-        <ui-avatar :name="name" :size="128" class="primary-card__icon" />
+        <ui-avatar
+          :name="name"
+          :alt="name"
+          :size="128"
+          class="primary-card__icon"
+        />
       </slot>
       <p class="primary-card__name" :title="name">{{ name }}</p>
       <p v-if="desc.length > 0" class="primary-card__desc" :title="desc">
@@ -38,10 +44,8 @@
 </template>
 
 <script>
+import { UiGrid, UiAvatar, UiBadge } from '@light-town/ui';
 import TemplateCard from '~/components/cards/template/index.vue';
-import UiGrid from '~/ui/grid/index.vue';
-import UiAvatar from '~/ui/avatar/index.vue';
-import UiBadge from '~/ui/badge/index.vue';
 
 export default {
   name: 'PrimaryCard',
@@ -65,6 +69,11 @@ export default {
       type: Number,
       required: false,
       default: 0,
+    },
+    active: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   methods: {

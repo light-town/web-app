@@ -1,7 +1,7 @@
-#app[data-theme-mode='light'] {
-  --color-empty-folder-stub-title-text: var(--color-gray-650);
-  --color-empty-folder-stub-desc-text: var(--color-gray-550);
-  --color-empty-folder-stub-icon-fill: var(--color-gray-350);
+.ui-theme_light {
+  --color-empty-folder-stub-title-text: #{$gray-650};
+  --color-empty-folder-stub-desc-text: #{$gray-550};
+  --color-empty-folder-stub-icon-fill: #{$gray-350};
 }
 
 .empty-folder-stub {

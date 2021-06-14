@@ -1,7 +1,3 @@
-#app[data-theme-mode='light'] {
-  --color-vault-text: var(--color-gray-650);
-}
-
 .vault-list {
   height: 100%;
 
@@ -16,15 +12,4 @@
   &__table {
     padding: 20px;
   }
-}
-
-.management-title {
-  font-size: 15px;
-  font-weight: 500;
-
-  line-height: 2.25rem;
-
-  color: var(--color-gray-550);
-
-  text-align: center;
 }

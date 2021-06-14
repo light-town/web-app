@@ -12,10 +12,7 @@
       display: inline-flex;
       flex-wrap: wrap;
 
-      --size: 48px;
-
-      width: var(--size);
-      height: var(--size);
+      @include ui-size(48px);
 
       margin: 0 1.25rem;
     }

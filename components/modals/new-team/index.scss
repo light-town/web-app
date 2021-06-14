@@ -1,0 +1,66 @@
+.ui-theme_light {
+  --color-new-team-form-bg: #{$white};
+  --color-new-team-form-title: #{$gray-700};
+}
+
+.new-team-btn {
+  width: 100%;
+
+  border-style: dashed;
+
+  &:hover:enabled {
+    border-style: dashed;
+  }
+
+  &__text {
+    display: inline-flex;
+  }
+}
+
+.new-team-form {
+  width: 360px !important;
+
+  display: inline-flex;
+
+  border-radius: 0.25rem;
+
+  background-color: var(--color-new-team-form-bg);
+
+  &__title {
+    display: inline-flex;
+
+    font-size: 1.5em;
+    font-weight: 500;
+
+    color: var(--color-new-team-form-title);
+  }
+
+  &__input {
+    width: 100%;
+    min-width: 324px;
+
+    margin-bottom: 1rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__controls {
+    margin-bottom: 0;
+  }
+
+  &__avatar {
+    margin-bottom: 1.5rem;
+
+    & > .ui-avatar__badge {
+      @include ui-size(3.125rem);
+
+      font-size: 1.375em;
+    }
+  }
+
+  &__alert {
+    margin-bottom: 1rem;
+  }
+}

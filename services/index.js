@@ -8,6 +8,8 @@ import VaultsService from './vaults';
 import VaultFoldersService from './vault-folders';
 import VaultCategoriesService from './vault-categories';
 import VaultItemsService from './vault-items';
+import TeamsService from './teams';
+import TeamMembersService from './team-members';
 
 export default axios => ({
   storage: new StorageService(),
@@ -20,4 +22,6 @@ export default axios => ({
   vaultFolders: new VaultFoldersService({ axios }),
   vaultCategories: new VaultCategoriesService({ axios }),
   vaultItems: new VaultItemsService({ axios }),
+  teams: new TeamsService({ axios }),
+  teamMembers: new TeamMembersService({ axios }),
 });

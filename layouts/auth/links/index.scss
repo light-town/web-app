@@ -1,0 +1,43 @@
+.ui-theme_light {
+  --color-links-text: #{$gray-450};
+  --color-links-icon: #{$gray-450};
+  --color-links-hover-text: #{$gray-450};
+  --color-links-hover-bg: #{$gray-100};
+  --color-links-active-text: #{$gray-450};
+  --color-links-active-bg: #{$gray-150};
+}
+
+.links {
+  display: inline-flex !important;
+
+  width: auto !important;
+
+  &__support {
+    width: auto;
+  }
+
+  &__icon {
+    @include ui-size(10px);
+
+    fill: var(--color-links-icon);
+
+    margin-left: 12px;
+
+    transform: rotate(90deg);
+  }
+
+  &__btn {
+    font-size: 12px !important;
+    color: var(--color-links-text) !important;
+
+    &:hover:enabled {
+      color: var(--color-links-hover-text) !important;
+      background-color: var(--color-links-hover-bg) !important;
+    }
+
+    &:active:enabled {
+      color: var(--color-links-active-text) !important;
+      background-color: var(--color-links-active-bg) !important;
+    }
+  }
+}

@@ -28,9 +28,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import UiButton from '~/ui/button/index.vue';
-import UiBreadcrumbs from '~/ui/breadcrumbs/index.vue';
-import UiMenuItem from '~/ui/menu/item.vue';
+import { UiButton, UiBreadcrumbs, UiMenuItem } from '@light-town/ui';
 import FolderIcon from '~/assets/folder.svg?inline';
 
 export default {

@@ -38,8 +38,8 @@
 </template>
 
 <script>
+import { UiInput } from '@light-town/ui';
 import DefaultItemField from '../default/index.vue';
-import UiInput from '~/ui/input/index.vue';
 
 export default {
   name: 'TextItemField',

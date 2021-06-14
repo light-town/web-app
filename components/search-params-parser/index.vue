@@ -7,7 +7,7 @@
 <script>
 import { mapState, mapGetters } from 'vuex';
 import core from '@light-town/core';
-import UiGrid from '~/ui/grid/index.vue';
+import { UiGrid } from '@light-town/ui';
 import DateFormater from '~/tools/date-formater';
 
 const OPERATIONS = {
@@ -100,10 +100,11 @@ export default {
         }),
       ]);
 
-      const primaryKeySet = await core.helpers.keySets.decryptPrimaryKeySetHelper(
-        encKeySets.find(k => k.isPrimary),
-        this.muk
-      );
+      const primaryKeySet =
+        await core.helpers.keySets.decryptPrimaryKeySetHelper(
+          encKeySets.find(k => k.isPrimary),
+          this.muk
+        );
 
       const vaults = (
         await Promise.all(

@@ -1,8 +1,8 @@
-#app[data-theme-mode='light'] {
-  --color-avatar-item-field-title: var(--color-gray-650);
-  --color-avatar-item-field-text: var(--color-gray-300);
+.ui-theme_light {
+  --color-avatar-item-field-title: #{$gray-650};
+  --color-avatar-item-field-text: #{$gray-300};
 
-  --color-avatar-item-field-name-border: var(--color-gray-150);
+  --color-avatar-item-field-name-border: #{$gray-150};
 }
 
 .avatar-item-field {

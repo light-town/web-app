@@ -1,13 +1,16 @@
 <template>
-  <ui-form class="auth-form" @submit="onSubmit">
+  <ui-form class="auth-form" @submit.prevent="onSubmit">
     <ui-grid direction="column" align-items="center" class="auth-form__header">
       <p class="auth-form__title">{{ title }}</p>
       <p v-if="desc && desc.length" class="auth-form__desc">{{ desc }}</p>
     </ui-grid>
     <ui-grid direction="column" class="auth-form__body">
-      <ui-alert v-if="error" severity="error" class="auth-form__alert">
-        {{ error.message }}
-      </ui-alert>
+      <ui-alert
+        v-if="error"
+        variant="error"
+        :message="error.message"
+        class="auth-form__alert"
+      />
       <slot name="body"></slot>
     </ui-grid>
     <ui-grid justify="space-between" class="auth-form__footer"
@@ -17,9 +20,7 @@
 </template>
 
 <script>
-import UiForm from '~/ui/form/index.vue';
-import UiGrid from '~/ui/grid/index.vue';
-import UiAlert from '~/ui/alert/index.vue';
+import { UiForm, UiGrid, UiAlert } from '@light-town/ui';
 
 export default {
   name: 'AuthForm',

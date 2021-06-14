@@ -3,11 +3,11 @@ name: ci
 on:
   push:
     branches:
-      - develop
+      - main
       - master
   pull_request:
     branches:
-      - develop
+      - main
       - master
 
 jobs:
@@ -20,16 +20,16 @@ jobs:
         node: [14]
 
     steps:
-      - name: Checkout 
+      - name: Checkout 🛎
         uses: actions/checkout@master
 
-      - name: Setup node env 
+      - name: Setup node env 🏗
         uses: actions/setup-node@v2.1.2
         with:
           node-version: ${{ matrix.node }}
           check-latest: true
 
-      - name: Cache node_modules 
+      - name: Cache node_modules 📦
         uses: actions/cache@v2
         with:
           path: ~/.npm
@@ -37,19 +37,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install dependencies 
+      - name: Install dependencies 👨🏻‍💻
         run: npm ci
 
-      - name: Run prettier 
-        run: npm run format
-
-      - name: Run linter 
+      - name: Run linter 👀
         run: npm run lint
 
-      - name: Run tests 
-        run: npm run test:prod
-
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run tests 🧪
+        run: npm run test

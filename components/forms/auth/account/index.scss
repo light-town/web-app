@@ -1,7 +1,7 @@
-#app[data-theme-mode='light'] {
-  --color-auth-form-account-border: var(--color-gray-150);
-  --color-auth-form-account-icon: var(--color-gray-450);
-  --color-auth-form-account-text: var(--color-gray-450);
+.ui-theme_light {
+  --color-auth-form-account-border: #{$gray-150};
+  --color-auth-form-account-icon: #{$gray-450};
+  --color-auth-form-account-text: #{$gray-450};
 }
 
 .auth-form {
@@ -13,10 +13,7 @@
     border-radius: 4px;
 
     &-icon {
-      --size: 40px;
-
-      width: var(--size);
-      height: var(--size);
+      @include ui-size(40px);
 
       fill: var(--color-auth-form-account-icon);
 

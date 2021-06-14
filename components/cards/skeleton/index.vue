@@ -97,9 +97,8 @@
 </template>
 
 <script>
+import { UiGrid, UiSkeleton } from '@light-town/ui';
 import EntryCard from '~/components/cards/template/index.vue';
-import UiGrid from '~/ui/grid/index.vue';
-import UiSkeleton from '~/ui/skeleton/index.vue';
 
 export default {
   name: 'SkeletonCard',

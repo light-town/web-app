@@ -1,18 +1,18 @@
-#app[data-theme-mode='light'] {
-  --color-app-page-nav-list-item-text: var(--color-gray-650);
-  --color-app-page-nav-list-item-icon-fill: var(--color-gray-650);
+.ui-theme_light {
+  --color-app-page-nav-list-item-text: #{$gray-650};
+  --color-app-page-nav-list-item-icon-fill: #{$gray-650};
 
-  --color-app-page-nav-list-item-hover-text: var(--color-green-400);
-  --color-app-page-nav-list-item-hover-icon-fill: var(--color-green-400);
-  --color-app-page-nav-list-item-hover-badge-border: var(--color-green-400);
-  --color-app-page-nav-list-item-hover-bg: var(--color-green-50);
+  --color-app-page-nav-list-item-hover-text: #{$green-400};
+  --color-app-page-nav-list-item-hover-icon-fill: #{$green-400};
+  --color-app-page-nav-list-item-hover-badge-border: #{$green-400};
+  --color-app-page-nav-list-item-hover-bg: #{$green-50};
 
-  --color-app-page-nav-list-item-active-text: var(--color-green-400);
-  --color-app-page-nav-list-item-active-icon-fill: var(--color-green-400);
-  --color-app-page-nav-list-item-active-badge-border: var(--color-green-400);
-  --color-app-page-nav-list-item-active-bg: var(--color-green-50);
+  --color-app-page-nav-list-item-active-text: #{$green-400};
+  --color-app-page-nav-list-item-active-icon-fill: #{$green-400};
+  --color-app-page-nav-list-item-active-badge-border: #{$green-400};
+  --color-app-page-nav-list-item-active-bg: #{$green-50};
 
-  --color-app-page-nav-content-view-btn-icon-fill: var(--color-gray-650);
+  --color-app-page-nav-content-view-btn-icon-fill: #{$gray-650};
 }
 
 .app-page-nav {
@@ -98,6 +98,9 @@
 
       & > .ui-badge {
         transition: inherit;
+
+        @include ui-px-3;
+        @include ui-py-1\.5;
 
         border: 1px solid transparent;
       }

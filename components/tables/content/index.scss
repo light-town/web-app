@@ -1,11 +1,11 @@
-#app[data-theme-mode='light'] {
-  --color-folder-content-table-row-hover-bg: var(--color-gray-50);
+.ui-theme_light {
+  --color-folder-content-table-row-hover-bg: #{$gray-50};
 
-  --color-folder-content-table-row-active-bg: var(--color-green-50);
-  --color-folder-content-table-cell-active-text: var(--color-green-400);
-  --color-folder-content-table-cell-active-icon-fill: var(--color-green-400);
+  --color-folder-content-table-row-active-bg: #{$green-50};
+  --color-folder-content-table-cell-active-text: #{$green-400};
+  --color-folder-content-table-cell-active-icon-fill: #{$green-400};
 
-  --color-folder-content-table-cell-icon-fill: var(--color-gray-450);
+  --color-folder-content-table-cell-icon-fill: #{$gray-450};
 }
 
 .folder-content-table {

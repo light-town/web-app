@@ -1,5 +1,5 @@
 <template>
-  <client-only>
+  <auth-page-layout>
     <auth-form
       v-if="showAuthForm"
       :title="$t('2-Step Verification')"
@@ -36,15 +36,16 @@
     <template slot="placeholder">
       <auth-form-skeleton :title="$t('Sign In')"></auth-form-skeleton>
     </template>
-  </client-only>
+  </auth-page-layout>
 </template>
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
-import UiButton from '~/ui/button/index.vue';
+import { UiButton } from '@light-town/ui';
+import AuthPageLayout from '~/layouts/auth/index.vue';
 import AuthForm from '~/components/forms/auth/form/index.vue';
 import AuthFormAccount from '~/components/forms/auth/account/index.vue';
-import AuthFormSkeleton from '~/components/forms/auth/skeleton.vue';
+import AuthFormSkeleton from '~/components/forms/auth/skeleton/index.vue';
 import PhoneAccessIllustration from '~/assets/illustrations/2fa.svg?inline';
 import { ChangedSessionVerificationStageEvent } from '~/services/subscriptions';
 import * as cacheActionTypes from '~/store/cache/types';
@@ -56,23 +57,20 @@ export default {
     AuthForm,
     AuthFormAccount,
     AuthFormSkeleton,
+    AuthPageLayout,
     PhoneAccessIllustration,
   },
-  layout: 'auth',
   data() {
     return {
       event: null,
+      error: null,
+      loading: false,
     };
   },
   computed: {
     ...mapState({
-      isAccountServiceInit: state => state.accounts.isInit,
       sessionUuid: state => state.auth.session?.uuid,
       deviceUuid: state => state.devices.deviceUuid,
-      isCacheServiceInit: state => state.cache.isInit,
-      error(state) {
-        return this.localError || state.auth.error;
-      },
       versionAccountKey() {
         return this.currentAccount.key.split('-')[0];
       },
@@ -80,13 +78,7 @@ export default {
         return this.currentAccount.key.split('-')[1];
       },
       showAuthForm() {
-        return (
-          this.isCacheServiceInit &&
-          this.isAccountServiceInit &&
-          this.currentAccount &&
-          this.os &&
-          this.model
-        );
+        return this.currentAccount && this.os && this.model;
       },
       os: state => state.cache.raws.verificationDevice?.os,
       model: state => state.cache.raws.verificationDevice?.model,
@@ -120,9 +112,7 @@ export default {
     ...mapActions({
       clearCache: cacheActionTypes.CLEAR_CACHE,
     }),
-    handleSubmitForm(e) {
-      e.preventDefault();
-    },
+    handleSubmitForm() {},
     redirectToSignUpPage() {
       this.$router.push('/sign-up');
     },

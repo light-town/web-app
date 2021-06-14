@@ -1,0 +1,35 @@
+.ui-theme_light {
+  --color-select-langs-items-bg: #{$white};
+  --color-select-langs-items-border: #{$gray-150};
+  --color-select-langs-item-text: #{$gray-700};
+  --color-select-langs-item-hover-bg: #{$gray-100};
+}
+
+.select-langs {
+  &__items {
+    max-height: 19.5rem;
+    padding: 8px 0;
+
+    border: 1px solid var(--color-select-langs-items-border);
+    border-radius: 4px;
+
+    background-color: var(--color-select-langs-items-bg);
+  }
+
+  &__item {
+    padding: 0 16px;
+
+    cursor: pointer;
+
+    & > p {
+      padding: 8px 0;
+
+      font-size: 14px;
+      color: var(--color-select-langs-item-text);
+    }
+
+    &:hover {
+      background-color: var(--color-select-langs-item-hover-bg);
+    }
+  }
+}

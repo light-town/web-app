@@ -5,8 +5,7 @@
 </template>
 
 <script>
-import UiGrid from '~/ui/grid/index.vue';
-import UiSkeleton from '~/ui/skeleton/index.vue';
+import { UiGrid, UiSkeleton } from '@light-town/ui';
 
 export default {
   name: 'Account',

@@ -113,5 +113,16 @@
   "Team Management": "Team Management",
   "Account Management": "Account Management",
   "Your vault is empty": "Your vault is empty",
-  "To create a vault, right-click on an empty space": "To create a vault, right-click on an empty space"
+  "To create a vault, right-click on an empty space": "To create a vault, right-click on an empty space",
+  "My Teams": "My Teams",
+  "You haven't joined any teams yet": "You haven't joined any teams yet",
+  "To create a team, right-click on an empty space": "To create a team, right-click on an empty space",
+  "New Team": "New Team",
+  "Team": "Team",
+  "Dashboard": "Dashboard",
+  "Members": "Members",
+  "Invitations": "Invitations",
+  "Activity Logs": "Activity Logs",
+  "Security": "Security",
+  "New Team Vault": "New Team Vault"
 }

@@ -1,7 +1,7 @@
 <template>
-  <main-page-layout :title="$t('Search results')">
+  <main-page-layout :title="$t('Nothing to find')" :desc="$t('Search results')">
     <template #main>
-      <content-viewer class="h-full overflow-auto">
+      <content-viewer class="ui-h-full ui-overflow-auto">
         <template #table>
           <search-content-table :query="query" />
         </template>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import MainPageLayout from '~/layouts/main.vue';
+import MainPageLayout from '~/layouts/main/index.vue';
 import SearchContentTable from '~/components/tables/content/search.vue';
 import SearchContentGrid from '~/components/grids/content/search.vue';
 
@@ -25,7 +25,6 @@ export default {
     SearchContentTable,
     SearchContentGrid,
   },
-  middleware: ['auth'],
   computed: {
     query() {
       return this.$route.query;

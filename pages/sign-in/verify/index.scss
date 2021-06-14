@@ -1,6 +1,6 @@
-#app[data-theme-mode='light'] {
-  --color-verify-page-title: var(--color-gray-700);
-  --color-verify-page-desc: var(--color-gray-700);
+.ui-theme_light {
+  --color-verify-page-title: #{$gray-700};
+  --color-verify-page-desc: #{$gray-700};
 }
 
 .verify-page {

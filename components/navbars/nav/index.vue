@@ -24,9 +24,7 @@
 </template>
 
 <script>
-import UiGrid from '~/ui/grid/index.vue';
-import UiButton from '~/ui/button/index.vue';
-import UiBadge from '~/ui/badge/index.vue';
+import { UiGrid, UiButton, UiBadge } from '@light-town/ui';
 
 export default {
   name: 'AppPageNav',

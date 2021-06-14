@@ -1,6 +1,6 @@
-#app[data-theme-mode='light'] {
-  --color-new-element-button-icon-fill: var(--color-green-400);
-  --color-new-element-button-text: var(--color-green-400);
+.ui-theme_light {
+  --color-new-element-button-icon-fill: #{$green-400};
+  --color-new-element-button-text: #{$green-400};
 }
 
 .new-element-button {

@@ -1,11 +1,11 @@
-#app[data-theme-mode='light'] {
-  --color-item-field-controls: var(--color-gray-150);
-  --color-item-field-controls-btn-border: var(--color-gray-150);
-  --color-item-field-controls-btn-text: var(--color-gray-450);
+.ui-theme_light {
+  --color-item-field-controls: #{$gray-150};
+  --color-item-field-controls-btn-border: #{$gray-150};
+  --color-item-field-controls-btn-text: #{$gray-450};
 
-  --color-item-field-controls-btn-active-border: var(--color-green-400);
-  --color-item-field-controls-btn-active-text: var(--color-green-400);
-  --color-item-field-controls-btn-active-bg: var(--color-green-50);
+  --color-item-field-controls-btn-active-border: #{$green-400};
+  --color-item-field-controls-btn-active-text: #{$green-400};
+  --color-item-field-controls-btn-active-bg: #{$green-50};
 }
 
 .item-field {

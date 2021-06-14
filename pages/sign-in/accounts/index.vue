@@ -1,51 +1,48 @@
 <template>
-  <ui-grid>
-    <client-only>
-      <auth-form v-if="showAuthForm" :title="$t('Choose an account')">
-        <template #body>
-          <ui-alert v-if="error" severity="error">
-            {{ error.message }}
-          </ui-alert>
-          <ui-grid direction="column" class="accounts__list">
-            <auth-form-account
-              v-for="account in accounts"
-              :key="account.uuid"
-              :version="getVersionAccountKey(account.key)"
-              :uuid="getUuidAccountKey(account.key)"
-              :name="account.name"
-              class="accounts__account"
-              @click="handleChooseAccount(account.uuid)"
-            />
-          </ui-grid>
-        </template>
-        <template #footer>
-          <ui-grid justify="center">
-            <ui-button
-              variant="outlined"
-              type="submit"
-              @click="handleSignInAnotherAccount"
-            >
-              {{ $t('Sign in to another account') }}
-            </ui-button>
-          </ui-grid>
-        </template>
-      </auth-form>
-      <auth-form-skeleton v-else :title="$t('Sign In')" />
-      <template slot="placeholder">
-        <auth-form-skeleton :title="$t('Sign In')" />
+  <auth-page-layout>
+    <auth-form v-if="showAuthForm" :title="$t('Choose an account')">
+      <template #body>
+        <ui-alert v-if="error" variant="error">
+          {{ error.message }}
+        </ui-alert>
+        <ui-grid direction="column" class="accounts__list">
+          <auth-form-account
+            v-for="account in accounts"
+            :key="account.uuid"
+            :version="getVersionAccountKey(account.key)"
+            :uuid="getUuidAccountKey(account.key)"
+            :name="account.name"
+            class="accounts__account"
+            @click="handleChooseAccount(account.uuid)"
+          />
+        </ui-grid>
       </template>
-    </client-only>
-  </ui-grid>
+      <template #footer>
+        <ui-grid justify="center">
+          <ui-button
+            variant="outlined"
+            type="submit"
+            @click="handleSignInAnotherAccount"
+          >
+            {{ $t('Sign in to another account') }}
+          </ui-button>
+        </ui-grid>
+      </template>
+    </auth-form>
+    <auth-form-skeleton v-else :title="$t('Sign In')" />
+    <template slot="placeholder">
+      <auth-form-skeleton :title="$t('Sign In')" />
+    </template>
+  </auth-page-layout>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import UiGrid from '~/ui/grid/index.vue';
-import UiButton from '~/ui/button/index.vue';
-import UiAlert from '~/ui/alert/index.vue';
+import { UiGrid, UiButton, UiAlert } from '@light-town/ui';
+import AuthPageLayout from '~/layouts/auth/index.vue';
 import AuthForm from '~/components/forms/auth/form/index.vue';
 import AuthFormAccount from '~/components/forms/auth/account/index.vue';
-import AuthFormSkeleton from '~/components/forms/auth/skeleton.vue';
+import AuthFormSkeleton from '~/components/forms/auth/skeleton/index.vue';
 import * as accountsActionTypes from '~/store/accounts/types';
 
 export default {
@@ -57,24 +54,20 @@ export default {
     AuthForm,
     AuthFormAccount,
     AuthFormSkeleton,
+    AuthPageLayout,
   },
-  layout: 'auth',
   data() {
     return {
-      localError: null,
+      loading: false,
+      error: null,
     };
   },
   computed: {
     ...mapState({
-      isAccountServiceInit: state => state.accounts.isInit,
       accounts: state => Object.values(state.accounts.accounts),
-      error(state) {
-        return this.localError || state.auth.error;
-      },
     }),
-
     showAuthForm() {
-      return this.isAccountServiceInit && this.accounts.length;
+      return !this.loading && this.accounts.length;
     },
   },
   methods: {

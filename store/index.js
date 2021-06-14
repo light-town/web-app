@@ -1,13 +1,20 @@
 export const getters = {
   currentAccount: state =>
     state.accounts.accounts[state.accounts.currentAccountUuid],
+
   primaryKeySet: state =>
-    Object.values(state['key-sets']).find(keySet => keySet?.isPrimary),
+    Object.values(state['key-sets'].all).find(keySet => keySet.isPrimary),
+
   currentVault: state => state.vaults.all[state.vaults.currentVaultUuid],
+
   currentVaultFolder: state =>
     state['vault-folders'].all[state['vault-folders'].currentVaultFolderUuid],
+
   currentVaultItem: state =>
     state['vault-items'].all[state['vault-items'].currentVaultItemUuid],
+
+  currentTeam: state => state.teams.all[state.teams.currentTeamUuid],
+
   pathToFolder: state => folderUuid => {
     const folders = [];
     let currentFolder = state['vault-folders'].all[folderUuid];
@@ -20,5 +27,6 @@ export const getters = {
 
     return folders;
   },
+
   vault: state => vaultUuid => state.vaults.all[vaultUuid],
 };

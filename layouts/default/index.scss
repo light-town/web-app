@@ -1,0 +1,6 @@
+.app-page-layout {
+  @include ui-w-full;
+  @include ui-h-screen;
+  @include ui-flex-fixed;
+  @include ui-overflow-auto;
+}

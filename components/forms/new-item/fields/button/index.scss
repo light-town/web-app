@@ -1,6 +1,6 @@
-#app[data-theme-mode='light'] {
-  --color-button-item-field-title: var(--color-gray-650);
-  --color-button-item-field-text: var(--color-gray-300);
+.ui-theme_light {
+  --color-button-item-field-title: #{$gray-650};
+  --color-button-item-field-text: #{$gray-300};
 }
 
 .button-item-field {

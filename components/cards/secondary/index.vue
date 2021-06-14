@@ -39,9 +39,8 @@
 </template>
 
 <script>
-import UiGrid from '~/ui/grid/index.vue';
+import { UiBadge, UiGrid } from '@light-town/ui';
 import TemplateCard from '~/components/cards/template/index.vue';
-import UiBadge from '~/ui/badge/index.vue';
 import KeyIcon from '~/assets/key.svg?inline';
 
 export default {
