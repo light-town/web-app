@@ -5,14 +5,13 @@
         :key="item.uuid"
         :name="item.overview.name"
         :desc="item.overview.desc"
-        :entries-count="item.containedFoldersCount"
+        :entries-count="item.foldersCount + item.itemsCount"
         :active="selected"
         class="content-grid__cell"
         @click="hadnleClick($event, item, select)"
         @dblclick="hadnleDblClick($event, item)"
       />
     </template>
-    <!-- <template #empty-grid-template> </template> -->
   </grid-template>
 </template>
 

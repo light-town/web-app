@@ -71,10 +71,13 @@ export default {
       folders: state => state['vault-folders'].all,
       currentVaultFolderUuid: state =>
         state['vault-folders'].currentVaultFolderUuid,
+      currentVaultUuid: state => state.vaults.currentVaultUuid,
     }),
     ...mapGetters(['currentVault', 'pathToFolder']),
     nodes() {
-      return Object.values(this.folders);
+      return Object.values(this.folders).filter(
+        folder => folder.vaultUuid === this.currentVaultUuid
+      );
     },
   },
   created() {
@@ -116,8 +119,8 @@ export default {
 
       while (currentVaultFolderUuid) {
         await this.getVaultFolder({ uuid: currentVaultFolderUuid });
-        currentVaultFolderUuid = this.folders[currentVaultFolderUuid]
-          ?.parentFolderUuid;
+        currentVaultFolderUuid =
+          this.folders[currentVaultFolderUuid]?.parentFolderUuid;
       }
 
       const folders = this.pathToFolder(this.currentVaultFolderUuid);

@@ -130,7 +130,7 @@ export default {
         return;
       }
 
-      // eslint-disable-next-line no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const [_, operator, criteria] = matches;
 
       this.tokens.push(this.criterias.find(c => c.queryName === criteria));
@@ -188,18 +188,19 @@ export default {
 
       switch (criteria.queryName) {
         case 'vault-name': {
-          const { data: encKeySets } = await this.$api.keySets.getKeySets(
-            this.currentAccount.uuid
-          );
-          const primaryKeySet = await core.helpers.keySets.decryptPrimaryKeySetHelper(
-            encKeySets.find(k => k.isPrimary),
-            this.muk
-          );
+          const { data: encKeySets } =
+            await this.$api.keySets.getAccountKeySets(this.currentAccount.uuid);
+          const primaryKeySet =
+            await core.helpers.keySets.decryptPrimaryKeySetHelper(
+              encKeySets.find(k => k.isPrimary),
+              this.muk
+            );
           const { data: encVaults } = await this.$api.vaults.getVaults();
-          const vault = await core.helpers.vaults.decryptVaultByPrivateKeyHelper(
-            encVaults.find(v => v.keySetUuid === primaryKeySet.uuid),
-            primaryKeySet.privateKey
-          );
+          const vault =
+            await core.helpers.vaults.decryptVaultByPrivateKeyHelper(
+              encVaults.find(v => v.keySetUuid === primaryKeySet.uuid),
+              primaryKeySet.privateKey
+            );
 
           this.currentDropdownItems = [
             { id: vault.uuid, name: vault.overview.name, type: 'value' },
@@ -207,26 +208,27 @@ export default {
           break;
         }
         case 'folder-name': {
-          const { data: encKeySets } = await this.$api.keySets.getKeySets(
-            this.currentAccount.uuid
-          );
-          const primaryKeySet = await core.helpers.keySets.decryptPrimaryKeySetHelper(
-            encKeySets.find(k => k.isPrimary),
-            this.muk
-          );
+          const { data: encKeySets } =
+            await this.$api.keySets.getAccountKeySets(this.currentAccount.uuid);
+          const primaryKeySet =
+            await core.helpers.keySets.decryptPrimaryKeySetHelper(
+              encKeySets.find(k => k.isPrimary),
+              this.muk
+            );
           const { data: encVaults } = await this.$api.vaults.getVaults();
-          const vault = await core.helpers.vaults.decryptVaultByPrivateKeyHelper(
-            encVaults.find(v => v.keySetUuid === primaryKeySet.uuid),
-            primaryKeySet.privateKey
-          );
-          const {
-            data: encVaultFolders,
-          } = await this.$api.vaultFolders.getFolders();
+          const vault =
+            await core.helpers.vaults.decryptVaultByPrivateKeyHelper(
+              encVaults.find(v => v.keySetUuid === primaryKeySet.uuid),
+              primaryKeySet.privateKey
+            );
+          const { data: encVaultFolders } =
+            await this.$api.vaultFolders.getFolders();
 
-          const folders = await core.helpers.vaultFolders.decryptVaultFoldersHelper(
-            encVaultFolders.filter(f => f.vaultUuid === vault.uuid),
-            vault.key
-          );
+          const folders =
+            await core.helpers.vaultFolders.decryptVaultFoldersHelper(
+              encVaultFolders.filter(f => f.vaultUuid === vault.uuid),
+              vault.key
+            );
 
           this.currentDropdownItems = _.uniqWith(
             folders,
@@ -239,18 +241,19 @@ export default {
           break;
         }
         case 'item-name': {
-          const { data: encKeySets } = await this.$api.keySets.getKeySets(
-            this.currentAccount.uuid
-          );
-          const primaryKeySet = await core.helpers.keySets.decryptPrimaryKeySetHelper(
-            encKeySets.find(k => k.isPrimary),
-            this.muk
-          );
+          const { data: encKeySets } =
+            await this.$api.keySets.getAccountKeySets(this.currentAccount.uuid);
+          const primaryKeySet =
+            await core.helpers.keySets.decryptPrimaryKeySetHelper(
+              encKeySets.find(k => k.isPrimary),
+              this.muk
+            );
           const { data: encVaults } = await this.$api.vaults.getVaults();
-          const vault = await core.helpers.vaults.decryptVaultByPrivateKeyHelper(
-            encVaults.find(v => v.keySetUuid === primaryKeySet.uuid),
-            primaryKeySet.privateKey
-          );
+          const vault =
+            await core.helpers.vaults.decryptVaultByPrivateKeyHelper(
+              encVaults.find(v => v.keySetUuid === primaryKeySet.uuid),
+              primaryKeySet.privateKey
+            );
           const { data: encVaultItems } = await this.$api.vaultItems.getItems({
             onlyOverview: true,
           });

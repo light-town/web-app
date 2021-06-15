@@ -1,1 +1,5 @@
 @import '../../node_modules/@light-town/ui/src/scss/main.scss';
+
+* {
+  user-select: none;
+}

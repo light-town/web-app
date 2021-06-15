@@ -2,8 +2,12 @@
   <default-page-layout>
     <ui-grid direction="column" class="ui-h-full">
       <appbar class="app-page__appbar" />
-      <ui-grid class="app-page__header-layout" direction="column">
-        <ui-grid class="app-page__breadcrumbs-layout">
+      <ui-grid
+        class="app-page__header-layout"
+        direction="column"
+        justify="center"
+      >
+        <ui-grid class="app-page__breadcrumbs-layout" align-items="center">
           <slot name="breadcrumbs">
             <p class="app-page__desc">{{ desc }}</p>
           </slot>

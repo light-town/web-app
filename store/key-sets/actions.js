@@ -46,7 +46,7 @@ export default {
     { commit, state, rootState },
     payload
   ) {
-    const existsAccountPrimaryKeySet = await findAccountPrimaryKey(
+    const existsAccountPrimaryKeySet = findAccountPrimaryKey(
       state.all,
       rootState.accounts.currentAccountUuid
     );

@@ -1,5 +1,6 @@
 import core from '@light-town/core';
 import findTeamPrimaryKey from '../key-sets/helpers/find-team-primary-key-set';
+import findAccountPrimaryKey from '../key-sets/helpers/find-account-primary-key-set';
 import * as actionTypes from './action-types';
 import * as mutationTypes from './mutation-types';
 import * as teamActionTypes from '~/store/teams/types';
@@ -150,10 +151,8 @@ export default {
 
     commit(mutationTypes.SET_VAULT, {
       vault: {
-        uuid: response.data.uuid,
+        ...response.data,
         ...newVault,
-        accountUuid: response.data.accountUuid,
-        keySetUuid: response.data.keySetUuid,
       },
     });
   },

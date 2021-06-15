@@ -1,4 +1,8 @@
 .new-vault-folder-modal {
+  &__form {
+    width: 360px !important;
+  }
+
   &__input {
     margin: 6px 0;
   }

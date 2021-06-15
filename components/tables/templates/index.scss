@@ -1,14 +1,14 @@
 .ui-theme_light {
-  --color-folder-content-table-row-hover-bg: #{$gray-50};
+  --color-content-table-row-hover-bg: #{$gray-50};
 
-  --color-folder-content-table-row-active-bg: #{$green-50};
-  --color-folder-content-table-cell-active-text: #{$green-400};
-  --color-folder-content-table-cell-active-icon-fill: #{$green-400};
+  --color-content-table-row-active-bg: #{$green-50};
+  --color-content-table-cell-active-text: #{$green-400};
+  --color-content-table-cell-active-icon-fill: #{$green-400};
 
-  --color-folder-content-table-cell-icon-fill: #{$gray-450};
+  --color-content-table-cell-icon-fill: #{$gray-450};
 }
 
-.folder-content-table {
+.content-table {
   height: 100%;
 
   overflow-y: auto;
@@ -21,14 +21,14 @@
         cursor: pointer;
 
         &_active {
-          background-color: var(--color-folder-content-table-row-active-bg);
+          background-color: var(--color-content-table-row-active-bg);
 
-          .folder-content-table__table-body-cell__title {
-            color: var(--color-folder-content-table-cell-active-text);
+          .content-table__table-body-cell__title {
+            color: var(--color-content-table-cell-active-text);
           }
 
-          .folder-content-table__table-body-cell__icon {
-            fill: var(--color-folder-content-table-cell-active-icon-fill);
+          .content-table__table-body-cell__icon {
+            fill: var(--color-content-table-cell-active-icon-fill);
           }
         }
       }
@@ -74,7 +74,7 @@
           width: var(--size);
           height: var(--size);
 
-          fill: var(--color-folder-content-table-cell-icon-fill);
+          fill: var(--color-content-table-cell-icon-fill);
         }
       }
     }

@@ -3,7 +3,7 @@
     <content-viewer>
       <template #table>
         <folder-content-table
-          :items="items"
+          :rows="items"
           :loading="loading"
           :vault-uuid="currentVaultUuid"
           :folder-uuid="currentVaultFolderUuid"
@@ -24,8 +24,8 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import FolderPageLayout from '~/layouts/folder.vue';
-import FolderContentTable from '~/components/tables/content/folder.vue';
-import FolderContentGrid from '~/components/grids/content/folders.vue';
+import FolderContentTable from '~/components/tables/folder-contents.table.vue';
+import FolderContentGrid from '~/components/grids/folder-contents.grid.vue';
 import ContentViewer from '~/components/content-viewer/index.vue';
 import * as vaultFolderActionTypes from '~/store/vault-folders/types';
 import * as vaultItemActionTypes from '~/store/vault-items/types';

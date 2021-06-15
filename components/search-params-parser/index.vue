@@ -1,14 +1,6 @@
-<template>
-  <ui-grid direction="column">
-    <slot :items="rows" :loading="loading"></slot>
-  </ui-grid>
-</template>
-
 <script>
 import { mapState, mapGetters } from 'vuex';
 import core from '@light-town/core';
-import { UiGrid } from '@light-town/ui';
-import DateFormater from '~/tools/date-formater';
 
 const OPERATIONS = {
   EQUAL: 'equal',
@@ -23,9 +15,6 @@ const CRITERIAS = {
 
 export default {
   name: 'SearchParamsParser',
-  components: {
-    UiGrid,
-  },
   props: {
     query: {
       type: Object,
@@ -45,11 +34,7 @@ export default {
       muk: state => state['key-sets'].masterUnlockKey,
     }),
     rows() {
-      return [...this.folders, ...this.items].map(i => ({
-        ...i,
-        lastUpdatedAt: DateFormater.formatFromString(i.lastUpdatedAt),
-        createdAt: DateFormater.formatFromString(i.createdAt),
-      }));
+      return [...this.folders, ...this.items];
     },
     parsedQuery() {
       const regex = /^(\w+)\[([a-zA-Z0-9\- ]+)\]$/u;
@@ -58,11 +43,12 @@ export default {
           const matches = queryName.match(regex);
 
           if (!matches || matches.length !== 3) {
+            // eslint-disable-next-line no-console
             console.error('invalud key search');
             return {};
           }
 
-          // eslint-disable-next-line no-unused-vars
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const [_, op, criteria] = matches;
 
           return {
@@ -82,6 +68,7 @@ export default {
   created() {
     this.computeResult();
   },
+
   methods: {
     async computeResult() {
       this.loading = true;
@@ -92,7 +79,7 @@ export default {
         { data: encVaultFolders },
         { data: encVaultItems },
       ] = await Promise.all([
-        this.$api.keySets.getKeySets(this.currentAccount.uuid),
+        this.$api.keySets.getAccountKeySets(this.currentAccount.uuid),
         this.$api.vaults.getVaults(),
         this.$api.vaultFolders.getFolders(),
         this.$api.vaultItems.getItems({
@@ -209,6 +196,12 @@ export default {
         (op === OPERATIONS.NOT_EQUAL && !regexResult)
       );
     },
+  },
+  render() {
+    return this.$scopedSlots.default({
+      items: this.rows,
+      loading: this.loading,
+    });
   },
 };
 </script>

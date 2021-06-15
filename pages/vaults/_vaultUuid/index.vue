@@ -2,15 +2,15 @@
   <vault-page-layout>
     <content-viewer>
       <template #table>
-        <vault-content-table
-          :items="items"
+        <vault-contents-table
+          :rows="items"
           :loading="loading"
           :vault-uuid="currentVaultUuid"
           @row-dbl-click="openItem"
         />
       </template>
       <template #grid>
-        <vault-content-grid
+        <vault-contents-grid
           :items="items"
           :loading="loading"
           @item-dbl-click="openItem"
@@ -23,8 +23,8 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import VaultPageLayout from '~/layouts/vault.vue';
-import VaultContentTable from '~/components/tables/content/vault.vue';
-import VaultContentGrid from '~/components/grids/content/folders.vue';
+import VaultContentsTable from '~/components/tables/vault-contents.table.vue';
+import VaultContentsGrid from '~/components/grids/vault-contents.grid.vue';
 import ContentViewer from '~/components/content-viewer/index.vue';
 import * as vaultFolderActionTypes from '~/store/vault-folders/types';
 import * as vaultItemActionTypes from '~/store/vault-items/types';
@@ -33,8 +33,8 @@ export default {
   name: 'VaultPage',
   components: {
     VaultPageLayout,
-    VaultContentTable,
-    VaultContentGrid,
+    VaultContentsTable,
+    VaultContentsGrid,
     ContentViewer,
   },
   middleware: ['auth', 'url-params'],

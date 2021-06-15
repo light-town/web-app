@@ -1,5 +1,5 @@
 <template>
-  <ui-grid class="ui-w-full ui-h-full">
+  <ui-grid class="ui-w-full ui-h-full ui-overflow-auto">
     <slot v-if="isTableContentViewWay" name="table"></slot>
     <slot v-if="isGridContentViewWay" name="grid"></slot>
   </ui-grid>

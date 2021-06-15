@@ -1,5 +1,5 @@
 <template>
-  <main-page-layout :title="$t('My Vaults')" :desc="$t('Account Management')">
+  <main-page-layout :title="$t('My vaults')" :desc="$t('Account management')">
     <template #nav>
       <account-navbar>
         <template #creation-button>
@@ -8,37 +8,21 @@
       </account-navbar>
     </template>
     <template #main>
-      <ui-grid class="vault-list" wrap="wrap">
-        <template v-if="showVaults">
-          <vault-card
-            v-for="vault in vaults"
-            :key="vault.uuid"
-            :name="vault.overview.name"
-            :desc="vault.overview.desc"
-            class="vault-list__vault"
-            @dblclick="openVault(vault)"
-          />
-        </template>
-        <template v-else>
-          <vault-card-skeleton
-            v-for="i in 6"
-            :key="i"
-            class="vault-list__vault"
-          />
-        </template>
-      </ui-grid>
+      <account-vaults-grid
+        :items="vaults"
+        :loading="loading"
+        @item-dbl-click="openVault"
+      />
     </template>
   </main-page-layout>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex';
-import { UiGrid } from '@light-town/ui';
 import MainPageLayout from '~/layouts/main/index.vue';
-import VaultCard from '~/components/cards/vault/index.vue';
 import AccountNavbar from '~/components/navbars/account/index.vue';
-import VaultCardSkeleton from '~/components/cards/skeleton/index.vue';
 import CreationVaultsButton from '~/components/navbars/creation-vaults-button/index.vue';
+import AccountVaultsGrid from '~/components/grids/account-vaults.grid.vue';
 import * as vaultActionTypes from '~/store/vaults/types';
 import * as keySetsActionTypes from '~/store/key-sets/types';
 import * as teamsActionTypes from '~/store/teams/types';
@@ -46,10 +30,8 @@ import * as teamsActionTypes from '~/store/teams/types';
 export default {
   name: 'VaultsPage',
   components: {
-    UiGrid,
     MainPageLayout,
-    VaultCard,
-    VaultCardSkeleton,
+    AccountVaultsGrid,
     AccountNavbar,
     CreationVaultsButton,
   },
@@ -64,9 +46,6 @@ export default {
           v => v.ownerAccountUuid === state.accounts.currentAccountUuid
         ),
     }),
-    showVaults() {
-      return !this.loading && this.vaults.length > 0;
-    },
   },
   async created() {
     this.loading = true;
@@ -85,7 +64,7 @@ export default {
       getVault: vaultActionTypes.GET_ACCOUNT_VAULT,
       getTeams: teamsActionTypes.GET_TEAMS,
     }),
-    async openVault(vault) {
+    async openVault(_, vault) {
       await this.setCurrentVault({ uuid: vault.uuid });
       await this.getVault({ uuid: vault.uuid });
 

@@ -34,9 +34,7 @@
           {{ entriesCount }}
         </ui-badge>
         <p class="primary-card__badge-desc">
-          {{
-            entriesCount > 0 ? $t('Entries inside') : $t('No entries inside')
-          }}
+          {{ $tc(labelEntriesInside, 10) }}
         </p>
       </ui-grid>
     </template>
@@ -74,6 +72,11 @@ export default {
       type: Boolean,
       required: false,
       default: false,
+    },
+    labelEntriesInside: {
+      type: String,
+      required: false,
+      default: '{n} Entries inside',
     },
   },
   methods: {

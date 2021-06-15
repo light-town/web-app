@@ -28,7 +28,7 @@ export default {
       'node_modules/@light-town/ui/src/scss/utilities.scss',
     ],
   },
-  plugins: ['~/plugins/axios', '~/plugins/api'],
+  plugins: ['~/plugins/axios', '~/plugins/vue-i18n', '~/plugins/api'],
   components: true,
   buildModules: [
     '@nuxt/typescript-build',
