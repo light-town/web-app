@@ -31,12 +31,14 @@
 <script>
 import DefaultPageLayout from '@/layouts/default/index.vue';
 import { UiGrid } from '@light-town/ui';
+import Appbar from '~/components/appbar/index.vue';
 
 export default {
   name: 'MainPageLayout',
   components: {
     UiGrid,
     DefaultPageLayout,
+    Appbar,
   },
   props: {
     title: {

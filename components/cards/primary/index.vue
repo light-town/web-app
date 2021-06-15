@@ -34,7 +34,7 @@
           {{ entriesCount }}
         </ui-badge>
         <p class="primary-card__badge-desc">
-          {{ $tc(labelEntriesInside, 10) }}
+          {{ $tc(labelEntriesInside, entriesCount) }}
         </p>
       </ui-grid>
     </template>

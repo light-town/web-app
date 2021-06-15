@@ -16,7 +16,7 @@
   &__icon,
   &__name,
   &__desc {
-    margin: 0.125rem 0;
+    @include ui-my-1;
 
     transition: all 0.3s;
   }
@@ -49,7 +49,10 @@
   }
 
   &__badge {
-    margin-right: 10px;
+    @include ui-px-6;
+    @include ui-py-3;
+
+    @include ui-mr(px_to_rem(10px));
 
     &-desc {
       font-size: 13px;

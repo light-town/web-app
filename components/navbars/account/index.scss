@@ -99,8 +99,8 @@
       & > .ui-badge {
         transition: inherit;
 
-        @include ui-px-3;
-        @include ui-py-1\.5;
+        @include ui-px-6;
+        @include ui-py-2;
 
         border: 1px solid transparent;
       }

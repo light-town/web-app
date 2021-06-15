@@ -1,12 +1,9 @@
 .appbar {
-  height: 70px;
+  @include ui-h(70px);
 
-  flex-shrink: 0;
-  flex-grow: 0;
-
-  padding: 0 2.5rem;
+  @include ui-flex-fixed;
 
   &__logo {
-    margin-right: 2.5rem;
+    @include ui-pr-14;
   }
 }

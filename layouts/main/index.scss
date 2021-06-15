@@ -8,28 +8,25 @@
   &__header-layout,
   &__nav-layout,
   &__main-layout {
-    padding: 0 2.5rem;
+    @include ui-px-14;
   }
 
   &__nav-layout {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
+    @include ui-py-4;
   }
 
   &__main-layout {
-    overflow: auto;
-    height: 100%;
+    @include ui-overflow-auto;
+    @include ui-h-full;
   }
 
   &__header-layout {
-    height: 112px;
-
+    @include ui-h(112px);
     @include ui-flex-fixed;
   }
 
   &__breadcrumbs-layout {
-    height: 36px;
-
+    @include ui-h(36px);
     @include ui-flex-fixed;
   }
 

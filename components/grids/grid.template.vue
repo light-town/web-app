@@ -65,11 +65,11 @@ export default {
   @include ui-overflow-x-auto;
 
   &__cell {
-    @include ui-m-2;
+    @include ui-m-4;
   }
 
   &__loading {
-    @include ui-mt-8;
+    @include ui-mt-12;
   }
 }
 </style>
