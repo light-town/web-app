@@ -25,17 +25,19 @@
         justify="center"
         class="primary-card__footer"
       >
-        <ui-badge
-          v-if="entriesCount > 0"
-          variant="contained"
-          color="green"
-          class="primary-card__badge"
-        >
-          {{ entriesCount }}
-        </ui-badge>
-        <p class="primary-card__badge-desc">
-          {{ $tc(labelEntriesInside, entriesCount) }}
-        </p>
+        <template v-if="entriesInsideExists">
+          <ui-badge
+            v-if="entriesCount > 0"
+            variant="contained"
+            color="green"
+            class="primary-card__badge"
+          >
+            {{ entriesCount }}
+          </ui-badge>
+          <p class="primary-card__badge-desc">
+            {{ $tc(labelEntriesInside, entriesCount) }}
+          </p>
+        </template>
       </ui-grid>
     </template>
   </template-card>
@@ -77,6 +79,11 @@ export default {
       type: String,
       required: false,
       default: '{n} Entries inside',
+    },
+    entriesInsideExists: {
+      type: Boolean,
+      required: false,
+      default: true,
     },
   },
   methods: {

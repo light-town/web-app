@@ -16,17 +16,13 @@
         class="auth-form__alert"
         :message="error.message"
       />
-      <ui-avatar :name="title" :alt="title" class="ui-mb-1.5" />
+      <ui-avatar :name="title" :alt="title" class="ui-mb-2" />
       <ui-grid direction="column">
-        <ui-input
-          v-model="title"
-          :placeholder="$t('Title')"
-          class="ui-my-1.5"
-        />
+        <ui-input v-model="title" :placeholder="$t('Title')" class="ui-my-2" />
         <ui-input
           v-model="desc"
           :placeholder="$t('Description (optional)')"
-          class="ui-my-1.5"
+          class="ui-my-2"
         />
       </ui-grid>
     </ui-grid>

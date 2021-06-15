@@ -127,5 +127,7 @@
   "Search for items...": "Search for items...",
   "{n} Members": "No members | Members",
   "{n} Entries inside": "No entries inside | Entries inside",
-  "{n} items found": "Nothing found | {n} items found"
+  "{n} items found": "Nothing found | {n} items found",
+  "Role": "Role",
+  "Joined at": "Joined at"
 }

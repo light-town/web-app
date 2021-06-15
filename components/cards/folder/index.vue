@@ -4,11 +4,11 @@
       <ui-grid
         align-items="flex-end"
         justify="center"
-        class="ui-w-32 ui-h-32 ui-mb-3.5 ui-flex-fixed"
+        class="ui-w-22 ui-h-22 ui-mb-7 ui-flex-fixed"
       >
         <opened-empty-folder-icon
           v-if="isFolderEmpty"
-          class="ui-w-32 ui-mb-3.5"
+          class="ui-w-22 ui-mb-7"
         />
         <contained-folder-icon v-else />
       </ui-grid>

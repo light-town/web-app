@@ -1,3 +1,9 @@
+.ui-theme_light {
+  --appbar-tool-btn-icon-fill: #{$gray-550};
+  --appbar-tool-btn-hover-bg: #{$gray-100};
+  --appbar-tool-btn-focus-bs: #{$gray-150};
+}
+
 .appbar {
   @include ui-h(70px);
 
@@ -5,5 +11,31 @@
 
   &__logo {
     @include ui-pr-14;
+  }
+
+  &__tool-btn {
+    @include ui-w-16;
+    @include ui-h-16;
+    @include ui-flex;
+    @include ui-flex-fixed;
+    @include ui-p-0;
+    @include ui-rounded;
+
+    @include ui-mr-8;
+
+    &-icon {
+      @include ui-w-10;
+      @include ui-h-10;
+
+      fill: var(--appbar-tool-btn-icon-fill);
+    }
+
+    &:hover {
+      background-color: var(--appbar-tool-btn-hover-bg) !important;
+    }
+
+    &:focus {
+      @include ui-box-shadow(var(--appbar-tool-btn-focus-bs));
+    }
   }
 }

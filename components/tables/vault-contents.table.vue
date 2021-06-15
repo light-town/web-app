@@ -1,25 +1,27 @@
 <template>
-  <default-table-template
-    v-model="activeRow"
-    :rows="rows"
-    :loading="loading"
-    v-bind="$attrs"
-    v-on="$listeners"
-    @row-context-menu="handleRowContextMenu"
-  >
+  <ui-grid>
+    <default-table-template
+      v-model="activeRow"
+      :rows="rows"
+      :loading="loading"
+      v-bind="$attrs"
+      v-on="$listeners"
+      @row-context-menu="handleRowContextMenu"
+    >
+      <template #empty-table-template>
+        <empty-vault-stub />
+      </template>
+    </default-table-template>
     <folder-context-menu
-      v-if="activeRow"
       ref="folderContextMenu"
-      :folder-uuid="activeRow.uuid"
+      :folder-uuid="folderUuid"
       :vault-uuid="vaultUuid"
     />
-    <template #empty-table-template>
-      <empty-vault-stub />
-    </template>
-  </default-table-template>
+  </ui-grid>
 </template>
 
 <script>
+import { UiGrid } from '@light-town/ui';
 import DefaultTableTemplate from './templates/default-table.template.vue';
 import FolderContextMenu from '~/components/context-menus/folder/index.vue';
 import EmptyVaultStub from '~/components/stubs/empty-vault/index.vue';
@@ -27,6 +29,7 @@ import EmptyVaultStub from '~/components/stubs/empty-vault/index.vue';
 export default {
   name: 'VaultContentsTable',
   components: {
+    UiGrid,
     FolderContextMenu,
     DefaultTableTemplate,
     EmptyVaultStub,
@@ -52,11 +55,25 @@ export default {
       activeRow: null,
     };
   },
+  computed: {
+    folderUuid() {
+      return this.activeRow?.uuid ?? null;
+    },
+  },
   methods: {
-    handleRowContextMenu(e) {
-      this.$nextTick(() => {
-        this.$refs.folderContextMenu.open(e);
-      });
+    async handleRowContextMenu(e) {
+      await this.$nextTick();
+      await this.$nextTick();
+      await this.$nextTick();
+      await this.$nextTick();
+      await this.$nextTick();
+      await this.$nextTick();
+      await this.$nextTick();
+      await this.$nextTick();
+
+      if (!this.$refs.folderContextMenu) return;
+
+      this.$refs.folderContextMenu.open(e);
     },
   },
 };

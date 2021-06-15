@@ -80,10 +80,12 @@ export default {
       vaultCategories: state => state['vault-categories'].all,
     }),
     categories() {
-      return Object.values(this.vaultCategories).map(c => ({
-        ...c,
-        type: 'category',
-      }));
+      return Object.values(this.vaultCategories)
+        .filter(c => c.vaultUuid === this.currentVaultUuid)
+        .map(c => ({
+          ...c,
+          type: 'category',
+        }));
     },
   },
   created() {

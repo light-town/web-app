@@ -1,5 +1,5 @@
 <template>
-  <ui-grid>
+  <ui-grid class="ui-w-auto">
     <ui-context-menu
       ref="contextMenu"
       @close="$emit('close', $event)"
@@ -44,7 +44,7 @@
       :folder-uuid="folderUuid"
       :vault-uuid="vaultUuid"
       @close="showNewVaultFolderModal = false"
-    ></new-vault-folder-modal>
+    />
   </ui-grid>
 </template>
 
@@ -86,9 +86,11 @@ export default {
     };
   },
   computed: {
-    /// getting THE vault categories
     ...mapState({
-      vaultCategories: state => Object.values(state['vault-categories'].all),
+      vaultCategories: state =>
+        Object.values(state['vault-categories'].all).filter(
+          c => c.vaultUuid === state.vaults.currentVaultUuid
+        ),
     }),
   },
   methods: {
