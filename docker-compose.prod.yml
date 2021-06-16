@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+      args:
+        NPM_TOKEN: ${NPM_TOKEN}
+        WORKDIR: /usr/src/light-town-web-app
+    ports:
+      - ${PORT}:${PORT}
+    environment:
+      PORT: ${PORT}
+      HOST: ${HOST}
+      API_URL: "http://light-town-api:8080/v1/api"
+      API_URL_BROWSER: ${API_URL_BROWSER}
+    volumes:
+      - .:/usr/src/light-town-web-app
+      - node_modules:/usr/src/light-town-web-app/node_modules
+    restart: always
+    container_name: light-town-web-app
+    networks:
+      - outside
+
+volumes:
+  node_modules:
+
+networks:
+  outside:
+    driver: bridge
+    name: outside
