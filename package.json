@@ -1,6 +1,6 @@
 {
   "name": "web",
-  "version": "1.0.0",
+  "version": "0.1.1",
   "private": true,
   "scripts": {
     "dev": "nuxt",
@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@light-town/core": "^0.3.2",
-    "@light-town/ui": "^0.1.21",
+    "@light-town/ui": "^0.1.22",
     "@nuxtjs/axios": "^5.13.1",
     "@nuxtjs/style-resources": "^1.1.0",
     "cookie-universal-nuxt": "^2.1.4",

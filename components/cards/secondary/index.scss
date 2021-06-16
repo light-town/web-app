@@ -19,57 +19,54 @@
       overflow: hidden;
       text-overflow: ellipsis;
 
-      font-size: 14px;
+      font-size: 1rem;
       font-weight: 400;
 
       color: var(--color-secondary-card-category-text-color);
     }
 
     &-icon {
-      @include ui-size(1.25rem);
+      @include ui-size(1.5rem);
       @include ui-flex-fixed;
+      @include ui-mr-4;
 
       fill: var(--color-secondary-card-category-icon-fill);
-
-      margin-right: 0.5rem;
     }
   }
 
   &__name,
   &__desc,
   &__datetime {
-    margin: 0.25rem 0;
-
-    width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    @include ui-my-2;
+    @include ui-w-full;
+    @include ui-truncate;
   }
 
   &__name {
-    font-size: 18px;
+    font-size: 1.5rem;
     font-weight: 600;
 
     color: var(--color-secondary-card-name-text-color);
   }
 
   &__desc {
-    font-size: 13px;
+    font-size: px_to_rem(15px);
 
     color: var(--color-secondary-card-desc-text-color);
   }
 
   &__datetime {
-    font-size: 13px;
+    font-size: px_to_rem(14px);
 
     color: var(--color-secondary-card-datetime-text-color);
   }
 
   &__tags {
-    padding: 0.5rem 0;
+    @include ui-py-4;
 
     & > * {
-      padding: 0.5rem 1rem;
+      @include ui-px-8;
+      @include ui-py-4;
     }
   }
 
@@ -87,6 +84,6 @@
   &__header,
   &__body,
   &__footer {
-    padding: 0.25rem 0;
+    @include ui-py-2;
   }
 }

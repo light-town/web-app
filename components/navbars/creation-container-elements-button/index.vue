@@ -38,6 +38,14 @@
       :vault-uuid="currentVaultUuid"
       @close="showNewVaultFolderModal = false"
     />
+    <new-vault-item-modal
+      v-if="currentVaultCategoryUuid"
+      :open="showNewVaultItemModal"
+      :folder-uuid="currentVaultFolderUuid"
+      :vault-uuid="currentVaultUuid"
+      :category-uuid="currentVaultCategoryUuid"
+      @close="showNewVaultItemModal = false"
+    />
   </ui-grid>
 </template>
 <script>
@@ -52,6 +60,7 @@ import {
 } from '@light-town/ui';
 import AddIcon from '~/assets/add.svg?inline';
 import NewVaultFolderModal from '~/components/modals/new-vault-folder/index.vue';
+import NewVaultItemModal from '~/components/modals/new-vault-item/index.vue';
 import * as vaultCategoryActionTypes from '~/store/vault-categories/types';
 
 export default {
@@ -65,11 +74,14 @@ export default {
     UiMenuSeparator,
     AddIcon,
     NewVaultFolderModal,
+    NewVaultItemModal,
   },
   data() {
     return {
       showNewVaultFolderModal: false,
+      showNewVaultItemModal: false,
       loading: false,
+      currentVaultCategoryUuid: null,
     };
   },
   computed: {
@@ -88,37 +100,32 @@ export default {
         }));
     },
   },
-  created() {
+  async created() {
+    this.currentVaultCategoryUuid = null;
     this.loading = true;
 
-    this.loadVaultCategories().finally(() => {
-      this.loading = false;
-    });
+    await this.getVaultCategories();
+
+    this.loading = false;
   },
   methods: {
     ...mapActions({
-      loadVaultCategories: vaultCategoryActionTypes.GET_VAULT_CATEGORIES,
+      getVaultCategories: vaultCategoryActionTypes.GET_VAULT_CATEGORIES,
     }),
     handleDropdownItemClick(e, item, close) {
-      if (item.type === 'folder') {
-        this.showNewVaultFolderModal = true;
-        close(e);
-        return;
+      switch (item.type) {
+        case 'folder': {
+          this.showNewVaultFolderModal = true;
+          break;
+        }
+        case 'category': {
+          this.currentVaultCategoryUuid = item.uuid;
+          this.showNewVaultItemModal = true;
+          break;
+        }
       }
 
-      if (
-        item.type === 'category' &&
-        this.categories.find(c => c.uuid === item.uuid)
-      ) {
-        if (this.currentVaultFolderUuid)
-          this.$router.push(
-            `/vaults/${this.currentVaultUuid}/folders/${this.currentVaultFolderUuid}/new-item?category-uuid=${item.uuid}`
-          );
-        else
-          this.$router.push(
-            `/vaults/${this.currentVaultUuid}/new-item?category-uuid=${item.uuid}`
-          );
-      }
+      close(e);
     },
   },
 };

@@ -4,7 +4,7 @@ export default class VaultItemsService extends AbstractService {
   getItems({ onlyOverview = false, folderUuid = null } = {}) {
     if (folderUuid)
       return this.axios
-        .get(`/items?only-overview=${onlyOverview}&fodler-uuid=${folderUuid}`)
+        .get(`/items?only-overview=${onlyOverview}&folder-uuid=${folderUuid}`)
         .then(response => response.data);
 
     return this.axios
@@ -13,11 +13,16 @@ export default class VaultItemsService extends AbstractService {
   }
 
   getVaultItems(vaultUuid, { onlyOverview = false, folderUuid = null } = {}) {
-    return this.axios
-      .get(
-        `/vaults/${vaultUuid}/items?only-overview=${onlyOverview}&fodler-uuid=${folderUuid}`
-      )
-      .then(response => response.data);
+    if (folderUuid)
+      return this.axios
+        .get(
+          `/vaults/${vaultUuid}/items?only-overview=${onlyOverview}&folder-uuid=${folderUuid}`
+        )
+        .then(response => response.data);
+    else
+      return this.axios
+        .get(`/vaults/${vaultUuid}/items?only-overview=${onlyOverview}`)
+        .then(response => response.data);
   }
 
   getVaultItem(
@@ -58,11 +63,19 @@ export default class VaultItemsService extends AbstractService {
   }
 
   createVaultItem(vaultUuid, folderUuid, encVaultItem, categoryUuid) {
-    return this.axios
-      .post(`/vaults/${vaultUuid}/folders/${folderUuid}/items`, {
-        ...encVaultItem,
-        categoryUuid,
-      })
-      .then(response => response.data);
+    if (folderUuid)
+      return this.axios
+        .post(`/vaults/${vaultUuid}/folders/${folderUuid}/items`, {
+          ...encVaultItem,
+          categoryUuid,
+        })
+        .then(response => response.data);
+    else
+      return this.axios
+        .post(`/vaults/${vaultUuid}/items`, {
+          ...encVaultItem,
+          categoryUuid,
+        })
+        .then(response => response.data);
   }
 }

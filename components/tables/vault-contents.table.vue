@@ -63,13 +63,6 @@ export default {
   methods: {
     async handleRowContextMenu(e) {
       await this.$nextTick();
-      await this.$nextTick();
-      await this.$nextTick();
-      await this.$nextTick();
-      await this.$nextTick();
-      await this.$nextTick();
-      await this.$nextTick();
-      await this.$nextTick();
 
       if (!this.$refs.folderContextMenu) return;
 

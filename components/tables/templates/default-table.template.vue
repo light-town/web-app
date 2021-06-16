@@ -27,14 +27,21 @@
               class="content-table__table-body-cell__icon"
             />
             <p class="content-table__table-body-cell__title">
-              {{ item.overview.name }}
+              {{
+                item.isItem ? item.overview.fields[0].value : item.overview.name
+              }}
             </p>
           </ui-grid>
         </template>
         <template #cell(desc)="{ item }">
           <ui-grid align-items="center">
-            <p class="content-table__table-body-cell__title">
-              {{ item.overview.desc }}
+            <p
+              v-if="item.overview.fields || item.isFolder"
+              class="content-table__table-body-cell__title"
+            >
+              {{
+                item.isItem ? item.overview.fields[1].value : item.overview.name
+              }}
             </p>
           </ui-grid>
         </template>

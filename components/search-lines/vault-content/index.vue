@@ -38,7 +38,12 @@
           :view-only="token.type !== 'value'"
           @close="handleRemoveTokenBtnClick(token)"
         >
-          <ui-grid align-items="center" justify="space-between">
+          <ui-grid
+            align-items="center"
+            justify="space-between"
+            wrap="nowrap"
+            class="vault-content-search-line__token-text"
+          >
             {{ token.name }}
           </ui-grid>
         </ui-token>
@@ -190,21 +195,52 @@ export default {
         case 'vault-name': {
           const { data: encKeySets } =
             await this.$api.keySets.getAccountKeySets(this.currentAccount.uuid);
+
           const primaryKeySet =
             await core.helpers.keySets.decryptPrimaryKeySetHelper(
               encKeySets.find(k => k.isPrimary),
               this.muk
             );
-          const { data: encVaults } = await this.$api.vaults.getVaults();
-          const vault =
-            await core.helpers.vaults.decryptVaultByPrivateKeyHelper(
-              encVaults.find(v => v.keySetUuid === primaryKeySet.uuid),
-              primaryKeySet.privateKey
-            );
 
-          this.currentDropdownItems = [
-            { id: vault.uuid, name: vault.overview.name, type: 'value' },
-          ];
+          const secondaryKeySets = await Promise.all(
+            encKeySets
+              .filter(ks => !ks.isPrimary)
+              .map(ks =>
+                core.helpers.keySets.decryptKeySetHelper(
+                  ks,
+                  primaryKeySet.privateKey
+                )
+              )
+          );
+
+          const keySets = [primaryKeySet, ...secondaryKeySets];
+
+          const { data: encVaults } = await this.$api.vaults.getVaults();
+
+          const vaults = await Promise.all(
+            encVaults.map(encVault => {
+              const keySet = keySets.find(
+                ks => ks.uuid === encVault.keySetUuid
+              );
+
+              if (keySet.isPrimary)
+                return core.helpers.vaults.decryptVaultByPrivateKeyHelper(
+                  encVault,
+                  keySet.privateKey
+                );
+
+              return core.helpers.vaults.decryptVaultBySecretKeyHelper(
+                encVault,
+                keySet.symmetricKey
+              );
+            })
+          );
+
+          this.currentDropdownItems = vaults.map(v => ({
+            id: v.uuid,
+            name: v.overview.name,
+            type: 'value',
+          }));
           break;
         }
         case 'folder-name': {

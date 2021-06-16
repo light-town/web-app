@@ -71,7 +71,7 @@ export default {
       this.items = [...this.formatedVaultFolders, ...this.formatedVaultItems];
     },
   },
-  mounted() {
+  created() {
     this.loading = true;
 
     Promise.all([this.getRootVaultFolders(), this.getVaultItems()]).finally(

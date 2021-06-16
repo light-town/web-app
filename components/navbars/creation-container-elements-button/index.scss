@@ -4,19 +4,16 @@
 }
 
 .new-element-button {
-  padding: 0.75em 1.5em;
+  @include ui-px-10;
+  @include ui-py-6;
 
   border-radius: 1.5em;
 
   &__icon {
-    --size: 1.25em;
-
-    width: var(--size);
-    height: var(--size);
+    @include ui-size(1.25rem);
+    @include ui-mr-8;
 
     fill: var(--color-new-element-button-icon-fill);
-
-    margin-right: 1em;
   }
 
   &__text {

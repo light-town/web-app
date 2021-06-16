@@ -129,5 +129,6 @@
   "{n} Entries inside": "No entries inside | Entries inside",
   "{n} items found": "Nothing found | {n} items found",
   "Role": "Role",
-  "Joined at": "Joined at"
+  "Joined at": "Joined at",
+  "Create Vault Item": "Create Vault Item"
 }

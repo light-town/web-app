@@ -15,8 +15,8 @@
       <item-card
         v-else-if="item.isItem"
         :key="item.uuid"
-        :name="item.overview.name"
-        :desc="item.overview.desc"
+        :name="item.overview.fields[0].value"
+        :desc="item.overview.fields[1].value"
         :datetime="formatDateTime(item.createdAt)"
         category-name="Password"
         class="content-grid__cell"

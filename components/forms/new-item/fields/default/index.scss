@@ -1,10 +1,7 @@
 .item-field {
   &__head {
-    width: 180px;
-
-    flex-shrink: 0;
-    flex-grow: 0;
-
-    margin-right: 24px;
+    @include ui-w(px_to_rem(260px));
+    @include ui-flex-fixed;
+    @include ui-mr-10;
   }
 }

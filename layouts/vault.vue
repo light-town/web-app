@@ -26,6 +26,7 @@ import MainPageLayout from './main/index.vue';
 import FolderTreeView from '~/components/treeviews/folders/index.vue';
 import AccountNavbar from '~/components/navbars/account/index.vue';
 import * as vaultActionTypes from '~/store/vaults/types';
+import * as vaultFoldersActionTypes from '~/store/vault-folders/types';
 
 export default {
   name: 'VaultPageLayout',
@@ -41,20 +42,21 @@ export default {
   computed: {
     ...mapGetters(['currentVault']),
   },
-  created() {
+  async created() {
+    this.setCurrentVaultFolderUuid({ uuid: null });
     this.currentVaultName = this.currentVault?.overview?.name ?? '';
 
     if (this.currentVaultName.length) return;
 
-    Promise.all([
-      this.getVault({ uuid: this.$route.params.vaultUuid }),
-    ]).finally(() => {
-      this.currentVaultName = this.currentVault.overview.name;
-    });
+    await this.getVault({ uuid: this.$route.params.vaultUuid });
+
+    this.currentVaultName = this.currentVault.overview.name;
   },
   methods: {
     ...mapActions({
       getVault: vaultActionTypes.GET_ACCOUNT_VAULT,
+      setCurrentVaultFolderUuid:
+        vaultFoldersActionTypes.SET_CURRENT_VAULT_FOLDER,
     }),
   },
 };

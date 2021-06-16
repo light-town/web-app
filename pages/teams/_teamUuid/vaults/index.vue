@@ -75,9 +75,7 @@ export default {
       getTeamKeySets: keySetsActionTypes.GET_TEAM_KEY_SETS,
       getTeamVaults: vaultsActionTypes.GET_TEAM_VAULTS,
     }),
-    openVault(_, vault) {
-      console.log(vault);
-    },
+    openVault() {},
   },
 };
 </script>

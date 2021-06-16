@@ -1,0 +1,6 @@
+.new-vault-item-modal {
+  @include ui-w(px_to_rem(874px));
+  @include ui-h(px_to_rem(360px));
+  @include ui-flex-fixed;
+  @include ui-overflow-auto;
+}

@@ -7,8 +7,7 @@
         :handleRowContextMenu="handleRowContextMenu"
         :handleRowDblClick="handleRowDblClick"
         :handleRowClick="handleRowClick"
-      >
-      </slot>
+      />
     </template>
     <slot v-else-if="loading" name="loading-table-template">
       <ui-grid align-items="center" justify="center" class="ui-mt-8">

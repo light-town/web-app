@@ -26,6 +26,7 @@ import AccountVaultsGrid from '~/components/grids/account-vaults.grid.vue';
 import * as vaultActionTypes from '~/store/vaults/types';
 import * as keySetsActionTypes from '~/store/key-sets/types';
 import * as teamsActionTypes from '~/store/teams/types';
+import * as vaultFoldersActionTypes from '~/store/vault-folders/types';
 
 export default {
   name: 'VaultsPage',
@@ -50,6 +51,9 @@ export default {
   async created() {
     this.loading = true;
 
+    await this.setCurrentVaultUuid({ uuid: null });
+    await this.setCurrentVaultFolderUuid({ uuid: null });
+
     await this.getKeySets();
     await this.getVaults();
     await this.getTeams();
@@ -60,12 +64,14 @@ export default {
     ...mapActions({
       getKeySets: keySetsActionTypes.GET_ACCOUNT_KEY_SETS,
       getVaults: vaultActionTypes.GET_ACCOUNT_VAULTS,
-      setCurrentVault: vaultActionTypes.SET_CURRENT_VAULT,
+      setCurrentVaultUuid: vaultActionTypes.SET_CURRENT_VAULT,
+      setCurrentVaultFolderUuid:
+        vaultFoldersActionTypes.SET_CURRENT_VAULT_FOLDER,
       getVault: vaultActionTypes.GET_ACCOUNT_VAULT,
       getTeams: teamsActionTypes.GET_TEAMS,
     }),
     async openVault(_, vault) {
-      await this.setCurrentVault({ uuid: vault.uuid });
+      await this.setCurrentVaultUuid({ uuid: vault.uuid });
       await this.getVault({ uuid: vault.uuid });
 
       this.$router.push(`/vaults/${vault.uuid}`);
