@@ -1,0 +1,16 @@
+.ui-theme_light {
+  --team-category-avatar-text: #{$gray-650};
+}
+
+.team-category {
+  &__avatar {
+    @include ui-px-9;
+    @include ui-py-8;
+
+    &-title {
+      font-size: 13px;
+
+      color: var(--team-category-avatar-text);
+    }
+  }
+}

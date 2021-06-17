@@ -1,0 +1,33 @@
+.ui-theme_light {
+  --team-category-text-orange: #{$orange-400};
+  --team-category-icon-orange: #{$orange-400};
+}
+
+.team-category {
+  &__dropdown {
+    &-header {
+      @include ui-px-9;
+      @include ui-py-8;
+
+      cursor: pointer;
+
+      &-title {
+        font-size: 13px;
+
+        color: var(--team-category-text-orange);
+      }
+
+      &-icon {
+        @include ui-size(0.75rem);
+
+        fill: var(--team-category-icon-orange);
+      }
+    }
+
+    &_active {
+      .team-category__dropdown-header-icon {
+        transform: rotate(90deg);
+      }
+    }
+  }
+}

@@ -128,6 +128,8 @@
   "{n} Members": "No members | Members",
   "{n} Entries inside": "No entries inside | Entries inside",
   "{n} items found": "Nothing found | {n} items found",
+  "{n} awaiting configurations": "No awaiting confirmation | {n} awaiting confirmations",
+  "{n} invitations sent": "No invitations sent | {n} invitations sent",
   "Role": "Role",
   "Joined at": "Joined at",
   "Create Vault Item": "Create Vault Item",

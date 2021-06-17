@@ -58,7 +58,7 @@ export default {
     async openTeam(_, team) {
       await this.setCurrentTeam({ uuid: team.uuid });
 
-      this.$router.push(`/teams/${team.uuid}`);
+      this.$router.push(`/teams/${team.uuid}/dashboard`);
     },
   },
 };
