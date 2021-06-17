@@ -3,10 +3,16 @@
     <select-languages></select-languages>
     <ui-grid class="links__support">
       <ui-button variant="text" class="links__btn">{{ $t('Help') }}</ui-button>
-      <ui-button variant="text" class="links__btn">{{
-        $t('Privacy')
-      }}</ui-button>
-      <ui-button variant="text" class="links__btn">{{ $t('Terms') }}</ui-button>
+      <ui-button
+        variant="text"
+        class="links__btn"
+        @click="redirectToPrivacyPage"
+      >
+        {{ $t('Privacy') }}
+      </ui-button>
+      <ui-button variant="text" class="links__btn" @click="redirectToTermsPage">
+        {{ $t('Terms') }}
+      </ui-button>
     </ui-grid>
   </ui-grid>
 </template>
@@ -21,6 +27,14 @@ export default {
     UiGrid,
     UiButton,
     SelectLanguages,
+  },
+  methods: {
+    redirectToPrivacyPage() {
+      this.$router.push('/legal/privacy');
+    },
+    redirectToTermsPage() {
+      this.$router.push('/legal/terms-of-service');
+    },
   },
 };
 </script>

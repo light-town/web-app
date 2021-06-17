@@ -8,7 +8,7 @@
       >
         <app-logo />
         <slot></slot>
-        <app-links />
+        <app-links v-if="showLinks" />
       </ui-grid>
     </ui-grid>
   </default-page-layout>
@@ -27,6 +27,13 @@ export default {
     AppLogo,
     AppLinks,
     DefaultPageLayout,
+  },
+  props: {
+    showLinks: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
 };
 </script>

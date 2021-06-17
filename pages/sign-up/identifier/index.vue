@@ -16,13 +16,29 @@
         <auth-form-link to="/sign-in" :text="$t('Already has an account?')" />
       </template>
       <template #footer>
-        <ui-button
-          variant="contained"
-          type="submit"
-          class="indentifier-form__submit-btn"
-        >
-          {{ $t('Next') }}
-        </ui-button>
+        <ui-grid direction="column">
+          <ui-button
+            variant="contained"
+            type="submit"
+            class="indentifier-form__submit-btn"
+          >
+            {{ $t('Next') }}
+          </ui-button>
+          <p class="indentifier-form__legal-text">
+            {{ $t('By proceeding, you agree to') }}
+            <auth-form-link
+              class="indentifier-form__legal-text"
+              to="/legal/terms-of-service"
+              :text="$t('Terms of Service')"
+            />
+            {{ $t('and') }}
+            <auth-form-link
+              class="indentifier-form__legal-text"
+              to="/legal/privacy"
+              :text="`${$t('Privacy Notice')}.`"
+            />
+          </p>
+        </ui-grid>
       </template>
     </auth-form>
   </auth-page-layout>

@@ -1,0 +1,57 @@
+.ui-theme_light {
+  --color-legal-form-title: #{$gray-650};
+  --color-legal-form-desc: #{$gray-550};
+  --color-legal-form-bg: #{$white};
+  --color-legal-form-border: #{$gray-150};
+}
+
+.legal-form {
+  &__title {
+    font-size: 28px;
+    font-weight: 500;
+
+    @include ui-my-2;
+
+    color: var(--color-legal-form-title);
+  }
+
+  &__desc {
+    font-size: 18px;
+
+    @include ui-my-2;
+
+    color: var(--color-legal-form-desc);
+  }
+
+  &__groups {
+    background-color: var(--color-legal-form-bg);
+    border: 1px solid var(--color-legal-form-border);
+
+    @include ui-rounded-1;
+    @include ui-w-half;
+    @include ui-flex-fixed;
+    @include ui-px-16;
+    @include ui-py-5;
+  }
+
+  &__group {
+    @include ui-my-5;
+
+    &-title {
+      font-size: 20px;
+      font-weight: 600;
+
+      @include ui-my-5;
+
+      color: var(--color-legal-form-desc);
+    }
+
+    &-item {
+      font-size: 15px;
+
+      @include ui-my-5;
+
+      color: var(--color-legal-form-desc);
+    }
+  }
+}

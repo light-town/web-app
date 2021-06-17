@@ -23,10 +23,10 @@
   &__header,
   &__body,
   &__footer {
-    margin-bottom: 40px;
+    @include ui-mb-12;
 
     &:last-child {
-      margin-bottom: 0;
+      @include ui-mb-0;
     }
   }
 

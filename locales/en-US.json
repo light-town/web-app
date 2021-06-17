@@ -130,5 +130,11 @@
   "{n} items found": "Nothing found | {n} items found",
   "Role": "Role",
   "Joined at": "Joined at",
-  "Create Vault Item": "Create Vault Item"
+  "Create Vault Item": "Create Vault Item",
+  "By proceeding, you agree to": "By proceeding, you agree to",
+  "Terms of Service": "Terms of Service",
+  "and": "and",
+  "Privacy Notice": "Privacy Notice",
+  "LightTown Privacy Policy": "LightTown Privacy Policy",
+  "Terms of use of the LightTown website, resources and services": "Terms of use of the LightTown website, resources and services"
 }

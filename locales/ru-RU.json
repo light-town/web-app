@@ -129,5 +129,11 @@
   "{n} items found": "Ничего не найдено | {n} элемент найден | {n} элемента найдено | {n} элементов найдено",
   "Role": "Роль",
   "Joined at": "Присоединился в",
-  "Create Vault Item": "Создать Элемент Хранилища"
+  "Create Vault Item": "Создать Элемент Хранилища",
+  "By proceeding, you agree to": "Продолжая, вы соглашаетесь с",
+  "Terms of Service": "Условиями оказания услуг",
+  "and": "и",
+  "Privacy Notice": "Уведомлением о порядке использования личной информации",
+  "LightTown Privacy Policy": "Политика конфиденциальности LightTown",
+  "Terms of use of the LightTown website, resources and services": "Правила пользования сайтом, ресурсами и сервисами LightTown"
 }

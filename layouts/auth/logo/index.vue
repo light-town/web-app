@@ -1,5 +1,10 @@
 <template>
-  <ui-grid class="logo" align-items="center" justify="center">
+  <ui-grid
+    class="logo"
+    align-items="center"
+    justify="center"
+    @click.native="redirect"
+  >
     <p class="logo__title">LightTown</p>
     <logo-icon class="logo__icon"></logo-icon>
   </ui-grid>
@@ -14,6 +19,11 @@ export default {
   components: {
     UiGrid,
     LogoIcon,
+  },
+  methods: {
+    redirect() {
+      this.$router.push('/');
+    },
   },
 };
 </script>
