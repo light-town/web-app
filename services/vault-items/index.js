@@ -1,7 +1,7 @@
 import AbstractService from '../abstract-service';
 
 export default class VaultItemsService extends AbstractService {
-  getItems({ onlyOverview = false, folderUuid = null } = {}) {
+  getItems({ onlyOverview = true, folderUuid = null } = {}) {
     if (folderUuid)
       return this.axios
         .get(`/items?only-overview=${onlyOverview}&folder-uuid=${folderUuid}`)
@@ -12,7 +12,7 @@ export default class VaultItemsService extends AbstractService {
       .then(response => response.data);
   }
 
-  getVaultItems(vaultUuid, { onlyOverview = false, folderUuid = null } = {}) {
+  getVaultItems(vaultUuid, { onlyOverview = true, folderUuid = null } = {}) {
     if (folderUuid)
       return this.axios
         .get(
@@ -28,7 +28,7 @@ export default class VaultItemsService extends AbstractService {
   getVaultItem(
     vaultUuid,
     vaultItemUuid,
-    { onlyOverview } = { onlyOverview: false }
+    { onlyOverview } = { onlyOverview: true }
   ) {
     return this.axios
       .get(
@@ -40,7 +40,7 @@ export default class VaultItemsService extends AbstractService {
   getVaultItemsFromFolder(
     vaultUuid,
     folderUuid,
-    { onlyOverview } = { onlyOverview: false }
+    { onlyOverview } = { onlyOverview: true }
   ) {
     return this.axios
       .get(
@@ -53,7 +53,7 @@ export default class VaultItemsService extends AbstractService {
     vaultUuid,
     folderUuid,
     vaultItemUuid,
-    { onlyOverview } = { onlyOverview: false }
+    { onlyOverview } = { onlyOverview: true }
   ) {
     return this.axios
       .get(

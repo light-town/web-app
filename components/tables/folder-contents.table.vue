@@ -13,7 +13,7 @@
       </template>
     </default-table-template>
     <folder-context-menu
-      v-if="activeRow"
+      v-if="activeRow && activeRow.isFolder"
       ref="folderContextMenu"
       :folder-uuid="activeRow.uuid"
       :vault-uuid="vaultUuid"

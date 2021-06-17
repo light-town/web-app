@@ -39,16 +39,16 @@ export default {
     AccountNavbar,
   },
   data() {
-    return { currentVaultFolderName: '', loading: false };
+    return { loading: false };
   },
   computed: {
     ...mapGetters(['currentVaultFolder']),
+    currentVaultFolderName() {
+      return this.currentVaultFolder?.overview?.name;
+    },
   },
   created() {
-    if (this.currentVaultFolder) {
-      this.currentVaultFolderName = this.currentVaultFolder.overview.name;
-      return;
-    }
+    if (this.currentVaultFolderName) return;
 
     this.loading = true;
 
@@ -57,13 +57,9 @@ export default {
       this.getVaultFolder({
         uuid: this.$route.params.vaultFolderUuid,
       }),
-    ])
-      .then(() => {
-        this.currentVaultFolderName = this.currentVaultFolder.overview.name;
-      })
-      .finally(() => {
-        this.loading = false;
-      });
+    ]).finally(() => {
+      this.loading = false;
+    });
   },
   methods: {
     ...mapActions({

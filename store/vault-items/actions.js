@@ -3,22 +3,17 @@ import * as actionTypes from './action-types';
 import * as mutationTypes from './mutation-types';
 
 export default {
-  async [actionTypes.GET_VAULT_ITEMS](
-    { commit },
-    payload = { folderUuid: null }
-  ) {
+  async [actionTypes.GET_VAULT_ITEMS]({ commit }, payload = {}) {
     let response;
 
     if (payload.folderUuid) {
       response = await this.$api.vaultItems.getVaultItemsFromFolder(
         this.getters.currentVault.uuid,
-        payload.folderUuid,
-        { onlyOverview: true }
+        payload.folderUuid
       );
     } else {
       response = await this.$api.vaultItems.getVaultItems(
-        this.getters.currentVault.uuid,
-        { onlyOverview: true }
+        this.getters.currentVault.uuid
       );
     }
 
@@ -34,11 +29,21 @@ export default {
     });
   },
   async [actionTypes.GET_VAULT_ITEM]({ commit }, payload) {
-    const response = await this.$api.vaultItems.getVaultItemFromFolder(
-      this.getters.currentVault.uuid,
-      payload.folderUuid,
-      payload.uuid
-    );
+    let response;
+
+    if (payload.folderUuid)
+      response = await this.$api.vaultItems.getVaultItemFromFolder(
+        this.getters.currentVault.uuid,
+        payload.folderUuid,
+        payload.uuid,
+        { onlyOverview: false }
+      );
+    else
+      response = await this.$api.vaultItems.getVaultItem(
+        this.getters.currentVault.uuid,
+        payload.uuid,
+        { onlyOverview: false }
+      );
 
     const vaultItem = await core.helpers.vaultItems.decryptVaultItemHelper(
       response.data,

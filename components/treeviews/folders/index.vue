@@ -94,8 +94,10 @@ export default {
       getNestedVaultFolders: vaultFolderActionTypes.GET_NESTED_VAULT_FOLDERS,
       setExpandedVaultFolder: vaultFolderActionTypes.SET_EXPANDED_VAULT_FOLDER,
       getVaultFolder: vaultFolderActionTypes.GET_VAULT_FOLDER,
+      setCurrentVaultFolder: vaultFolderActionTypes.SET_CURRENT_VAULT_FOLDER,
     }),
     activeFolderNode(node) {
+      this.setCurrentVaultFolder({ uuid: node.uuid });
       this.$router.push(
         `/vaults/${this.currentVault.uuid}/folders/${node.uuid}`
       );

@@ -144,6 +144,7 @@ export default {
       const name = this.itemFields.find(f => f.fieldName === 'Avatar')?.value;
 
       this.$emit('input', {
+        ...(this.item ?? {}),
         overview: {
           name,
           fields: this.itemFields.filter(

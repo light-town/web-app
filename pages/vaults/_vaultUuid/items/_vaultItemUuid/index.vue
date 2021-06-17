@@ -55,8 +55,6 @@ export default {
     ...mapGetters(['currentVaultItem']),
     ...mapState({
       currentVaultUuid: state => state.vaults.currentVaultUuid,
-      currentVaultFolderUuid: state =>
-        state['vault-folders'].currentVaultFolderUuid,
       currentVaultItemUuid: state => state['vault-items'].currentVaultItemUuid,
       currentVaultCategory(state) {
         return state['vault-categories'].all[
@@ -70,7 +68,6 @@ export default {
 
     await this.getVaultItem({
       uuid: this.currentVaultItemUuid,
-      folderUuid: this.currentVaultFolderUuid,
     });
 
     await this.getVaultCategory({ uuid: this.currentVaultItem.categoryUuid });
