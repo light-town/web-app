@@ -6,6 +6,7 @@
 .accounts {
   &__list {
     max-height: 520px;
+    min-height: 360px;
 
     overflow-y: auto;
   }

@@ -6,7 +6,7 @@ export default class AuthService extends AbstractService {
     { verifier, salt },
     { accountKey, username, avatarUrl },
     { publicKey, encPrivateKey, encSymmetricKey },
-    { encKey, encOverview, encCategories }
+    { encKey, encOverview, encCategories, encPrimaryVaultItems }
   ) {
     return this.axios
       .post('/auth/sign-up', {
@@ -30,6 +30,7 @@ export default class AuthService extends AbstractService {
           encOverview,
           encCategories,
         },
+        primaryVaultItems: encPrimaryVaultItems,
       })
       .then(response => response.data)
       .catch(({ response }) => {

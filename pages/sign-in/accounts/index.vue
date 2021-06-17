@@ -2,9 +2,9 @@
   <auth-page-layout>
     <auth-form v-if="showAuthForm" :title="$t('Choose an account')">
       <template #body>
-        <ui-alert v-if="error" variant="error">
-          {{ error.message }}
-        </ui-alert>
+        <ui-grid>
+          <ui-alert v-if="error" variant="error" :message="error.message" />
+        </ui-grid>
         <ui-grid direction="column" class="accounts__list">
           <auth-form-account
             v-for="account in accounts"
@@ -30,9 +30,6 @@
       </template>
     </auth-form>
     <auth-form-skeleton v-else :title="$t('Sign In')" />
-    <template slot="placeholder">
-      <auth-form-skeleton :title="$t('Sign In')" />
-    </template>
   </auth-page-layout>
 </template>
 
@@ -70,8 +67,18 @@ export default {
       return !this.loading && this.accounts.length;
     },
   },
+  async mounted() {
+    this.loading = true;
+
+    await this.loadAccountsFromStorage();
+
+    if (!this.accounts.length) this.handleSignInAnotherAccount();
+
+    this.loading = false;
+  },
   methods: {
     ...mapActions({
+      loadAccountsFromStorage: accountsActionTypes.LOAD_ACCOUNTS_FROM_STORAGE,
       setCurrentAccountUuid: accountsActionTypes.SET_CURRENT_ACCOUNT_UUID,
     }),
     getVersionAccountKey(key) {

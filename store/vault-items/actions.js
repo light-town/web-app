@@ -55,6 +55,8 @@ export default {
     });
   },
   async [actionTypes.CREATE_VAULT_ITEM]({ commit }, payload) {
+    debugger;
+
     const encVaultItem = await core.helpers.vaultItems.createVaultItemHelper(
       payload.overview,
       payload.details,

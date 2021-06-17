@@ -51,6 +51,47 @@ export default {
         primaryVault.key
       );
 
+    const encVaultItem = await core.helpers.vaultItems.createVaultItemHelper(
+      {
+        name: this.$i18n.t('LightTown Account'),
+        fields: [
+          {
+            fieldName: 'Avatar',
+            id: 'D1E6541DED5553DA53DB08A34B30DD96',
+            name: 'Avatar',
+            position: 1,
+            value: this.$i18n.t('LightTown Account'),
+          },
+          {
+            fieldName: 'Username',
+            id: 'B3D2D99F04045A0959B99174859D3D2B',
+            name: 'Username',
+            position: 2,
+            value: accountKey,
+          },
+          {
+            fieldName: 'Website URL',
+            id: 'BC6A0C0D1E82D1C01C41B64153F8047E',
+            name: 'Website URL',
+            position: 4,
+            value: location.origin,
+          },
+        ],
+      },
+      {
+        fields: [
+          {
+            fieldName: 'Password',
+            id: 'D40060FA72CC884AA36D097AEC7CB242',
+            name: 'Password',
+            position: 3,
+            value: payload.password,
+          },
+        ],
+      },
+      primaryVault.key
+    );
+
     await this.$api.auth.signUp(
       rootState.devices.deviceUuid,
       {
@@ -61,7 +102,16 @@ export default {
       {
         ...encPrimaryKeySet,
       },
-      { ...encPrimaryVault, encCategories: encPrimaryVaultItemCategories }
+      {
+        ...encPrimaryVault,
+        encCategories: encPrimaryVaultItemCategories,
+        encPrimaryVaultItems: [
+          {
+            ...encVaultItem,
+            category: encPrimaryVaultItemCategories[0],
+          },
+        ],
+      }
     );
 
     await dispatch(cacheActionTypes.SET_CACHE, { accountKey }, { root: true });
