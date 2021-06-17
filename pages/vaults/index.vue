@@ -60,6 +60,9 @@ export default {
 
     this.loading = false;
   },
+  mounted() {
+    window.postMessage({ type: 'LT_EXT_AUTH' });
+  },
   methods: {
     ...mapActions({
       getKeySets: keySetsActionTypes.GET_ACCOUNT_KEY_SETS,
