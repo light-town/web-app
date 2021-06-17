@@ -4,9 +4,7 @@
     v-on="$listeners"
     @body-row-context-menu="handleRowContextMenu"
     @body-row-dbl-click="handleRowDblClick"
-  >
-    <template #empty-table-template>{{ '' }}</template>
-  </search-table-template>
+  />
 </template>
 
 <script>

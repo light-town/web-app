@@ -60,19 +60,19 @@ export default {
   },
   methods: {
     handleRowDblClick(e, item) {
-      this.$emit('row-dbl-click', e, item);
+      this.$emit('body-row-dbl-click', e, item);
     },
     handleRowClick(e, item) {
       this.activeRow = item;
       this.$emit('input', item);
 
-      this.$emit('row-click', e, item);
+      this.$emit('body-row-click', e, item);
     },
     handleRowContextMenu(e, item) {
       this.activeRow = item;
       this.$emit('input', item);
 
-      this.$emit('row-context-menu', e, item);
+      this.$emit('body-row-context-menu', e, item);
     },
   },
 };

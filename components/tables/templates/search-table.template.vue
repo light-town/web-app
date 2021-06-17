@@ -83,7 +83,6 @@ import { UiGrid, UiTable } from '@light-town/ui';
 import TableWrapper from './table.wrapper.vue';
 import FolderIcon from '~/assets/folder.svg?inline';
 import KeyIcon from '~/assets/key.svg?inline';
-// import SearchEmptyIcon from '~/assets/search-empty.svg?inline';
 
 export default {
   name: 'EntityContentTable',
@@ -93,7 +92,6 @@ export default {
     TableWrapper,
     FolderIcon,
     KeyIcon,
-    // SearchEmptyIcon,
   },
   data() {
     return {

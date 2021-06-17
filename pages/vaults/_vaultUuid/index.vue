@@ -6,7 +6,7 @@
           :rows="items"
           :loading="loading"
           :vault-uuid="currentVaultUuid"
-          @row-dbl-click="openItem"
+          @body-row-dbl-click="openItem"
         />
       </template>
       <template #grid>

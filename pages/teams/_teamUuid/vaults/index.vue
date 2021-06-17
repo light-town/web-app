@@ -5,7 +5,7 @@
         <team-vaults-table
           :rows="items"
           :loading="loading"
-          @row-dbl-click="openVault"
+          @body-row-dbl-click="openVault"
         />
       </template>
       <template #grid>
