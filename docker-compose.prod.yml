@@ -1,6 +1,20 @@
-version: "3.9"
+version: '3.9'
 
 services:
+  nginx:
+    image: nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./nginx/certs:/etc/nginx/certs
+    container_name: nginx
+    depends_on:
+      - web
+    networks:
+      - outside
+
   web:
     build:
       context: .
@@ -13,7 +27,7 @@ services:
     environment:
       PORT: ${PORT}
       HOST: ${HOST}
-      API_URL: "http://light-town-api:8080/v1/api"
+      API_URL: 'http://light-town-api:8080/v1/api'
       API_URL_BROWSER: ${API_URL_BROWSER}
     volumes:
       - .:/usr/src/light-town-web-app
