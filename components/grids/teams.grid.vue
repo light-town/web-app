@@ -12,18 +12,23 @@
         @dblclick="hadnleDblClick($event, item)"
       />
     </template>
+    <template #empty-grid-template>
+      <empty-team-list-stub />
+    </template>
   </grid-template>
 </template>
 
 <script>
 import GridTemplate from './grid.template.vue';
 import TeamCard from '~/components/cards/team/index.vue';
+import EmptyTeamListStub from '~/components/stubs/empty-team-list/index.vue';
 
 export default {
   name: 'FoldersGrid',
   components: {
     TeamCard,
     GridTemplate,
+    EmptyTeamListStub,
   },
   props: {
     items: {

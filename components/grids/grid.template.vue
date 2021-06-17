@@ -20,7 +20,7 @@
       </ui-grid>
     </template>
     <template v-else>
-      <slot name="empty-grid-template"> Empty </slot>
+      <slot name="empty-grid-template"> </slot>
     </template>
   </ui-grid>
 </template>

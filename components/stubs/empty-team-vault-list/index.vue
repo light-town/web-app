@@ -12,10 +12,10 @@
       class="empty-vault-stub__text"
     >
       <p class="empty-vault-stub__title">
-        {{ $t(`You haven't joined any teams yet`) }}
+        {{ $t(`There are no available vaults in the team`) }}
       </p>
       <p class="empty-vault-stub__desc">
-        {{ $t('To create a team, right-click on an empty space') }}
+        {{ $t('To create a vault, right-click on an empty space') }}
       </p>
     </ui-grid>
   </ui-grid>
@@ -23,10 +23,10 @@
 
 <script>
 import { UiGrid } from '@light-town/ui';
-import EmptyTeamListIllustration from '~/assets/illustrations/team.svg?inline';
+import EmptyTeamListIllustration from '~/assets/folder-empty.svg?inline';
 
 export default {
-  name: 'EmptyTeamListStub',
+  name: 'EmptyTeamVaultListStub',
   components: {
     UiGrid,
     EmptyTeamListIllustration,

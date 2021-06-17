@@ -66,30 +66,7 @@
             </p>
           </ui-grid>
         </template>
-        <template #table-empty-template>
-          <!-- <ui-grid
-        direction="column"
-        align-items="center"
-        justify="center"
-        class="content-table__plug"
-      >
-        <search-empty-icon
-          class="content-table__plug__illustrate"
-        ></search-empty-icon>
-        <ui-grid
-          direction="column"
-          align-items="center"
-          class="content-table__plug__text"
-        >
-          <p class="content-table__plug__title">
-            {{ $t('Sorry, your filter produced no results') }}
-          </p>
-          <p class="content-table__plug__desc">
-            {{ $t('To widen your search, change or remove filters above') }}
-          </p>
-        </ui-grid>
-      </ui-grid> -->
-        </template>
+        <template #table-empty-template> </template>
       </ui-table>
     </template>
     <template #loading-table-template>

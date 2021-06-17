@@ -13,8 +13,9 @@
       </template>
     </default-table-template>
     <folder-context-menu
+      v-if="activeRow"
       ref="folderContextMenu"
-      :folder-uuid="folderUuid"
+      :folder-uuid="activeRow.uuid"
       :vault-uuid="vaultUuid"
     />
   </ui-grid>
@@ -54,11 +55,6 @@ export default {
     return {
       activeRow: null,
     };
-  },
-  computed: {
-    folderUuid() {
-      return this.activeRow?.uuid ?? null;
-    },
   },
   methods: {
     async handleRowContextMenu(e) {

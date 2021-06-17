@@ -42,13 +42,13 @@ export default {
     commit(mutationTypes.SET_TEAM, {
       team: {
         ...response.data,
-        ...decTeam,
+        ...team,
       },
     });
 
     return {
       ...response.data,
-      ...decTeam,
+      ...team,
     };
   },
   [actionTypes.SET_CURRENT_TEAM_UUID]({ commit }, payload) {

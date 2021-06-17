@@ -12,18 +12,23 @@
         @dblclick="hadnleDblClick($event, item)"
       />
     </template>
+    <template #empty-grid-template>
+      <empty-vault-list-stub />
+    </template>
   </grid-template>
 </template>
 
 <script>
 import GridTemplate from './grid.template.vue';
 import VaultCard from '~/components/cards/vault/index.vue';
+import EmptyVaultListStub from '~/components/stubs/empty-team-list/index.vue';
 
 export default {
   name: 'FoldersGrid',
   components: {
     VaultCard,
     GridTemplate,
+    EmptyVaultListStub,
   },
   props: {
     items: {

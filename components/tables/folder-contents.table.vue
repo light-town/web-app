@@ -1,25 +1,28 @@
 <template>
-  <default-table-template
-    v-model="activeRow"
-    :rows="rows"
-    :loading="loading"
-    v-bind="$attrs"
-    v-on="$listeners"
-    @row-context-menu="handleRowContextMenu"
-  >
+  <ui-grid>
+    <default-table-template
+      v-model="activeRow"
+      :rows="rows"
+      :loading="loading"
+      v-bind="$attrs"
+      v-on="$listeners"
+      @row-context-menu="handleRowContextMenu"
+    >
+      <template #empty-table-template>
+        <empty-folder-stub />
+      </template>
+    </default-table-template>
     <folder-context-menu
       v-if="activeRow"
       ref="folderContextMenu"
       :folder-uuid="activeRow.uuid"
       :vault-uuid="vaultUuid"
     />
-    <template #empty-table-template>
-      <empty-folder-stub />
-    </template>
-  </default-table-template>
+  </ui-grid>
 </template>
 
 <script>
+import { UiGrid } from '@light-town/ui';
 import DefaultTableTemplate from './templates/default-table.template.vue';
 import FolderContextMenu from '~/components/context-menus/folder/index.vue';
 import EmptyFolderStub from '~/components/stubs/empty-folder/index.vue';
@@ -27,6 +30,7 @@ import EmptyFolderStub from '~/components/stubs/empty-folder/index.vue';
 export default {
   name: 'FolderContentsTable',
   components: {
+    UiGrid,
     FolderContextMenu,
     DefaultTableTemplate,
     EmptyFolderStub,
@@ -53,10 +57,10 @@ export default {
     };
   },
   methods: {
-    handleRowContextMenu(e) {
-      this.$nextTick(() => {
-        this.$refs.folderContextMenu.open(e);
-      });
+    async handleRowContextMenu(e) {
+      await this.$nextTick();
+
+      this.$refs.folderContextMenu.open(e);
     },
   },
 };

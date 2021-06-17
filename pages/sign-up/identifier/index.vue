@@ -46,7 +46,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import { UiButton } from '@light-town/ui';
+import { UiGrid, UiButton } from '@light-town/ui';
 import AuthPageLayout from '~/layouts/auth/index.vue';
 import AuthForm from '~/components/forms/auth/form/index.vue';
 import AuthFormLink from '~/components/forms/auth/link/index.vue';
@@ -56,6 +56,7 @@ import * as cacheActionTypes from '~/store/cache/types';
 export default {
   name: 'IdentifierPage',
   components: {
+    UiGrid,
     UiButton,
     AuthForm,
     AuthFormLink,
