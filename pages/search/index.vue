@@ -9,6 +9,13 @@
         "
         :desc="$t('Search result')"
       >
+        <template #nav>
+          <account-navbar :show-tool-btns="true">
+            <template #creation-button>
+              <p></p>
+            </template>
+          </account-navbar>
+        </template>
         <template #main>
           <content-viewer>
             <template #table>
@@ -30,6 +37,7 @@ import SearchResultTable from '~/components/tables/search-result.table.vue';
 import SearchResultGrid from '~/components/grids/search-result.grid.vue';
 import ContentViewer from '~/components/content-viewer/index.vue';
 import SearchParamsParser from '~/components/search-params-parser/index.vue';
+import AccountNavbar from '~/components/navbars/account/index.vue';
 
 export default {
   name: 'SearchPage',
@@ -39,6 +47,7 @@ export default {
     SearchResultGrid,
     ContentViewer,
     SearchParamsParser,
+    AccountNavbar,
   },
   middleware: ['auth'],
   computed: {
