@@ -18,23 +18,33 @@
         :title="$t('Members')"
         class="team-category_purple ui-mr-8 ui-my-8"
       >
-        <team-avatar-category
-          v-for="member in members"
-          :key="member.uuid"
-          :name="member.accountName"
-        >
-        </team-avatar-category>
+        <template v-if="!loading">
+          <team-avatar-category
+            v-for="member in members"
+            :key="member.uuid"
+            :name="member.accountName"
+          >
+          </team-avatar-category>
+        </template>
+        <template v-else>
+          <team-loading-category> </team-loading-category>
+        </template>
       </team-category>
       <team-category
         :title="$t('Vaults')"
         class="team-category_green ui-mr-8 ui-my-8"
       >
-        <team-avatar-category
-          v-for="vault in vaults"
-          :key="vault.uuid"
-          :name="vault.overview.name"
-        >
-        </team-avatar-category>
+        <template v-if="!loading">
+          <team-avatar-category
+            v-for="vault in vaults"
+            :key="vault.uuid"
+            :name="vault.overview.name"
+          >
+          </team-avatar-category>
+        </template>
+        <template v-else>
+          <team-loading-category> </team-loading-category>
+        </template>
       </team-category>
     </ui-grid>
   </team-page-layout>
@@ -46,8 +56,11 @@ import { UiGrid } from '@light-town/ui';
 import TeamCategory from './categories/index.vue';
 import TeamInvitationCategory from './categories/invitations/index.vue';
 import TeamAvatarCategory from './categories/avatar/index.vue';
+import TeamLoadingCategory from './categories/loading/index.vue';
 import TeamPageLayout from '~/layouts/team.vue';
+import * as keySetsActionTypes from '~/store/key-sets/types';
 import * as vaultsActionTypes from '~/store/vaults/types';
+import * as teamsActionTypes from '~/store/teams/types';
 
 export default {
   name: 'TeamDashboardPage',
@@ -56,6 +69,7 @@ export default {
     TeamPageLayout,
     TeamCategory,
     TeamAvatarCategory,
+    TeamLoadingCategory,
     TeamInvitationCategory,
   },
   middleware: ['auth', 'url-params'],
@@ -83,12 +97,16 @@ export default {
       await this.$api.teamMembers.getTeamMembers(this.currentTeamUuid)
     ).data;
 
+    await this.getTeam({ uuid: this.currentTeamUuid });
+    await this.getTeamKeySets();
     await this.getTeamVaults();
 
     this.loading = false;
   },
   methods: {
     ...mapActions({
+      getTeam: teamsActionTypes.GET_TEAM,
+      getTeamKeySets: keySetsActionTypes.GET_TEAM_KEY_SETS,
       getTeamVaults: vaultsActionTypes.GET_TEAM_VAULTS,
     }),
   },

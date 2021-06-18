@@ -1,0 +1,9 @@
+.ui-theme_light {
+}
+
+.team-category {
+  &__loading {
+    @include ui-px-9;
+    @include ui-py-8;
+  }
+}

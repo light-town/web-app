@@ -1,0 +1,87 @@
+.ui-theme_light {
+  --team-invitations-border: #{$gray-150};
+
+  --team-invitations-bar-icon: #{$white};
+  --team-invitations-bar-bg: #{$green-400};
+
+  --team-invitations-bar-hover-bg: #{$green-500};
+
+  --team-invitations-bar-copy-btn-icon: #{$gray-650};
+}
+
+.team-invitations {
+  &__bar {
+    @include ui-w(340px);
+    @include ui-flex-fixed;
+
+    border-radius: 0.25rem;
+    border: 1px solid var(--team-category-border);
+
+    @include ui-px-9;
+    @include ui-py-8;
+
+    &-body {
+      @include ui-pt-8;
+    }
+
+    &-text {
+      font-size: 13px;
+    }
+
+    &-title {
+      font-size: 15px;
+    }
+
+    &-groups {
+      @include ui-w-auto;
+
+      display: inline-flex;
+    }
+
+    &-category {
+      @include ui-p-0;
+    }
+  }
+
+  &__invite-btn {
+    @include ui-size(2rem);
+    @include ui-flex-fixed;
+
+    align-items: center;
+    justify-content: center;
+
+    @include ui-p-0;
+    @include ui-rounded;
+
+    @include ui-mr-8;
+
+    background-color: var(--team-invitations-bar-bg);
+
+    &:hover {
+      background-color: var(--team-invitations-bar-hover-bg) !important;
+    }
+
+    &-icon {
+      @include ui-size(1rem);
+
+      fill: var(--team-invitations-bar-icon);
+    }
+  }
+
+  &__copy-btn {
+    @include ui-size(2.5rem);
+    @include ui-flex-fixed;
+
+    align-items: center;
+    justify-content: center;
+
+    @include ui-p-0;
+    @include ui-rounded-1;
+
+    &-icon {
+      @include ui-size(1.5rem);
+
+      fill: var(--team-invitations-bar-copy-btn-icon);
+    }
+  }
+}
