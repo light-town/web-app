@@ -10,8 +10,11 @@
         </ui-grid>
         <ui-grid class="team-invitations__bar-body">
           <p class="team-invitations__bar-text">
-            Use the + button to invite your teammates one by one, or use the
-            Sign Up Link to invite your whole Team at the same time.
+            {{
+              $t(
+                'Use the + button to invite your teammates one by one, or use the Sign Up Link to invite your whole Team at the same time.'
+              )
+            }}
           </p>
         </ui-grid>
       </ui-grid>
@@ -25,8 +28,11 @@
           </ui-grid>
           <ui-grid class="team-invitations__bar-body">
             <p class="team-invitations__bar-text">
-              Anyone with LightTown account can join your Team by following this
-              secret link:
+              {{
+                $t(
+                  'Anyone with LightTown account can join your Team by following this secret link:'
+                )
+              }}
             </p>
           </ui-grid>
         </ui-grid>
@@ -35,8 +41,8 @@
           justify="space-between"
           class="team-invitations__bar ui-mr-8"
         >
-          <p class="team-invitations__bar-text">
-            http://team-name/join?e=jfscr23t2nf34nvg4vb554m349yjn3fg
+          <p class="team-invitations__bar-text team-invitations__bar-text-link">
+            {{ link }}
           </p>
           <ui-button variant="text" class="team-invitations__copy-btn">
             <copy-icon class="team-invitations__copy-btn-icon" />
@@ -87,12 +93,18 @@ export default {
       loading: false,
       awaitingCount: 0,
       sentCount: 0,
+      link: '',
     };
   },
   computed: {
     ...mapState({
       currentTeamUuid: state => state.teams.currentTeamUuid,
     }),
+  },
+  async created() {
+    this.link = await this.$api.invitations.getInvitationLink(
+      this.currentTeamUuid
+    );
   },
 };
 </script>

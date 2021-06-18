@@ -140,5 +140,11 @@
   "Terms of use of the LightTown website, resources and services": "Правила пользования сайтом, ресурсами и сервисами LightTown",
   "You haven't any vaults": "У вас нет никаких хранилищ",
   "There are no available vaults in the team": "В команде нет доступных хранилищ",
-  "LightTown Account": "LightTown Аккаунт"
+  "LightTown Account": "LightTown Аккаунт",
+  "Soon": "Cкоро",
+  "Sign Up Link": "Ссылка для Регистрации",
+  "Activity log is empty": "Журнал действий пуст",
+  "None of the members have performed any actions in the team yet": "Никто из участников команды еще не совершил каких-либо действий в команде",
+  "Anyone with LightTown account can join your Team by following this secret link:": "Любой человек с учетной записью Light Town может присоединиться к вашей команде, перейдя по этой секретной ссылке:",
+  "Use the + button to invite your teammates one by one, or use the Sign Up Link to invite your whole Team at the same time.": "Используйте кнопку +, чтобы пригласить своих товарищей по команде одного за другим, или используйте ссылку Зарегистрироваться, чтобы пригласить всю свою команду одновременно."
 }

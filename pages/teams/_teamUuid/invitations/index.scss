@@ -26,6 +26,10 @@
 
     &-text {
       font-size: 13px;
+
+      &-link {
+        @include ui-truncate;
+      }
     }
 
     &-title {
